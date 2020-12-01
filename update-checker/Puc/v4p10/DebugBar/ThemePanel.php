@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_DebugBar_ThemePanel', false) ):
+if (!class_exists('Puc_v4p10_DebugBar_ThemePanel', false)):
 
 	class Puc_v4p10_DebugBar_ThemePanel extends Puc_v4p10_DebugBar_Panel {
 		/**

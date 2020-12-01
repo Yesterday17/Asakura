@@ -2,26 +2,18 @@
 
 namespace Sakura\API;
 
-class QQ
-{
+class QQ {
     public static function get_qq_info($qq) {
         $get_info = file_get_contents('http://r.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg?get_nick=1&uins=' . $qq);
         $get_info = mb_convert_encoding($get_info, "UTF-8", "GBK");
         $name = json_decode(substr($get_info, 17, -1), true);
         if ($name) {
             $output = array(
-                'status' => 200,
-                'success' => true,
-                'message' => 'success',
-                'avatar' => 'https://q.qlogo.cn/headimg_dl?dst_uin=' . $qq . '&spec=100',
-                'name' => $name[$qq][6],
+                'status' => 200, 'success' => true, 'message' => 'success',
+                'avatar' => 'https://q.qlogo.cn/headimg_dl?dst_uin=' . $qq . '&spec=100', 'name' => $name[$qq][6],
             );
         } else {
-            $output = array(
-                'status' => 404,
-                'success' => false,
-                'message' => 'QQ number not exist.'
-            );
+            $output = array('status' => 404, 'success' => false, 'message' => 'QQ number not exist.');
         }
         return $output;
     }

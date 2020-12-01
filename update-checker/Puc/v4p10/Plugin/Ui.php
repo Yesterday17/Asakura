@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
+if (!class_exists('Puc_v4p10_Plugin_Ui', false)):
 	/**
 	 * Additional UI elements for plugins.
 	 */
@@ -18,7 +18,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		}
 
 		public function onAdminInit() {
-			if ( $this->updateChecker->userCanInstallUpdates() ) {
+			if ($this->updateChecker->userCanInstallUpdates()) {
 				$this->handleManualCheck();
 
 				add_filter('plugin_row_meta', array($this, 'addViewDetailsLink'), 10, 3);
@@ -50,34 +50,25 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		 * @return array
 		 */
 		public function addViewDetailsLink($pluginMeta, $pluginFile, $pluginData = array()) {
-			if ( $this->isMyPluginFile($pluginFile) && !isset($pluginData['slug']) ) {
+			if ($this->isMyPluginFile($pluginFile) && !isset($pluginData['slug'])) {
 				$linkText = apply_filters($this->updateChecker->getUniqueName('view_details_link'), __('View details'));
-				if ( !empty($linkText) ) {
+				if (!empty($linkText)) {
 					$viewDetailsLinkPosition = 'append';
 
 					//Find the "Visit plugin site" link (if present).
 					$visitPluginSiteLinkIndex = count($pluginMeta) - 1;
-					if ( $pluginData['PluginURI'] ) {
+					if ($pluginData['PluginURI']) {
 						$escapedPluginUri = esc_url($pluginData['PluginURI']);
 						foreach ($pluginMeta as $linkIndex => $existingLink) {
-							if ( strpos($existingLink, $escapedPluginUri) !== false ) {
+							if (strpos($existingLink, $escapedPluginUri) !== false) {
 								$visitPluginSiteLinkIndex = $linkIndex;
-								$viewDetailsLinkPosition = apply_filters(
-									$this->updateChecker->getUniqueName('view_details_link_position'),
-									'before'
-								);
+								$viewDetailsLinkPosition = apply_filters($this->updateChecker->getUniqueName('view_details_link_position'), 'before');
 								break;
 							}
 						}
 					}
 
-					$viewDetailsLink = sprintf('<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
-						esc_url(network_admin_url('plugin-install.php?tab=plugin-information&plugin=' . urlencode($this->updateChecker->slug) .
-							'&TB_iframe=true&width=600&height=550')),
-						esc_attr(sprintf(__('More information about %s'), $pluginData['Name'])),
-						esc_attr($pluginData['Name']),
-						$linkText
-					);
+					$viewDetailsLink = sprintf('<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>', esc_url(network_admin_url('plugin-install.php?tab=plugin-information&plugin=' . urlencode($this->updateChecker->slug) . '&TB_iframe=true&width=600&height=550')), esc_attr(sprintf(__('More information about %s'), $pluginData['Name'])), esc_attr($pluginData['Name']), $linkText);
 					switch ($viewDetailsLinkPosition) {
 						case 'before':
 							array_splice($pluginMeta, $visitPluginSiteLinkIndex, 0, $viewDetailsLink);
@@ -111,23 +102,13 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		 * @return array
 		 */
 		public function addCheckForUpdatesLink($pluginMeta, $pluginFile) {
-			if ( $this->isMyPluginFile($pluginFile) ) {
-				$linkUrl = wp_nonce_url(
-					add_query_arg(
-						array(
-							'puc_check_for_updates' => 1,
-							'puc_slug'              => $this->updateChecker->slug,
-						),
-						self_admin_url('plugins.php')
-					),
-					'puc_check_for_updates'
-				);
+			if ($this->isMyPluginFile($pluginFile)) {
+				$linkUrl = wp_nonce_url(add_query_arg(array(
+					'puc_check_for_updates' => 1, 'puc_slug' => $this->updateChecker->slug,
+				), self_admin_url('plugins.php')), 'puc_check_for_updates');
 
-				$linkText = apply_filters(
-					$this->updateChecker->getUniqueName('manual_check_link'),
-					__('Check for updates', 'plugin-update-checker')
-				);
-				if ( !empty($linkText) ) {
+				$linkText = apply_filters($this->updateChecker->getUniqueName('manual_check_link'), __('Check for updates', 'plugin-update-checker'));
+				if (!empty($linkText)) {
 					/** @noinspection HtmlUnknownTarget */
 					$pluginMeta[] = sprintf('<a href="%s">%s</a>', esc_attr($linkUrl), $linkText);
 				}
@@ -136,61 +117,51 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		}
 
 		protected function isMyPluginFile($pluginFile) {
-			return ($pluginFile == $this->updateChecker->pluginFile)
-				|| (!empty($this->updateChecker->muPluginFile) && ($pluginFile == $this->updateChecker->muPluginFile));
+			return ($pluginFile == $this->updateChecker->pluginFile) || (!empty($this->updateChecker->muPluginFile) && ($pluginFile == $this->updateChecker->muPluginFile));
 		}
 
 		/**
 		 * Check for updates when the user clicks the "Check for updates" link.
 		 *
+		 * @return void
 		 * @see self::addCheckForUpdatesLink()
 		 *
-		 * @return void
 		 */
 		public function handleManualCheck() {
-			$shouldCheck =
-				isset($_GET['puc_check_for_updates'], $_GET['puc_slug'])
-				&& $_GET['puc_slug'] == $this->updateChecker->slug
-				&& check_admin_referer('puc_check_for_updates');
+			$shouldCheck = isset($_GET['puc_check_for_updates'], $_GET['puc_slug']) && $_GET['puc_slug'] == $this->updateChecker->slug && check_admin_referer('puc_check_for_updates');
 
-			if ( $shouldCheck ) {
+			if ($shouldCheck) {
 				$update = $this->updateChecker->checkForUpdates();
 				$status = ($update === null) ? 'no_update' : 'update_available';
 
-				if ( ($update === null) && !empty($this->lastRequestApiErrors) ) {
+				if (($update === null) && !empty($this->lastRequestApiErrors)) {
 					//Some errors are not critical. For example, if PUC tries to retrieve the readme.txt
 					//file from GitHub and gets a 404, that's an API error, but it doesn't prevent updates
 					//from working. Maybe the plugin simply doesn't have a readme.
 					//Let's only show important errors.
 					$foundCriticalErrors = false;
 					$questionableErrorCodes = array(
-						'puc-github-http-error',
-						'puc-gitlab-http-error',
-						'puc-bitbucket-http-error',
+						'puc-github-http-error', 'puc-gitlab-http-error', 'puc-bitbucket-http-error',
 					);
 
 					foreach ($this->lastRequestApiErrors as $item) {
 						$wpError = $item['error'];
 						/** @var WP_Error $wpError */
-						if ( !in_array($wpError->get_error_code(), $questionableErrorCodes) ) {
+						if (!in_array($wpError->get_error_code(), $questionableErrorCodes)) {
 							$foundCriticalErrors = true;
 							break;
 						}
 					}
 
-					if ( $foundCriticalErrors ) {
+					if ($foundCriticalErrors) {
 						$status = 'error';
 						set_site_transient($this->manualCheckErrorTransient, $this->lastRequestApiErrors, 60);
 					}
 				}
 
-				wp_redirect(add_query_arg(
-					array(
-						'puc_update_check_result' => $status,
-						'puc_slug'                => $this->updateChecker->slug,
-					),
-					self_admin_url('plugins.php')
-				));
+				wp_redirect(add_query_arg(array(
+					'puc_update_check_result' => $status, 'puc_slug' => $this->updateChecker->slug,
+				), self_admin_url('plugins.php')));
 				exit;
 			}
 		}
@@ -203,17 +174,17 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		 * You can change the result message by using the "puc_manual_check_message-$slug" filter.
 		 */
 		public function displayManualCheckResult() {
-			if ( isset($_GET['puc_update_check_result'], $_GET['puc_slug']) && ($_GET['puc_slug'] == $this->updateChecker->slug) ) {
+			if (isset($_GET['puc_update_check_result'], $_GET['puc_slug']) && ($_GET['puc_slug'] == $this->updateChecker->slug)) {
 				$status = strval($_GET['puc_update_check_result']);
 				$title = $this->updateChecker->getInstalledPackage()->getPluginTitle();
 				$noticeClass = 'updated notice-success';
 				$details = '';
 
-				if ( $status == 'no_update' ) {
+				if ($status == 'no_update') {
 					$message = sprintf(_x('The %s plugin is up to date.', 'the plugin title', 'plugin-update-checker'), $title);
-				} else if ( $status == 'update_available' ) {
+				} else if ($status == 'update_available') {
 					$message = sprintf(_x('A new version of the %s plugin is available.', 'the plugin title', 'plugin-update-checker'), $title);
-				} else if ( $status === 'error' ) {
+				} else if ($status === 'error') {
 					$message = sprintf(_x('Could not determine if updates are available for %s.', 'the plugin title', 'plugin-update-checker'), $title);
 					$noticeClass = 'error notice-error';
 
@@ -223,12 +194,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 					$message = sprintf(__('Unknown update checker status "%s"', 'plugin-update-checker'), htmlentities($status));
 					$noticeClass = 'error notice-error';
 				}
-				printf(
-					'<div class="notice %s is-dismissible"><p>%s</p>%s</div>',
-					$noticeClass,
-					apply_filters($this->updateChecker->getUniqueName('manual_check_message'), $message, $status),
-					$details
-				);
+				printf('<div class="notice %s is-dismissible"><p>%s</p>%s</div>', $noticeClass, apply_filters($this->updateChecker->getUniqueName('manual_check_message'), $message, $status), $details);
 			}
 		}
 
@@ -239,13 +205,13 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 		 * @return string
 		 */
 		protected function formatManualCheckErrors($errors) {
-			if ( empty($errors) ) {
+			if (empty($errors)) {
 				return '';
 			}
 			$output = '';
 
 			$showAsList = count($errors) > 1;
-			if ( $showAsList ) {
+			if ($showAsList) {
 				$output .= '<ol>';
 				$formatString = '<li>%1$s <code>%2$s</code></li>';
 			} else {
@@ -254,13 +220,9 @@ if ( !class_exists('Puc_v4p10_Plugin_Ui', false) ):
 			foreach ($errors as $item) {
 				$wpError = $item['error'];
 				/** @var WP_Error $wpError */
-				$output .= sprintf(
-					$formatString,
-					$wpError->get_error_message(),
-					$wpError->get_error_code()
-				);
+				$output .= sprintf($formatString, $wpError->get_error_message(), $wpError->get_error_code());
 			}
-			if ( $showAsList ) {
+			if ($showAsList) {
 				$output .= '</ol>';
 			}
 

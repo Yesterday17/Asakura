@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_Vcs_ThemeUpdateChecker', false) ):
+if (!class_exists('Puc_v4p10_Vcs_ThemeUpdateChecker', false)):
 
 	class Puc_v4p10_Vcs_ThemeUpdateChecker extends Puc_v4p10_Theme_UpdateChecker implements Puc_v4p10_Vcs_BaseChecker {
 		/**
@@ -40,20 +40,11 @@ if ( !class_exists('Puc_v4p10_Vcs_ThemeUpdateChecker', false) ):
 
 			//Figure out which reference (tag or branch) we'll use to get the latest version of the theme.
 			$updateSource = $api->chooseReference($this->branch);
-			if ( $updateSource ) {
+			if ($updateSource) {
 				$ref = $updateSource->name;
 				$update->download_url = $updateSource->downloadUrl;
 			} else {
-				do_action(
-					'puc_api_error',
-					new WP_Error(
-						'puc-no-update-source',
-						'Could not retrieve version information from the repository. '
-						. 'This usually means that the update checker either can\'t connect '
-						. 'to the repository or it\'s configured incorrectly.'
-					),
-					null, null, $this->slug
-				);
+				do_action('puc_api_error', new WP_Error('puc-no-update-source', 'Could not retrieve version information from the repository. ' . 'This usually means that the update checker either can\'t connect ' . 'to the repository or it\'s configured incorrectly.'), null, null, $this->slug);
 				$ref = $this->branch;
 			}
 
@@ -61,18 +52,15 @@ if ( !class_exists('Puc_v4p10_Vcs_ThemeUpdateChecker', false) ):
 			//are what the WordPress install will actually see after upgrading, so they take precedence over releases/tags.
 			$remoteHeader = $this->package->getFileHeader($api->getRemoteFile('style.css', $ref));
 			$update->version = Puc_v4p10_Utils::findNotEmpty(array(
-				$remoteHeader['Version'],
-				Puc_v4p10_Utils::get($updateSource, 'version'),
+				$remoteHeader['Version'], Puc_v4p10_Utils::get($updateSource, 'version'),
 			));
 
 			//The details URL defaults to the Theme URI header or the repository URL.
 			$update->details_url = Puc_v4p10_Utils::findNotEmpty(array(
-				$remoteHeader['ThemeURI'],
-				$this->package->getHeaderValue('ThemeURI'),
-				$this->metadataUrl,
+				$remoteHeader['ThemeURI'], $this->package->getHeaderValue('ThemeURI'), $this->metadataUrl,
 			));
 
-			if ( empty($update->version) ) {
+			if (empty($update->version)) {
 				//It looks like we didn't find a valid update after all.
 				$update = null;
 			}
@@ -100,7 +88,7 @@ if ( !class_exists('Puc_v4p10_Vcs_ThemeUpdateChecker', false) ):
 		public function getUpdate() {
 			$update = parent::getUpdate();
 
-			if ( isset($update) && !empty($update->download_url) ) {
+			if (isset($update) && !empty($update->download_url)) {
 				$update->download_url = $this->api->signDownloadUrl($update->download_url);
 			}
 

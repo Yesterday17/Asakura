@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
+if (!class_exists('Puc_v4p10_Vcs_PluginUpdateChecker')):
 
 	class Puc_v4p10_Vcs_PluginUpdateChecker extends Puc_v4p10_Plugin_UpdateChecker implements Puc_v4p10_Vcs_BaseChecker {
 		/**
@@ -34,7 +34,7 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 		public function requestInfo($unusedParameter = null) {
 			//We have to make several remote API requests to gather all the necessary info
 			//which can take a while on slow networks.
-			if ( function_exists('set_time_limit') ) {
+			if (function_exists('set_time_limit')) {
 				@set_time_limit(60);
 			}
 
@@ -49,30 +49,21 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 
 			//Pick a branch or tag.
 			$updateSource = $api->chooseReference($this->branch);
-			if ( $updateSource ) {
+			if ($updateSource) {
 				$ref = $updateSource->name;
 				$info->version = $updateSource->version;
 				$info->last_updated = $updateSource->updated;
 				$info->download_url = $updateSource->downloadUrl;
 
-				if ( !empty($updateSource->changelog) ) {
+				if (!empty($updateSource->changelog)) {
 					$info->sections['changelog'] = $updateSource->changelog;
 				}
-				if ( isset($updateSource->downloadCount) ) {
+				if (isset($updateSource->downloadCount)) {
 					$info->downloaded = $updateSource->downloadCount;
 				}
 			} else {
 				//There's probably a network problem or an authentication error.
-				do_action(
-					'puc_api_error',
-					new WP_Error(
-						'puc-no-update-source',
-						'Could not retrieve version information from the repository. '
-						. 'This usually means that the update checker either can\'t connect '
-						. 'to the repository or it\'s configured incorrectly.'
-					),
-					null, null, $this->slug
-				);
+				do_action('puc_api_error', new WP_Error('puc-no-update-source', 'Could not retrieve version information from the repository. ' . 'This usually means that the update checker either can\'t connect ' . 'to the repository or it\'s configured incorrectly.'), null, null, $this->slug);
 				return null;
 			}
 
@@ -80,29 +71,29 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 			//are what the WordPress install will actually see after upgrading, so they take precedence over releases/tags.
 			$mainPluginFile = basename($this->pluginFile);
 			$remotePlugin = $api->getRemoteFile($mainPluginFile, $ref);
-			if ( !empty($remotePlugin) ) {
+			if (!empty($remotePlugin)) {
 				$remoteHeader = $this->package->getFileHeader($remotePlugin);
 				$this->setInfoFromHeader($remoteHeader, $info);
 			}
 
 			//Try parsing readme.txt. If it's formatted according to WordPress.org standards, it will contain
 			//a lot of useful information like the required/tested WP version, changelog, and so on.
-			if ( $this->readmeTxtExistsLocally() ) {
+			if ($this->readmeTxtExistsLocally()) {
 				$this->setInfoFromRemoteReadme($ref, $info);
 			}
 
 			//The changelog might be in a separate file.
-			if ( empty($info->sections['changelog']) ) {
+			if (empty($info->sections['changelog'])) {
 				$info->sections['changelog'] = $api->getRemoteChangelog($ref, $this->package->getAbsoluteDirectoryPath());
-				if ( empty($info->sections['changelog']) ) {
+				if (empty($info->sections['changelog'])) {
 					$info->sections['changelog'] = __('There is no changelog available.', 'plugin-update-checker');
 				}
 			}
 
-			if ( empty($info->last_updated) ) {
+			if (empty($info->last_updated)) {
 				//Fetch the latest commit that changed the tag or branch and use it as the "last_updated" date.
 				$latestCommitTime = $api->getLatestCommitTime($ref);
-				if ( $latestCommitTime !== null ) {
+				if ($latestCommitTime !== null) {
 					$info->last_updated = $latestCommitTime;
 				}
 			}
@@ -128,27 +119,21 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 		 */
 		protected function setInfoFromHeader($fileHeader, $pluginInfo) {
 			$headerToPropertyMap = array(
-				'Version' => 'version',
-				'Name' => 'name',
-				'PluginURI' => 'homepage',
-				'Author' => 'author',
-				'AuthorName' => 'author',
-				'AuthorURI' => 'author_homepage',
+				'Version'    => 'version', 'Name' => 'name', 'PluginURI' => 'homepage', 'Author' => 'author',
+				'AuthorName' => 'author', 'AuthorURI' => 'author_homepage',
 
-				'Requires WP' => 'requires',
-				'Tested WP' => 'tested',
-				'Requires at least' => 'requires',
+				'Requires WP'  => 'requires', 'Tested WP' => 'tested', 'Requires at least' => 'requires',
 				'Tested up to' => 'tested',
 
 				'Requires PHP' => 'requires_php',
 			);
 			foreach ($headerToPropertyMap as $headerName => $property) {
-				if ( isset($fileHeader[$headerName]) && !empty($fileHeader[$headerName]) ) {
+				if (isset($fileHeader[$headerName]) && !empty($fileHeader[$headerName])) {
 					$pluginInfo->$property = $fileHeader[$headerName];
 				}
 			}
 
-			if ( !empty($fileHeader['Description']) ) {
+			if (!empty($fileHeader['Description'])) {
 				$pluginInfo->sections['description'] = $fileHeader['Description'];
 			}
 		}
@@ -161,24 +146,24 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 		 */
 		protected function setInfoFromRemoteReadme($ref, $pluginInfo) {
 			$readme = $this->api->getRemoteReadme($ref);
-			if ( empty($readme) ) {
+			if (empty($readme)) {
 				return;
 			}
 
-			if ( isset($readme['sections']) ) {
+			if (isset($readme['sections'])) {
 				$pluginInfo->sections = array_merge($pluginInfo->sections, $readme['sections']);
 			}
-			if ( !empty($readme['tested_up_to']) ) {
+			if (!empty($readme['tested_up_to'])) {
 				$pluginInfo->tested = $readme['tested_up_to'];
 			}
-			if ( !empty($readme['requires_at_least']) ) {
+			if (!empty($readme['requires_at_least'])) {
 				$pluginInfo->requires = $readme['requires_at_least'];
 			}
-			if ( !empty($readme['requires_php']) ) {
+			if (!empty($readme['requires_php'])) {
 				$pluginInfo->requires_php = $readme['requires_php'];
 			}
 
-			if ( isset($readme['upgrade_notice'], $readme['upgrade_notice'][$pluginInfo->version]) ) {
+			if (isset($readme['upgrade_notice'], $readme['upgrade_notice'][$pluginInfo->version])) {
 				$pluginInfo->upgrade_notice = $readme['upgrade_notice'][$pluginInfo->version];
 			}
 		}
@@ -200,7 +185,7 @@ if ( !class_exists('Puc_v4p10_Vcs_PluginUpdateChecker') ):
 		public function getUpdate() {
 			$update = parent::getUpdate();
 
-			if ( isset($update) && !empty($update->download_url) ) {
+			if (isset($update) && !empty($update->download_url)) {
 				$update->download_url = $this->api->signDownloadUrl($update->download_url);
 			}
 

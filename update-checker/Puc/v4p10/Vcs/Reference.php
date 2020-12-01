@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Vcs_Reference', false) ):
+if (!class_exists('Puc_v4p10_Vcs_Reference', false)):
 
 	/**
 	 * This class represents a VCS branch or tag. It's intended as a read only, short-lived container

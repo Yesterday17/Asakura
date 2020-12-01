@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar_Panel', false) ):
+if (!class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar_Panel', false)):
 
 	class Puc_v4p10_DebugBar_Panel extends Debug_Bar_Panel {
 		/** @var Puc_v4p10_UpdateChecker */
@@ -10,22 +10,12 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 
 		public function __construct($updateChecker) {
 			$this->updateChecker = $updateChecker;
-			$title = sprintf(
-				'<span class="puc-debug-menu-link-%s">PUC (%s)</span>',
-				esc_attr($this->updateChecker->getUniqueName('uid')),
-				$this->updateChecker->slug
-			);
+			$title = sprintf('<span class="puc-debug-menu-link-%s">PUC (%s)</span>', esc_attr($this->updateChecker->getUniqueName('uid')), $this->updateChecker->slug);
 			parent::__construct($title);
 		}
 
 		public function render() {
-			printf(
-				'<div class="puc-debug-bar-panel-v4" id="%1$s" data-slug="%2$s" data-uid="%3$s" data-nonce="%4$s">',
-				esc_attr($this->updateChecker->getUniqueName('debug-bar-panel')),
-				esc_attr($this->updateChecker->slug),
-				esc_attr($this->updateChecker->getUniqueName('uid')),
-				esc_attr(wp_create_nonce('puc-ajax'))
-			);
+			printf('<div class="puc-debug-bar-panel-v4" id="%1$s" data-slug="%2$s" data-uid="%3$s" data-nonce="%4$s">', esc_attr($this->updateChecker->getUniqueName('debug-bar-panel')), esc_attr($this->updateChecker->slug), esc_attr($this->updateChecker->getUniqueName('uid')), esc_attr(wp_create_nonce('puc-ajax')));
 
 			$this->displayConfiguration();
 			$this->displayStatus();
@@ -45,22 +35,15 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 			$this->row('Metadata URL', htmlentities($this->updateChecker->metadataUrl) . ' ' . $requestInfoButton . $this->responseBox);
 
 			$scheduler = $this->updateChecker->scheduler;
-			if ( $scheduler->checkPeriod > 0 ) {
+			if ($scheduler->checkPeriod > 0) {
 				$this->row('Automatic checks', 'Every ' . $scheduler->checkPeriod . ' hours');
 			} else {
 				$this->row('Automatic checks', 'Disabled');
 			}
 
-			if ( isset($scheduler->throttleRedundantChecks) ) {
-				if ( $scheduler->throttleRedundantChecks && ($scheduler->checkPeriod > 0) ) {
-					$this->row(
-						'Throttling',
-						sprintf(
-							'Enabled. If an update is already available, check for updates every %1$d hours instead of every %2$d hours.',
-							$scheduler->throttledCheckPeriod,
-							$scheduler->checkPeriod
-						)
-					);
+			if (isset($scheduler->throttleRedundantChecks)) {
+				if ($scheduler->throttleRedundantChecks && ($scheduler->checkPeriod > 0)) {
+					$this->row('Throttling', sprintf('Enabled. If an update is already available, check for updates every %1$d hours instead of every %2$d hours.', $scheduler->throttledCheckPeriod, $scheduler->checkPeriod));
 				} else {
 					$this->row('Throttling', 'Disabled');
 				}
@@ -84,17 +67,11 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 			echo '<table class="puc-debug-data">';
 			$state = $this->updateChecker->getUpdateState();
 			$checkNowButton = '';
-			if ( function_exists('get_submit_button')  ) {
-				$checkNowButton = get_submit_button(
-					'Check Now',
-					'secondary',
-					'puc-check-now-button',
-					false,
-					array('id' => $this->updateChecker->getUniqueName('check-now-button'))
-				);
+			if (function_exists('get_submit_button')) {
+				$checkNowButton = get_submit_button('Check Now', 'secondary', 'puc-check-now-button', false, array('id' => $this->updateChecker->getUniqueName('check-now-button')));
 			}
 
-			if ( $state->getLastCheck() > 0 ) {
+			if ($state->getLastCheck() > 0) {
 				$this->row('Last check', $this->formatTimeWithDelta($state->getLastCheck()) . ' ' . $checkNowButton . $this->responseBox);
 			} else {
 				$this->row('Last check', 'Never');
@@ -103,7 +80,7 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 			$nextCheck = wp_next_scheduled($this->updateChecker->scheduler->getCronHookName());
 			$this->row('Next automatic check', $this->formatTimeWithDelta($nextCheck));
 
-			if ( $state->getCheckedVersion() !== '' ) {
+			if ($state->getCheckedVersion() !== '') {
 				$this->row('Checked version', htmlentities($state->getCheckedVersion()));
 				$this->row('Cached update', $state->getUpdate());
 			}
@@ -113,12 +90,12 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 
 		private function displayCurrentUpdate() {
 			$update = $this->updateChecker->getUpdate();
-			if ( $update !== null ) {
+			if ($update !== null) {
 				echo '<h3>An Update Is Available</h3>';
 				echo '<table class="puc-debug-data">';
 				$fields = $this->getUpdateFields();
-				foreach($fields as $field) {
-					if ( property_exists($update, $field) ) {
+				foreach ($fields as $field) {
+					if (property_exists($update, $field)) {
 						$this->row(ucwords(str_replace('_', ' ', $field)), htmlentities($update->$field));
 					}
 				}
@@ -133,13 +110,13 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 		}
 
 		private function formatTimeWithDelta($unixTime) {
-			if ( empty($unixTime) ) {
+			if (empty($unixTime)) {
 				return 'Never';
 			}
 
 			$delta = time() - $unixTime;
 			$result = human_time_diff(time(), $unixTime);
-			if ( $delta < 0 ) {
+			if ($delta < 0) {
 				$result = 'after ' . $result;
 			} else {
 				$result = $result . ' ago';
@@ -153,7 +130,7 @@ if ( !class_exists('Puc_v4p10_DebugBar_Panel', false) && class_exists('Debug_Bar
 		}
 
 		public function row($name, $value) {
-			if ( is_object($value) || is_array($value) ) {
+			if (is_object($value) || is_array($value)) {
 				$value = '<pre>' . htmlentities(print_r($value, true)) . '</pre>';
 			} else if ($value === null) {
 				$value = '<code>null</code>';

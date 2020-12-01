@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Update', false) ):
+if (!class_exists('Puc_v4p10_Update', false)):
 
 	/**
 	 * A simple container class for holding information about an available update.

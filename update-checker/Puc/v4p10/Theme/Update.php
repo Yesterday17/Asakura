@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_Theme_Update', false) ):
+if (!class_exists('Puc_v4p10_Theme_Update', false)):
 
 	class Puc_v4p10_Theme_Update extends Puc_v4p10_Update {
 		public $details_url = '';
@@ -14,13 +14,9 @@ if ( !class_exists('Puc_v4p10_Theme_Update', false) ):
 		 * @return array
 		 */
 		public function toWpFormat() {
-			$update = array(
-				'theme' => $this->slug,
-				'new_version' => $this->version,
-				'url' => $this->details_url,
-			);
+			$update = array('theme' => $this->slug, 'new_version' => $this->version, 'url' => $this->details_url,);
 
-			if ( !empty($this->download_url) ) {
+			if (!empty($this->download_url)) {
 				$update['package'] = $this->download_url;
 			}
 
@@ -35,7 +31,7 @@ if ( !class_exists('Puc_v4p10_Theme_Update', false) ):
 		 */
 		public static function fromJson($json) {
 			$instance = new self();
-			if ( !parent::createFromJson($json, $instance) ) {
+			if (!parent::createFromJson($json, $instance)) {
 				return null;
 			}
 			return $instance;
@@ -61,12 +57,9 @@ if ( !class_exists('Puc_v4p10_Theme_Update', false) ):
 		 */
 		protected function validateMetadata($apiResponse) {
 			$required = array('version', 'details_url');
-			foreach($required as $key) {
-				if ( !isset($apiResponse->$key) || empty($apiResponse->$key) ) {
-					return new WP_Error(
-						'tuc-invalid-metadata',
-						sprintf('The theme metadata is missing the required "%s" key.', $key)
-					);
+			foreach ($required as $key) {
+				if (!isset($apiResponse->$key) || empty($apiResponse->$key)) {
+					return new WP_Error('tuc-invalid-metadata', sprintf('The theme metadata is missing the required "%s" key.', $key));
 				}
 			}
 			return true;

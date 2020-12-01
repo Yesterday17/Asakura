@@ -2,8 +2,7 @@
 
 namespace Sakura\API;
 
-class Aplayer
-{
+class Aplayer {
     public $server;
     public $playlist_id;
     private $cookies;
@@ -22,7 +21,8 @@ class Aplayer
         $cookies = $this->cookies;
         $playlist_id = $this->playlist_id;
         $api = new \Sakura\API\Meting($server);
-        if (!empty($cookies) && $server === "netease") $api->cookie($cookies);
+        if (!empty($cookies) && $server === "netease")
+            $api->cookie($cookies);
         switch ($type) {
             case 'song':
                 $data = $api->format(true)->song($id);
@@ -70,17 +70,13 @@ class Aplayer
             $cover = "$api_url?server=$server&type=pic&id=" . $value->pic_id . '&meting_nonce=' . wp_create_nonce('pic#:' . $value->url_id);
             $lyric = "$api_url?server=$server&type=lyric&id=" . $value->lyric_id . '&meting_nonce=' . wp_create_nonce('lyric#:' . $value->url_id);
             $playlist[] = array(
-                "name" => $name,
-                "artist" => $artists,
-                "url" => $mp3_url,
-                "cover" => $cover,
-                "lrc" => $lyric
+                "name" => $name, "artist" => $artists, "url" => $mp3_url, "cover" => $cover, "lrc" => $lyric
             );
         }
         return $playlist;
     }
 
-    private function song_url($url){
+    private function song_url($url) {
         $server = $this->server;
         if ($server == 'netease') {
             $url = str_replace('://m7c.', '://m7.', $url);
@@ -88,11 +84,11 @@ class Aplayer
             $url = str_replace('http://m8.', 'https://m9.', $url);
             $url = str_replace('http://m7.', 'https://m9.', $url);
             $url = str_replace('http://m10.', 'https://m10.', $url);
-        }elseif ($server == 'xiami') {
+        } elseif ($server == 'xiami') {
             $url = str_replace('http://', 'https://', $url);
-        }elseif ($server == 'baidu') {
+        } elseif ($server == 'baidu') {
             $url = str_replace('http://zhangmenshiting.qianqian.com', 'https://gss3.baidu.com/y0s1hSulBw92lNKgpU_Z2jR7b2w6buu', $url);
-        }else{
+        } else {
             $url = $url;
         }
         return $url;

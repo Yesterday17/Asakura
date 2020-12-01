@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
+if (!class_exists('Puc_v4p10_Plugin_Package', false)):
 
 	class Puc_v4p10_Plugin_Package extends Puc_v4p10_InstalledPackage {
 		/**
@@ -34,23 +34,17 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 		}
 
 		public function getInstalledVersion() {
-			if ( isset($this->cachedInstalledVersion) ) {
+			if (isset($this->cachedInstalledVersion)) {
 				return $this->cachedInstalledVersion;
 			}
 
 			$pluginHeader = $this->getPluginHeader();
-			if ( isset($pluginHeader['Version']) ) {
+			if (isset($pluginHeader['Version'])) {
 				$this->cachedInstalledVersion = $pluginHeader['Version'];
 				return $pluginHeader['Version'];
 			} else {
 				//This can happen if the filename points to something that is not a plugin.
-				$this->updateChecker->triggerError(
-					sprintf(
-						"Can't to read the Version header for '%s'. The filename is incorrect or is not a plugin.",
-						$this->updateChecker->pluginFile
-					),
-					E_USER_WARNING
-				);
+				$this->updateChecker->triggerError(sprintf("Can't to read the Version header for '%s'. The filename is incorrect or is not a plugin.", $this->updateChecker->pluginFile), E_USER_WARNING);
 				return null;
 			}
 		}
@@ -80,7 +74,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 		 */
 		public function getHeaderValue($headerName, $defaultValue = '') {
 			$headers = $this->getPluginHeader();
-			if ( isset($headers[$headerName]) && ($headers[$headerName] !== '') ) {
+			if (isset($headers[$headerName]) && ($headers[$headerName] !== '')) {
 				return $headers[$headerName];
 			}
 			return $defaultValue;
@@ -88,21 +82,13 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 
 		protected function getHeaderNames() {
 			return array(
-				'Name'              => 'Plugin Name',
-				'PluginURI'         => 'Plugin URI',
-				'Version'           => 'Version',
-				'Description'       => 'Description',
-				'Author'            => 'Author',
-				'AuthorURI'         => 'Author URI',
-				'TextDomain'        => 'Text Domain',
-				'DomainPath'        => 'Domain Path',
-				'Network'           => 'Network',
+				'Name'              => 'Plugin Name', 'PluginURI' => 'Plugin URI', 'Version' => 'Version',
+				'Description'       => 'Description', 'Author' => 'Author', 'AuthorURI' => 'Author URI',
+				'TextDomain'        => 'Text Domain', 'DomainPath' => 'Domain Path', 'Network' => 'Network',
 
 				//The newest WordPress version that this plugin requires or has been tested with.
 				//We support several different formats for compatibility with other libraries.
-				'Tested WP'         => 'Tested WP',
-				'Requires WP'       => 'Requires WP',
-				'Tested up to'      => 'Tested up to',
+				'Tested WP'         => 'Tested WP', 'Requires WP' => 'Requires WP', 'Tested up to' => 'Tested up to',
 				'Requires at least' => 'Requires at least',
 			);
 		}
@@ -115,7 +101,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 		public function getPluginTitle() {
 			$title = '';
 			$header = $this->getPluginHeader();
-			if ( $header && !empty($header['Name']) && isset($header['TextDomain']) ) {
+			if ($header && !empty($header['Name']) && isset($header['TextDomain'])) {
 				$title = translate($header['Name'], $header['TextDomain']);
 			}
 			return $title;
@@ -127,19 +113,13 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 		 * @return array
 		 */
 		public function getPluginHeader() {
-			if ( !is_file($this->pluginAbsolutePath) ) {
+			if (!is_file($this->pluginAbsolutePath)) {
 				//This can happen if the plugin filename is wrong.
-				$this->updateChecker->triggerError(
-					sprintf(
-						"Can't to read the plugin header for '%s'. The file does not exist.",
-						$this->updateChecker->pluginFile
-					),
-					E_USER_WARNING
-				);
+				$this->updateChecker->triggerError(sprintf("Can't to read the plugin header for '%s'. The file does not exist.", $this->updateChecker->pluginFile), E_USER_WARNING);
 				return array();
 			}
 
-			if ( !function_exists('get_plugin_data') ) {
+			if (!function_exists('get_plugin_data')) {
 				/** @noinspection PhpIncludeInspection */
 				require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 			}
@@ -159,19 +139,19 @@ if ( !class_exists('Puc_v4p10_Plugin_Package', false) ):
 		public function isMuPlugin() {
 			static $cachedResult = null;
 
-			if ( $cachedResult === null ) {
-				if ( !defined('WPMU_PLUGIN_DIR') || !is_string(WPMU_PLUGIN_DIR) ) {
+			if ($cachedResult === null) {
+				if (!defined('WPMU_PLUGIN_DIR') || !is_string(WPMU_PLUGIN_DIR)) {
 					$cachedResult = false;
 					return $cachedResult;
 				}
 
 				//Convert both paths to the canonical form before comparison.
 				$muPluginDir = realpath(WPMU_PLUGIN_DIR);
-				$pluginPath  = realpath($this->pluginAbsolutePath);
+				$pluginPath = realpath($this->pluginAbsolutePath);
 				//If realpath() fails, just normalize the syntax instead.
 				if (($muPluginDir === false) || ($pluginPath === false)) {
 					$muPluginDir = Puc_v4p10_Factory::normalizePath(WPMU_PLUGIN_DIR);
-					$pluginPath  = Puc_v4p10_Factory::normalizePath($this->pluginAbsolutePath);
+					$pluginPath = Puc_v4p10_Factory::normalizePath($this->pluginAbsolutePath);
 				}
 
 				$cachedResult = (strpos($pluginPath, $muPluginDir) === 0);

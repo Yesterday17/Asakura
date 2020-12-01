@@ -4,24 +4,25 @@
  * created: March 27, 2016
  */
 
-;(function ($,window,document,undefined) {
-    function SliderUnlock(elm, options, success){
+;(function ($, window, document, undefined) {
+    function SliderUnlock(elm, options, success) {
         var me = this;
         var $elm = me.checkElm(elm) ? $(elm) : $;
-        success = me.checkFn(success) ? success : function(){};
-
-        var opts = {
-            successLabelTip:  "Successfully Verified",
-            duration:  200,
-            swipestart:  false,
-            min:  0,
-            max:  $elm.width(),
-            index:  0,
-            IsOk:  false,
-            lableIndex:  0
+        success = me.checkFn(success) ? success : function () {
         };
 
-        opts = $.extend(opts, options||{});
+        var opts = {
+            successLabelTip: "Successfully Verified",
+            duration: 200,
+            swipestart: false,
+            min: 0,
+            max: $elm.width(),
+            index: 0,
+            IsOk: false,
+            lableIndex: 0
+        };
+
+        opts = $.extend(opts, options || {});
 
         //$elm
         me.elm = $elm;
@@ -134,7 +135,7 @@
     SliderUnlock.prototype.move = function () {
         var me = this;
         if ((me.index + me.labelWidth) >= me.max) {
-            me.index = me.max - me.labelWidth -2;
+            me.index = me.max - me.labelWidth - 2;
             //停止
             me.swipestart = false;
             //解锁
@@ -145,10 +146,9 @@
             //未解锁
             me.isOk = false;
         }
-        if (me.index+me.labelWidth+2 == me.max && me.max > 0 && me.isOk) {
+        if (me.index + me.labelWidth + 2 == me.max && me.max > 0 && me.isOk) {
             //解锁默认操作
-            $('#label').unbind().next('#labelTip').
-            text(me.opts.successLabelTip).css({'color': '#fff'});
+            $('#label').unbind().next('#labelTip').text(me.opts.successLabelTip).css({'color': '#fff'});
 
             me.success();
         }
@@ -175,7 +175,7 @@
         startTime = 0;
 
         me.index = 0;
-        me.sliderBg .animate({'width':0},me.opts.duration);
+        me.sliderBg.animate({'width': 0}, me.opts.duration);
         me.elm.find("#label").animate({left: me.index}, me.opts.duration)
             .next("#lableTip").animate({opacity: 1}, me.opts.duration);
         me.updateView();
@@ -187,9 +187,9 @@
      * @returns {boolean}
      */
     SliderUnlock.prototype.checkElm = function (elm) {
-        if($(elm).length > 0){
+        if ($(elm).length > 0) {
             return true;
-        }else{
+        } else {
             throw "this element does not exist.";
         }
     };
@@ -200,9 +200,9 @@
      * @returns {boolean}
      */
     SliderUnlock.prototype.checkFn = function (fn) {
-        if(typeof fn === "function"){
+        if (typeof fn === "function") {
             return true;
-        }else{
+        } else {
             throw "the param is not a function.";
         }
     };

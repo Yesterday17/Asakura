@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_InstalledPackage', false) ):
+if (!class_exists('Puc_v4p10_InstalledPackage', false)):
 
 	/**
 	 * This class represents a currently installed plugin or theme.
@@ -38,11 +38,7 @@ if ( !class_exists('Puc_v4p10_InstalledPackage', false) ):
 		 * @return bool
 		 */
 		public function fileExists($relativeFileName) {
-			return is_file(
-				$this->getAbsoluteDirectoryPath()
-				. DIRECTORY_SEPARATOR
-				. ltrim($relativeFileName, '/\\')
-			);
+			return is_file($this->getAbsoluteDirectoryPath() . DIRECTORY_SEPARATOR . ltrim($relativeFileName, '/\\'));
 		}
 
 		/* -------------------------------------------------------------------
@@ -72,9 +68,9 @@ if ( !class_exists('Puc_v4p10_InstalledPackage', false) ):
 			foreach ($headers as $field => $name) {
 				$success = preg_match('/^[ \t\/*#@]*' . preg_quote($name, '/') . ':(.*)$/mi', $content, $matches);
 
-				if ( ($success === 1) && $matches[1] ) {
+				if (($success === 1) && $matches[1]) {
 					$value = $matches[1];
-					if ( function_exists('_cleanup_header_comment') ) {
+					if (function_exists('_cleanup_header_comment')) {
 						$value = _cleanup_header_comment($value);
 					}
 					$results[$field] = $value;

@@ -217,7 +217,7 @@ msgstr ""
 msgid ""
 "<b> For a better experience, please do not set <a href=\"/wp-admin/options-permalink.php\"> "
 "permalink </a> as plain. To do this, you may need to configure <a href=\"https://www.wpdaxue."
-"com/wordpress-rewriterule.html\" target=\"_blank\"> pseudo-static </a>. </ b>"
+"com/wordpress-rewriterule.html\" target=\"_blank\"> pseudo-static </a>. </b>"
 msgstr ""
 
 #: header.php:33
@@ -2753,7 +2753,7 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "made by FUUKEI"
+msgid "made by Yesterday17"
 msgstr ""
 
 #. Author URI of the plugin/theme

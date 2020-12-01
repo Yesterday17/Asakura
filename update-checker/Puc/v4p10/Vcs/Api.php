@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Vcs_Api') ):
+if (!class_exists('Puc_v4p10_Vcs_Api')):
 
 	abstract class Puc_v4p10_Vcs_Api {
 		protected $tagNameProperty = 'name';
@@ -61,7 +61,7 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 */
 		public function getRemoteReadme($ref = 'master') {
 			$fileContents = $this->getRemoteFile($this->getLocalReadmeName(), $ref);
-			if ( empty($fileContents) ) {
+			if (empty($fileContents)) {
 				return array();
 			}
 
@@ -82,16 +82,16 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 */
 		public function getLocalReadmeName() {
 			static $fileName = null;
-			if ( $fileName !== null ) {
+			if ($fileName !== null) {
 				return $fileName;
 			}
 
 			$fileName = 'readme.txt';
-			if ( isset($this->localDirectory) ) {
+			if (isset($this->localDirectory)) {
 				$files = scandir($this->localDirectory);
-				if ( !empty($files) ) {
+				if (!empty($files)) {
 					foreach ($files as $possibleFileName) {
-						if ( strcasecmp($possibleFileName, 'readme.txt') === 0 ) {
+						if (strcasecmp($possibleFileName, 'readme.txt') === 0) {
 							$fileName = $possibleFileName;
 							break;
 						}
@@ -136,7 +136,7 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 			$name = ltrim($name, 'v');
 
 			//The version string must start with a number.
-			if ( !is_numeric(substr($name, 0, 1)) ) {
+			if (!is_numeric(substr($name, 0, 1))) {
 				return false;
 			}
 
@@ -180,10 +180,10 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 */
 		protected function compareTagNames($tag1, $tag2) {
 			$property = $this->tagNameProperty;
-			if ( !isset($tag1->$property) ) {
+			if (!isset($tag1->$property)) {
 				return 1;
 			}
-			if ( !isset($tag2->$property) ) {
+			if (!isset($tag2->$property)) {
 				return -1;
 			}
 			return -version_compare(ltrim($tag1->$property, 'v'), ltrim($tag2->$property, 'v'));
@@ -215,12 +215,12 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 */
 		public function getRemoteChangelog($ref, $localDirectory) {
 			$filename = $this->findChangelogName($localDirectory);
-			if ( empty($filename) ) {
+			if (empty($filename)) {
 				return null;
 			}
 
 			$changelog = $this->getRemoteFile($filename, $ref);
-			if ( $changelog === null ) {
+			if ($changelog === null) {
 				return null;
 			}
 
@@ -235,10 +235,10 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 * @return string|null
 		 */
 		protected function findChangelogName($directory = null) {
-			if ( !isset($directory) ) {
+			if (!isset($directory)) {
 				$directory = $this->localDirectory;
 			}
-			if ( empty($directory) || !is_dir($directory) || ($directory === '.') ) {
+			if (empty($directory) || !is_dir($directory) || ($directory === '.')) {
 				return null;
 			}
 
@@ -246,7 +246,7 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 			$files = scandir($directory);
 			$foundNames = array_intersect($possibleNames, $files);
 
-			if ( !empty($foundNames) ) {
+			if (!empty($foundNames)) {
 				return reset($foundNames);
 			}
 			return null;
@@ -284,7 +284,7 @@ if ( !class_exists('Puc_v4p10_Vcs_Api') ):
 		 * @param string $directory
 		 */
 		public function setLocalDirectory($directory) {
-			if ( empty($directory) || !is_dir($directory) || ($directory === '.') ) {
+			if (empty($directory) || !is_dir($directory) || ($directory === '.')) {
 				$this->localDirectory = null;
 			} else {
 				$this->localDirectory = $directory;

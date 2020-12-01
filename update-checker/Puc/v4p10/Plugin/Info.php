@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
+if (!class_exists('Puc_v4p10_Plugin_Info', false)):
 
 	/**
 	 * A container class for holding and transforming various plugin metadata.
@@ -47,10 +47,10 @@ if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
 		 * @param string $json Valid JSON string representing plugin info.
 		 * @return self|null New instance of Plugin Info, or NULL on error.
 		 */
-		public static function fromJson($json){
+		public static function fromJson($json) {
 			$instance = new self();
 
-			if ( !parent::createFromJson($json, $instance) ) {
+			if (!parent::createFromJson($json, $instance)) {
 				return null;
 			}
 
@@ -68,15 +68,8 @@ if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
 		 * @return bool|WP_Error
 		 */
 		protected function validateMetadata($apiResponse) {
-			if (
-				!isset($apiResponse->name, $apiResponse->version)
-				|| empty($apiResponse->name)
-				|| empty($apiResponse->version)
-			) {
-				return new WP_Error(
-					'puc-invalid-metadata',
-					"The plugin metadata file does not contain the required 'name' and/or 'version' keys."
-				);
+			if (!isset($apiResponse->name, $apiResponse->version) || empty($apiResponse->name) || empty($apiResponse->version)) {
+				return new WP_Error('puc-invalid-metadata', "The plugin metadata file does not contain the required 'name' and/or 'version' keys.");
 			}
 			return true;
 		}
@@ -87,18 +80,17 @@ if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
 		 *
 		 * @return object
 		 */
-		public function toWpFormat(){
+		public function toWpFormat() {
 			$info = new stdClass;
 
 			//The custom update API is built so that many fields have the same name and format
 			//as those returned by the native WordPress.org API. These can be assigned directly.
 			$sameFormat = array(
-				'name', 'slug', 'version', 'requires', 'tested', 'rating', 'upgrade_notice',
-				'num_ratings', 'downloaded', 'active_installs', 'homepage', 'last_updated',
-				'requires_php',
+				'name', 'slug', 'version', 'requires', 'tested', 'rating', 'upgrade_notice', 'num_ratings',
+				'downloaded', 'active_installs', 'homepage', 'last_updated', 'requires_php',
 			);
-			foreach($sameFormat as $field){
-				if ( isset($this->$field) ) {
+			foreach ($sameFormat as $field) {
+				if (isset($this->$field)) {
 					$info->$field = $this->$field;
 				} else {
 					$info->$field = null;
@@ -110,7 +102,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
 			$info->author = $this->getFormattedAuthor();
 			$info->sections = array_merge(array('description' => ''), $this->sections);
 
-			if ( !empty($this->banners) ) {
+			if (!empty($this->banners)) {
 				//WP expects an array with two keys: "high" and "low". Both are optional.
 				//Docs: https://wordpress.org/plugins/about/faq/#banners
 				$info->banners = is_object($this->banners) ? get_object_vars($this->banners) : $this->banners;
@@ -121,7 +113,7 @@ if ( !class_exists('Puc_v4p10_Plugin_Info', false) ):
 		}
 
 		protected function getFormattedAuthor() {
-			if ( !empty($this->author_homepage) ){
+			if (!empty($this->author_homepage)) {
 				/** @noinspection HtmlUnknownTarget */
 				return sprintf('<a href="%s">%s</a>', $this->author_homepage, $this->author);
 			}

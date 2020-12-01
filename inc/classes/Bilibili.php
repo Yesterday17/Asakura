@@ -2,8 +2,7 @@
 
 namespace Sakura\API;
 
-class Bilibili
-{
+class Bilibili {
     private $uid;
     private $cookies;
 
@@ -18,8 +17,7 @@ class Bilibili
         $url = 'https://api.bilibili.com/x/space/bangumi/follow/list?type=1&pn=' . $page . '&ps=15&follow_status=0&vmid=' . $uid;
         $args = array(
             'headers' => array(
-                'Cookie' => $cookies,
-                'Host' => 'api.bilibili.com',
+                'Cookie' => $cookies, 'Host' => 'api.bilibili.com',
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97'
             )
         );

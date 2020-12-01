@@ -223,7 +223,7 @@ msgid ""
 "<b> For a better experience, please do not set <a href=\"/wp-admin/options-"
 "permalink.php\"> permalink </a> as plain. To do this, you may need to "
 "configure <a href=\"https://www.wpdaxue.com/wordpress-rewriterule.html\" "
-"target=\"_blank\"> pseudo-static </a>. </ b>"
+"target=\"_blank\"> pseudo-static </a>. </b>"
 msgstr ""
 "<b> 為了更好的使用體驗，請不要將<a href=\"/wp-admin/options-permalink.php\">"
 "固定連結</a>設置為樸素。為此，您可能需要配置<a href=\"https://www.wpdaxue."
@@ -2879,7 +2879,7 @@ msgstr ""
 "題）"
 
 #. Author of the plugin/theme
-msgid "made by FUUKEI"
+msgid "made by Yesterday17"
 msgstr ""
 
 #. Author URI of the plugin/theme

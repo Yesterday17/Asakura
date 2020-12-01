@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
+if (!class_exists('Puc_v4p10_Vcs_GitHubApi', false)):
 
 	class Puc_v4p10_Vcs_GitHubApi extends Puc_v4p10_Vcs_Api {
 		/**
@@ -44,7 +44,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 
 		public function __construct($repositoryUrl, $accessToken = null) {
 			$path = parse_url($repositoryUrl, PHP_URL_PATH);
-			if ( preg_match('@^/?(?P<username>[^/]+?)/(?P<repository>[^/#?&]+?)/?$@', $path, $matches) ) {
+			if (preg_match('@^/?(?P<username>[^/]+?)/(?P<repository>[^/#?&]+?)/?$@', $path, $matches)) {
 				$this->userName = $matches['username'];
 				$this->repositoryName = $matches['repository'];
 			} else {
@@ -61,27 +61,25 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 */
 		public function getLatestRelease() {
 			$release = $this->api('/repos/:user/:repo/releases/latest');
-			if ( is_wp_error($release) || !is_object($release) || !isset($release->tag_name) ) {
+			if (is_wp_error($release) || !is_object($release) || !isset($release->tag_name)) {
 				return null;
 			}
 
 			$reference = new Puc_v4p10_Vcs_Reference(array(
-				'name'        => $release->tag_name,
-				'version'     => ltrim($release->tag_name, 'v'), //Remove the "v" prefix from "v1.2.3".
-				'downloadUrl' => $release->zipball_url,
-				'updated'     => $release->created_at,
-				'apiResponse' => $release,
+				'name'        => $release->tag_name, 'version' => ltrim($release->tag_name, 'v'),
+				//Remove the "v" prefix from "v1.2.3".
+				'downloadUrl' => $release->zipball_url, 'updated' => $release->created_at, 'apiResponse' => $release,
 			));
 
-			if ( isset($release->assets[0]) ) {
+			if (isset($release->assets[0])) {
 				$reference->downloadCount = $release->assets[0]->download_count;
 			}
 
-			if ( $this->releaseAssetsEnabled && isset($release->assets, $release->assets[0]) ) {
+			if ($this->releaseAssetsEnabled && isset($release->assets, $release->assets[0])) {
 				//Use the first release asset that matches the specified regular expression.
 				$matchingAssets = array_filter($release->assets, array($this, 'matchesAssetFilter'));
-				if ( !empty($matchingAssets) ) {
-					if ( $this->isAuthenticationEnabled() ) {
+				if (!empty($matchingAssets)) {
+					if ($this->isAuthenticationEnabled()) {
 						/**
 						 * Keep in mind that we'll need to add an "Accept" header to download this asset.
 						 *
@@ -98,7 +96,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 				}
 			}
 
-			if ( !empty($release->body) ) {
+			if (!empty($release->body)) {
 				/** @noinspection PhpUndefinedClassInspection */
 				$reference->changelog = Parsedown::instance()->text($release->body);
 			}
@@ -114,21 +112,18 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		public function getLatestTag() {
 			$tags = $this->api('/repos/:user/:repo/tags');
 
-			if ( is_wp_error($tags) || !is_array($tags) ) {
+			if (is_wp_error($tags) || !is_array($tags)) {
 				return null;
 			}
 
 			$versionTags = $this->sortTagsByVersion($tags);
-			if ( empty($versionTags) ) {
+			if (empty($versionTags)) {
 				return null;
 			}
 
 			$tag = $versionTags[0];
-			return new Puc_v4p10_Vcs_Reference(array(
-				'name'        => $tag->name,
-				'version'     => ltrim($tag->name, 'v'),
-				'downloadUrl' => $tag->zipball_url,
-				'apiResponse' => $tag,
+			return new Puc_v4p10_Vcs_Reference(array('name'        => $tag->name, 'version' => ltrim($tag->name, 'v'),
+													 'downloadUrl' => $tag->zipball_url, 'apiResponse' => $tag,
 			));
 		}
 
@@ -140,17 +135,16 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 */
 		public function getBranch($branchName) {
 			$branch = $this->api('/repos/:user/:repo/branches/' . $branchName);
-			if ( is_wp_error($branch) || empty($branch) ) {
+			if (is_wp_error($branch) || empty($branch)) {
 				return null;
 			}
 
-			$reference = new Puc_v4p10_Vcs_Reference(array(
-				'name'        => $branch->name,
-				'downloadUrl' => $this->buildArchiveDownloadUrl($branch->name),
-				'apiResponse' => $branch,
+			$reference = new Puc_v4p10_Vcs_Reference(array('name'        => $branch->name,
+														   'downloadUrl' => $this->buildArchiveDownloadUrl($branch->name),
+														   'apiResponse' => $branch,
 			));
 
-			if ( isset($branch->commit, $branch->commit->commit, $branch->commit->commit->author->date) ) {
+			if (isset($branch->commit, $branch->commit->commit, $branch->commit->commit->author->date)) {
 				$reference->updated = $branch->commit->commit->author->date;
 			}
 
@@ -165,14 +159,8 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 * @return StdClass|null
 		 */
 		public function getLatestCommit($filename, $ref = 'master') {
-			$commits = $this->api(
-				'/repos/:user/:repo/commits',
-				array(
-					'path' => $filename,
-					'sha'  => $ref,
-				)
-			);
-			if ( !is_wp_error($commits) && isset($commits[0]) ) {
+			$commits = $this->api('/repos/:user/:repo/commits', array('path' => $filename, 'sha' => $ref,));
+			if (!is_wp_error($commits) && isset($commits[0])) {
 				return $commits[0];
 			}
 			return null;
@@ -186,7 +174,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 */
 		public function getLatestCommitTime($ref) {
 			$commits = $this->api('/repos/:user/:repo/commits', array('sha' => $ref));
-			if ( !is_wp_error($commits) && isset($commits[0]) ) {
+			if (!is_wp_error($commits) && isset($commits[0])) {
 				return $commits[0]->commit->author->date;
 			}
 			return null;
@@ -204,30 +192,27 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 			$url = $this->buildApiUrl($url, $queryParams);
 
 			$options = array('timeout' => 10);
-			if ( $this->isAuthenticationEnabled() ) {
+			if ($this->isAuthenticationEnabled()) {
 				$options['headers'] = array('Authorization' => $this->getAuthorizationHeader());
 			}
 
-			if ( !empty($this->httpFilterName) ) {
+			if (!empty($this->httpFilterName)) {
 				$options = apply_filters($this->httpFilterName, $options);
 			}
 			$response = wp_remote_get($url, $options);
-			if ( is_wp_error($response) ) {
+			if (is_wp_error($response)) {
 				do_action('puc_api_error', $response, null, $url, $this->slug);
 				return $response;
 			}
 
 			$code = wp_remote_retrieve_response_code($response);
 			$body = wp_remote_retrieve_body($response);
-			if ( $code === 200 ) {
+			if ($code === 200) {
 				$document = json_decode($body);
 				return $document;
 			}
 
-			$error = new WP_Error(
-				'puc-github-http-error',
-				sprintf('GitHub API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code)
-			);
+			$error = new WP_Error('puc-github-http-error', sprintf('GitHub API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code));
 			do_action('puc_api_error', $error, $response, $url, $this->slug);
 
 			return $error;
@@ -241,16 +226,13 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 * @return string
 		 */
 		protected function buildApiUrl($url, $queryParams) {
-			$variables = array(
-				'user' => $this->userName,
-				'repo' => $this->repositoryName,
-			);
+			$variables = array('user' => $this->userName, 'repo' => $this->repositoryName,);
 			foreach ($variables as $name => $value) {
 				$url = str_replace('/:' . $name, '/' . urlencode($value), $url);
 			}
 			$url = 'https://api.github.com' . $url;
 
-			if ( !empty($queryParams) ) {
+			if (!empty($queryParams)) {
 				$url = add_query_arg($queryParams, $url);
 			}
 
@@ -268,7 +250,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 			$apiUrl = '/repos/:user/:repo/contents/' . $path;
 			$response = $this->api($apiUrl, array('ref' => $ref));
 
-			if ( is_wp_error($response) || !isset($response->content) || ($response->encoding !== 'base64') ) {
+			if (is_wp_error($response) || !isset($response->content) || ($response->encoding !== 'base64')) {
 				return null;
 			}
 			return base64_decode($response->content);
@@ -281,12 +263,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 * @return string
 		 */
 		public function buildArchiveDownloadUrl($ref = 'master') {
-			$url = sprintf(
-				'https://api.github.com/repos/%1$s/%2$s/zipball/%3$s',
-				urlencode($this->userName),
-				urlencode($this->repositoryName),
-				urlencode($ref)
-			);
+			$url = sprintf('https://api.github.com/repos/%1$s/%2$s/zipball/%3$s', urlencode($this->userName), urlencode($this->repositoryName), urlencode($ref));
 			return $url;
 		}
 
@@ -319,16 +296,16 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		public function chooseReference($configBranch) {
 			$updateSource = null;
 
-			if ( $configBranch === 'master' ) {
+			if ($configBranch === 'master') {
 				//Use the latest release.
 				$updateSource = $this->getLatestRelease();
-				if ( $updateSource === null ) {
+				if ($updateSource === null) {
 					//Failing that, use the tag with the highest version number.
 					$updateSource = $this->getLatestTag();
 				}
 			}
 			//Alternatively, just use the branch itself.
-			if ( empty($updateSource) ) {
+			if (empty($updateSource)) {
 				$updateSource = $this->getBranch($configBranch);
 			}
 
@@ -348,11 +325,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		public function enableReleaseAssets($fileNameRegex = null) {
 			$this->releaseAssetsEnabled = true;
 			$this->assetFilterRegex = $fileNameRegex;
-			$this->assetApiBaseUrl = sprintf(
-				'//api.github.com/repos/%1$s/%2$s/releases/assets/',
-				$this->userName,
-				$this->repositoryName
-			);
+			$this->assetApiBaseUrl = sprintf('//api.github.com/repos/%1$s/%2$s/releases/assets/', $this->userName, $this->repositoryName);
 		}
 
 		/**
@@ -362,7 +335,7 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 * @return bool
 		 */
 		protected function matchesAssetFilter($releaseAsset) {
-			if ( $this->assetFilterRegex === null ) {
+			if ($this->assetFilterRegex === null) {
 				//The default is to accept all assets.
 				return true;
 			}
@@ -370,12 +343,12 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		}
 
 		/**
-		 * @internal
 		 * @param bool $result
 		 * @return bool
+		 * @internal
 		 */
 		public function addHttpRequestFilter($result) {
-			if ( !$this->downloadFilterAdded && $this->isAuthenticationEnabled() ) {
+			if (!$this->downloadFilterAdded && $this->isAuthenticationEnabled()) {
 				add_filter('http_request_args', array($this, 'setUpdateDownloadHeaders'), 10, 2);
 				add_action('requests-requests.before_redirect', array($this, 'removeAuthHeaderFromRedirects'), 10, 4);
 				$this->downloadFilterAdded = true;
@@ -397,12 +370,12 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 */
 		public function setUpdateDownloadHeaders($requestArgs, $url = '') {
 			//Is WordPress trying to download one of our release assets?
-			if ( $this->releaseAssetsEnabled && (strpos($url, $this->assetApiBaseUrl) !== false) ) {
+			if ($this->releaseAssetsEnabled && (strpos($url, $this->assetApiBaseUrl) !== false)) {
 				$requestArgs['headers']['Accept'] = 'application/octet-stream';
 			}
 			//Use Basic authentication, but only if the download is from our repository.
 			$repoApiBaseUrl = $this->buildApiUrl('/repos/:user/:repo/', array());
-			if ( $this->isAuthenticationEnabled() && (strpos($url, $repoApiBaseUrl)) === 0 ) {
+			if ($this->isAuthenticationEnabled() && (strpos($url, $repoApiBaseUrl)) === 0) {
 				$requestArgs['headers']['Authorization'] = $this->getAuthorizationHeader();
 			}
 			return $requestArgs;
@@ -413,17 +386,17 @@ if ( !class_exists('Puc_v4p10_Vcs_GitHubApi', false) ):
 		 * the authorization header to other hosts. We don't want that because it breaks
 		 * AWS downloads and can leak authorization information.
 		 *
-		 * @internal
 		 * @param string $location
 		 * @param array $headers
+		 * @internal
 		 */
 		public function removeAuthHeaderFromRedirects(&$location, &$headers) {
 			$repoApiBaseUrl = $this->buildApiUrl('/repos/:user/:repo/', array());
-			if ( strpos($location, $repoApiBaseUrl) === 0 ) {
+			if (strpos($location, $repoApiBaseUrl) === 0) {
 				return; //This request is going to GitHub, so it's fine.
 			}
 			//Remove the header.
-			if ( isset($headers['Authorization']) ) {
+			if (isset($headers['Authorization'])) {
 				unset($headers['Authorization']);
 			}
 		}

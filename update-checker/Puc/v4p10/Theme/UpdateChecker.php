@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
+if (!class_exists('Puc_v4p10_Theme_UpdateChecker', false)):
 
 	class Puc_v4p10_Theme_UpdateChecker extends Puc_v4p10_UpdateChecker {
 		protected $filterSuffix = 'theme';
@@ -13,18 +13,12 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		protected $stylesheet;
 
 		public function __construct($metadataUrl, $stylesheet = null, $customSlug = null, $checkPeriod = 12, $optionName = '') {
-			if ( $stylesheet === null ) {
+			if ($stylesheet === null) {
 				$stylesheet = get_stylesheet();
 			}
 			$this->stylesheet = $stylesheet;
 
-			parent::__construct(
-				$metadataUrl,
-				$stylesheet,
-				$customSlug ? $customSlug : $stylesheet,
-				$checkPeriod,
-				$optionName
-			);
+			parent::__construct($metadataUrl, $stylesheet, $customSlug ? $customSlug : $stylesheet, $checkPeriod, $optionName);
 		}
 
 		/**
@@ -44,7 +38,7 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		public function requestUpdate() {
 			list($themeUpdate, $result) = $this->requestMetadata('Puc_v4p10_Theme_Update', 'request_update');
 
-			if ( $themeUpdate !== null ) {
+			if ($themeUpdate !== null) {
 				/** @var Puc_v4p10_Theme_Update $themeUpdate */
 				$themeUpdate->slug = $this->slug;
 			}
@@ -54,13 +48,9 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		}
 
 		protected function getNoUpdateItemFields() {
-			return array_merge(
-				parent::getNoUpdateItemFields(),
-				array(
-					'theme'        => $this->directoryName,
-					'requires'     => '',
-				)
-			);
+			return array_merge(parent::getNoUpdateItemFields(), array('theme'    => $this->directoryName,
+																	  'requires' => '',
+			));
 		}
 
 		public function userCanInstallUpdates() {
@@ -100,7 +90,7 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		 * @param callable $callback
 		 * @return void
 		 */
-		public function addQueryArgFilter($callback){
+		public function addQueryArgFilter($callback) {
 			$this->addFilter('request_update_query_args', $callback);
 		}
 
@@ -111,10 +101,10 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		 * and return a modified array or arguments. See the WP documentation on wp_remote_get()
 		 * for details on what arguments are available and how they work.
 		 *
-		 * @uses add_filter() This method is a convenience wrapper for add_filter().
-		 *
 		 * @param callable $callback
 		 * @return void
+		 * @uses add_filter() This method is a convenience wrapper for add_filter().
+		 *
 		 */
 		public function addHttpRequestArgFilter($callback) {
 			$this->addFilter('request_update_options', $callback);
@@ -130,10 +120,10 @@ if ( !class_exists('Puc_v4p10_Theme_UpdateChecker', false) ):
 		 *
 		 * The callback function should return a new or modified instance of Theme_Update or NULL.
 		 *
-		 * @uses add_filter() This method is a convenience wrapper for add_filter().
-		 *
 		 * @param callable $callback
 		 * @return void
+		 * @uses add_filter() This method is a convenience wrapper for add_filter().
+		 *
 		 */
 		public function addResultFilter($callback) {
 			$this->addFilter('request_update_result', $callback, 10, 2);

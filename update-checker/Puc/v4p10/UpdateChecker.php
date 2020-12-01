@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
+if (!class_exists('Puc_v4p10_UpdateChecker', false)):
 
 	abstract class Puc_v4p10_UpdateChecker {
 		protected $filterSuffix = '';
@@ -77,10 +77,10 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			$this->slug = !empty($slug) ? $slug : $this->directoryName;
 
 			$this->optionName = $optionName;
-			if ( empty($this->optionName) ) {
+			if (empty($this->optionName)) {
 				//BC: Initially the library only supported plugin updates and didn't use type prefixes
 				//in the option name. Lets use the same prefix-less name when possible.
-				if ( $this->filterSuffix === '' ) {
+				if ($this->filterSuffix === '') {
 					$this->optionName = 'external_updates-' . $this->slug;
 				} else {
 					$this->optionName = $this->getUniqueName('external_updates');
@@ -92,7 +92,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			$this->upgraderStatus = new Puc_v4p10_UpgraderStatus();
 			$this->updateState = new Puc_v4p10_StateStore($this->optionName);
 
-			if ( did_action('init') ) {
+			if (did_action('init')) {
 				$this->loadTextDomain();
 			} else {
 				add_action('init', array($this, 'loadTextDomain'));
@@ -108,11 +108,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			//We're not using load_plugin_textdomain() or its siblings because figuring out where
 			//the library is located (plugin, mu-plugin, theme, custom wp-content paths) is messy.
 			$domain = 'plugin-update-checker';
-			$locale = apply_filters(
-				'plugin_locale',
-				(is_admin() && function_exists('get_user_locale')) ? get_user_locale() : get_locale(),
-				$domain
-			);
+			$locale = apply_filters('plugin_locale', (is_admin() && function_exists('get_user_locale')) ? get_user_locale() : get_locale(), $domain);
 
 			$moFile = $domain . '-' . $locale . '.mo';
 			$path = realpath(dirname(__FILE__) . '/../../languages');
@@ -124,7 +120,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 
 		protected function installHooks() {
 			//Insert our update info into the update array maintained by WP.
-			add_filter('site_transient_' . $this->updateTransient, array($this,'injectUpdate'));
+			add_filter('site_transient_' . $this->updateTransient, array($this, 'injectUpdate'));
 
 			//Insert translation updates into the update list.
 			add_filter('site_transient_' . $this->updateTransient, array($this, 'injectTranslationUpdates'));
@@ -132,13 +128,12 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			//Clear translation updates when WP clears the update cache.
 			//This needs to be done directly because the library doesn't actually remove obsolete plugin updates,
 			//it just hides them (see getUpdate()). We can't do that with translations - too much disk I/O.
-			add_action(
-				'delete_site_transient_' . $this->updateTransient,
-				array($this, 'clearCachedTranslationUpdates')
-			);
+			add_action('delete_site_transient_' . $this->updateTransient, array(
+				$this, 'clearCachedTranslationUpdates'
+			));
 
 			//Rename the update directory to be the same as the existing directory.
-			if ( $this->directoryName !== '.' ) {
+			if ($this->directoryName !== '.') {
 				add_filter('upgrader_source_selection', array($this, 'fixDirectoryName'), 10, 3);
 			}
 
@@ -146,7 +141,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			add_filter('http_request_host_is_external', array($this, 'allowMetadataHost'), 10, 2);
 
 			//DebugBar integration.
-			if ( did_action('plugins_loaded') ) {
+			if (did_action('plugins_loaded')) {
 				$this->maybeInitDebugBar();
 			} else {
 				add_action('plugins_loaded', array($this, 'maybeInitDebugBar'));
@@ -157,12 +152,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * Remove hooks that were added by this update checker instance.
 		 */
 		public function removeHooks() {
-			remove_filter('site_transient_' . $this->updateTransient, array($this,'injectUpdate'));
+			remove_filter('site_transient_' . $this->updateTransient, array($this, 'injectUpdate'));
 			remove_filter('site_transient_' . $this->updateTransient, array($this, 'injectTranslationUpdates'));
-			remove_action(
-				'delete_site_transient_' . $this->updateTransient,
-				array($this, 'clearCachedTranslationUpdates')
-			);
+			remove_action('delete_site_transient_' . $this->updateTransient, array(
+				$this, 'clearCachedTranslationUpdates'
+			));
 
 			remove_filter('upgrader_source_selection', array($this, 'fixDirectoryName'), 10);
 			remove_filter('http_request_host_is_external', array($this, 'allowMetadataHost'), 10);
@@ -170,11 +164,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 
 			remove_action('init', array($this, 'loadTextDomain'));
 
-			if ( $this->scheduler ) {
+			if ($this->scheduler) {
 				$this->scheduler->removeHooks();
 			}
 
-			if ( $this->debugBarExtension ) {
+			if ($this->debugBarExtension) {
 				$this->debugBarExtension->removeHooks();
 			}
 		}
@@ -205,11 +199,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return bool
 		 */
 		public function allowMetadataHost($allow, $host) {
-			if ( $this->cachedMetadataHost === 0 ) {
+			if ($this->cachedMetadataHost === 0) {
 				$this->cachedMetadataHost = parse_url($this->metadataUrl, PHP_URL_HOST);
 			}
 
-			if ( is_string($this->cachedMetadataHost) && (strtolower($host) === strtolower($this->cachedMetadataHost)) ) {
+			if (is_string($this->cachedMetadataHost) && (strtolower($host) === strtolower($this->cachedMetadataHost))) {
 				return true;
 			}
 			return $allow;
@@ -248,11 +242,8 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		public function checkForUpdates() {
 			$installedVersion = $this->getInstalledVersion();
 			//Fail silently if we can't find the plugin/theme or read its header.
-			if ( $installedVersion === null ) {
-				$this->triggerError(
-					sprintf('Skipping update check for %s - installed version unknown.', $this->slug),
-					E_USER_WARNING
-				);
+			if ($installedVersion === null) {
+				$this->triggerError(sprintf('Skipping update check for %s - installed version unknown.', $this->slug), E_USER_WARNING);
 				return null;
 			}
 
@@ -261,9 +252,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			add_action('puc_api_error', array($this, 'collectApiErrors'), 10, 4);
 
 			$state = $this->updateState;
-			$state->setLastCheckToNow()
-				->setCheckedVersion($installedVersion)
-				->save(); //Save before checking in case something goes wrong
+			$state->setLastCheckToNow()->setCheckedVersion($installedVersion)->save(); //Save before checking in case something goes wrong
 
 			$state->setUpdate($this->requestUpdate());
 			$state->save();
@@ -308,10 +297,10 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			$update = $this->updateState->getUpdate();
 
 			//Is there an update available?
-			if ( isset($update) ) {
+			if (isset($update)) {
 				//Check if the update is actually newer than the currently installed version.
 				$installedVersion = $this->getInstalledVersion();
-				if ( ($installedVersion !== null) && version_compare($update->version, $installedVersion, '>') ){
+				if (($installedVersion !== null) && version_compare($update->version, $installedVersion, '>')) {
 					return $update;
 				}
 			}
@@ -340,7 +329,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 
 			$this->fixSupportedWordpressVersion($update);
 
-			if ( isset($update, $update->translations) ) {
+			if (isset($update, $update->translations)) {
 				//Keep only those translation updates that apply to this site.
 				$update->translations = $this->filterApplicableTranslations($update->translations);
 			}
@@ -358,7 +347,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @param Puc_v4p10_Metadata|null $update
 		 */
 		protected function fixSupportedWordpressVersion(Puc_v4p10_Metadata $update = null) {
-			if ( !isset($update->tested) || !preg_match('/^\d++\.\d++$/', $update->tested) ) {
+			if (!isset($update->tested) || !preg_match('/^\d++\.\d++$/', $update->tested)) {
 				return;
 			}
 
@@ -366,11 +355,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 
 			$wpVersion = $GLOBALS['wp_version'];
 
-			if ( function_exists('get_core_updates') ) {
+			if (function_exists('get_core_updates')) {
 				$coreUpdates = get_core_updates();
-				if ( is_array($coreUpdates) ) {
+				if (is_array($coreUpdates)) {
 					foreach ($coreUpdates as $coreUpdate) {
-						if ( isset($coreUpdate->current) ) {
+						if (isset($coreUpdate->current)) {
 							$actualWpVersions[] = $coreUpdate->current;
 						}
 					}
@@ -381,10 +370,10 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 
 			$actualWpPatchNumber = null;
 			foreach ($actualWpVersions as $version) {
-				if ( preg_match('/^(?P<majorMinor>\d++\.\d++)(?:\.(?P<patch>\d++))?/', $version, $versionParts) ) {
-					if ( $versionParts['majorMinor'] === $update->tested ) {
+				if (preg_match('/^(?P<majorMinor>\d++\.\d++)(?:\.(?P<patch>\d++))?/', $version, $versionParts)) {
+					if ($versionParts['majorMinor'] === $update->tested) {
 						$patch = isset($versionParts['patch']) ? intval($versionParts['patch']) : 0;
-						if ( $actualWpPatchNumber === null ) {
+						if ($actualWpPatchNumber === null) {
 							$actualWpPatchNumber = $patch;
 						} else {
 							$actualWpPatchNumber = max($actualWpPatchNumber, $patch);
@@ -392,11 +381,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 					}
 				}
 			}
-			if ( $actualWpPatchNumber === null ) {
+			if ($actualWpPatchNumber === null) {
 				$actualWpPatchNumber = 999;
 			}
 
-			if ( $actualWpPatchNumber > 0 ) {
+			if ($actualWpPatchNumber > 0) {
 				$update->tested .= '.' . $actualWpPatchNumber;
 			}
 		}
@@ -426,7 +415,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @param int $errorType
 		 */
 		public function triggerError($message, $errorType) {
-			if ( $this->isDebugModeEnabled() ) {
+			if ($this->isDebugModeEnabled()) {
 				trigger_error($message, $errorType);
 			}
 		}
@@ -435,7 +424,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return bool
 		 */
 		protected function isDebugModeEnabled() {
-			if ( $this->debugMode === null ) {
+			if ($this->debugMode === null) {
 				$this->debugMode = (bool)(constant('WP_DEBUG'));
 			}
 			return $this->debugMode;
@@ -452,7 +441,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 */
 		public function getUniqueName($baseTag) {
 			$name = 'puc_' . $baseTag;
-			if ( $this->filterSuffix !== '' ) {
+			if ($this->filterSuffix !== '') {
 				$name .= '_' . $this->filterSuffix;
 			}
 			return $name . '-' . $this->slug;
@@ -461,22 +450,18 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		/**
 		 * Store API errors that are generated when checking for updates.
 		 *
-		 * @internal
 		 * @param WP_Error $error
 		 * @param array|null $httpResponse
 		 * @param string|null $url
 		 * @param string|null $slug
+		 * @internal
 		 */
 		public function collectApiErrors($error, $httpResponse = null, $url = null, $slug = null) {
-			if ( isset($slug) && ($slug !== $this->slug) ) {
+			if (isset($slug) && ($slug !== $this->slug)) {
 				return;
 			}
 
-			$this->lastRequestApiErrors[] = array(
-				'error'        => $error,
-				'httpResponse' => $httpResponse,
-				'url'          => $url,
-			);
+			$this->lastRequestApiErrors[] = array('error' => $error, 'httpResponse' => $httpResponse, 'url' => $url,);
 		}
 
 		/**
@@ -522,11 +507,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			//Is there an update to insert?
 			$update = $this->getUpdate();
 
-			if ( !$this->shouldShowUpdates() ) {
+			if (!$this->shouldShowUpdates()) {
 				$update = null;
 			}
 
-			if ( !empty($update) ) {
+			if (!empty($update)) {
 				//Let plugins filter the update info before it's passed on to WordPress.
 				$update = apply_filters($this->getUniqueName('pre_inject_update'), $update);
 				$updates = $this->addUpdateToList($updates, $update->toWpFormat());
@@ -548,7 +533,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return stdClass
 		 */
 		protected function addUpdateToList($updates, $updateToAdd) {
-			if ( !is_object($updates) ) {
+			if (!is_object($updates)) {
 				$updates = new stdClass();
 				$updates->response = array();
 			}
@@ -562,7 +547,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return stdClass|null
 		 */
 		protected function removeUpdateFromList($updates) {
-			if ( isset($updates, $updates->response) ) {
+			if (isset($updates, $updates->response)) {
 				unset($updates->response[$this->getUpdateListKey()]);
 			}
 			return $updates;
@@ -576,15 +561,15 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return stdClass
 		 */
 		protected function addNoUpdateItem($updates) {
-			if ( !is_object($updates) ) {
+			if (!is_object($updates)) {
 				$updates = new stdClass();
 				$updates->response = array();
 				$updates->no_update = array();
-			} else if ( !isset($updates->no_update) ) {
+			} else if (!isset($updates->no_update)) {
 				$updates->no_update = array();
 			}
 
-			$updates->no_update[$this->getUpdateListKey()] = (object) $this->getNoUpdateItemFields();
+			$updates->no_update[$this->getUpdateListKey()] = (object)$this->getNoUpdateItemFields();
 
 			return $updates;
 		}
@@ -595,10 +580,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 */
 		protected function getNoUpdateItemFields() {
 			return array(
-				'new_version'   => $this->getInstalledVersion(),
-				'url'           => '',
-				'package'       => '',
-				'requires_php'  => '',
+				'new_version' => $this->getInstalledVersion(), 'url' => '', 'package' => '', 'requires_php' => '',
 			);
 		}
 
@@ -642,47 +624,37 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 */
 		protected function requestMetadata($metaClass, $filterRoot, $queryArgs = array()) {
 			//Query args to append to the URL. Plugins can add their own by using a filter callback (see addQueryArgFilter()).
-			$queryArgs = array_merge(
-				array(
-					'installed_version' => strval($this->getInstalledVersion()),
-					'php' => phpversion(),
-					'locale' => get_locale(),
-				),
-				$queryArgs
-			);
+			$queryArgs = array_merge(array(
+				'installed_version' => strval($this->getInstalledVersion()), 'php' => phpversion(),
+				'locale'            => get_locale(),
+			), $queryArgs);
 			$queryArgs = apply_filters($this->getUniqueName($filterRoot . '_query_args'), $queryArgs);
 
 			//Various options for the wp_remote_get() call. Plugins can filter these, too.
 			$options = array(
 				'timeout' => 10, //seconds
-				'headers' => array(
-					'Accept' => 'application/json',
-				),
+				'headers' => array('Accept' => 'application/json',),
 			);
 			$options = apply_filters($this->getUniqueName($filterRoot . '_options'), $options);
 
 			//The metadata file should be at 'http://your-api.com/url/here/$slug/info.json'
 			$url = $this->metadataUrl;
-			if ( !empty($queryArgs) ){
+			if (!empty($queryArgs)) {
 				$url = add_query_arg($queryArgs, $url);
 			}
 
 			$result = wp_remote_get($url, $options);
 
 			$result = apply_filters($this->getUniqueName('request_metadata_http_result'), $result, $url, $options);
-			
+
 			//Try to parse the response
 			$status = $this->validateApiResponse($result);
 			$metadata = null;
-			if ( !is_wp_error($status) ){
+			if (!is_wp_error($status)) {
 				$metadata = call_user_func(array($metaClass, 'fromJson'), $result['body']);
 			} else {
 				do_action('puc_api_error', $status, $result, $url, $this->slug);
-				$this->triggerError(
-					sprintf('The URL %s does not point to a valid metadata file. ', $url)
-					. $status->get_error_message(),
-					E_USER_WARNING
-				);
+				$this->triggerError(sprintf('The URL %s does not point to a valid metadata file. ', $url) . $status->get_error_message(), E_USER_WARNING);
 			}
 
 			return array($metadata, $result);
@@ -695,25 +667,20 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return true|WP_Error
 		 */
 		protected function validateApiResponse($result) {
-			if ( is_wp_error($result) ) { /** @var WP_Error $result */
+			if (is_wp_error($result)) {
+				/** @var WP_Error $result */
 				return new WP_Error($result->get_error_code(), 'WP HTTP Error: ' . $result->get_error_message());
 			}
 
-			if ( !isset($result['response']['code']) ) {
-				return new WP_Error(
-					'puc_no_response_code',
-					'wp_remote_get() returned an unexpected result.'
-				);
+			if (!isset($result['response']['code'])) {
+				return new WP_Error('puc_no_response_code', 'wp_remote_get() returned an unexpected result.');
 			}
 
-			if ( $result['response']['code'] !== 200 ) {
-				return new WP_Error(
-					'puc_unexpected_response_code',
-					'HTTP response code is ' . $result['response']['code'] . ' (expected: 200)'
-				);
+			if ($result['response']['code'] !== 200) {
+				return new WP_Error('puc_unexpected_response_code', 'HTTP response code is ' . $result['response']['code'] . ' (expected: 200)');
 			}
 
-			if ( empty($result['body']) ) {
+			if (empty($result['body'])) {
 				return new WP_Error('puc_empty_response', 'The metadata file appears to be empty.');
 			}
 
@@ -741,13 +708,13 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 				//Does it match one of the available core languages?
 				$isApplicable = array_key_exists($translation->language, $languages);
 				//Is it more recent than an already-installed translation?
-				if ( isset($installedTranslations[$translation->language]) ) {
+				if (isset($installedTranslations[$translation->language])) {
 					$updateTimestamp = strtotime($translation->updated);
 					$installedTimestamp = strtotime($installedTranslations[$translation->language]['PO-Revision-Date']);
 					$isApplicable = $updateTimestamp > $installedTimestamp;
 				}
 
-				if ( $isApplicable ) {
+				if ($isApplicable) {
 					$applicableTranslations[] = $translation;
 				}
 			}
@@ -761,11 +728,11 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return array
 		 */
 		protected function getInstalledTranslations() {
-			if ( !function_exists('wp_get_installed_translations') ) {
+			if (!function_exists('wp_get_installed_translations')) {
 				return array();
 			}
 			$installedTranslations = wp_get_installed_translations($this->translationType . 's');
-			if ( isset($installedTranslations[$this->directoryName]) ) {
+			if (isset($installedTranslations[$this->directoryName])) {
 				$installedTranslations = $installedTranslations[$this->directoryName];
 			} else {
 				$installedTranslations = array();
@@ -781,38 +748,32 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 */
 		public function injectTranslationUpdates($updates) {
 			$translationUpdates = $this->getTranslationUpdates();
-			if ( empty($translationUpdates) ) {
+			if (empty($translationUpdates)) {
 				return $updates;
 			}
 
 			//Being defensive.
-			if ( !is_object($updates) ) {
+			if (!is_object($updates)) {
 				$updates = new stdClass();
 			}
-			if ( !isset($updates->translations) ) {
+			if (!isset($updates->translations)) {
 				$updates->translations = array();
 			}
 
 			//In case there's a name collision with a plugin or theme hosted on wordpress.org,
 			//remove any preexisting updates that match our thing.
-			$updates->translations = array_values(array_filter(
-				$updates->translations,
-				array($this, 'isNotMyTranslation')
-			));
+			$updates->translations = array_values(array_filter($updates->translations, array(
+				$this, 'isNotMyTranslation'
+			)));
 
 			//Add our updates to the list.
-			foreach($translationUpdates as $update) {
-				$convertedUpdate = array_merge(
-					array(
-						'type' => $this->translationType,
-						'slug' => $this->directoryName,
-						'autoupdate' => 0,
-						//AFAICT, WordPress doesn't actually use the "version" field for anything.
-						//But lets make sure it's there, just in case.
-						'version' => isset($update->version) ? $update->version : ('1.' . strtotime($update->updated)),
-					),
-					(array)$update
-				);
+			foreach ($translationUpdates as $update) {
+				$convertedUpdate = array_merge(array(
+					'type' => $this->translationType, 'slug' => $this->directoryName, 'autoupdate' => 0,
+					//AFAICT, WordPress doesn't actually use the "version" field for anything.
+					//But lets make sure it's there, just in case.
+					'version' => isset($update->version) ? $update->version : ('1.' . strtotime($update->updated)),
+				), (array)$update);
 
 				$updates->translations[] = $convertedUpdate;
 			}
@@ -848,9 +809,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * @return bool
 		 */
 		protected function isNotMyTranslation($translation) {
-			$isMatch = isset($translation['type'], $translation['slug'])
-				&& ($translation['type'] === $this->translationType)
-				&& ($translation['slug'] === $this->directoryName);
+			$isMatch = isset($translation['type'], $translation['slug']) && ($translation['type'] === $this->translationType) && ($translation['slug'] === $this->directoryName);
 
 			return !$isMatch;
 		}
@@ -884,48 +843,34 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			/** @var WP_Filesystem_Base $wp_filesystem */
 
 			//Basic sanity checks.
-			if ( !isset($source, $remoteSource, $upgrader, $upgrader->skin, $wp_filesystem) ) {
+			if (!isset($source, $remoteSource, $upgrader, $upgrader->skin, $wp_filesystem)) {
 				return $source;
 			}
 
 			//If WordPress is upgrading anything other than our plugin/theme, leave the directory name unchanged.
-			if ( !$this->isBeingUpgraded($upgrader) ) {
+			if (!$this->isBeingUpgraded($upgrader)) {
 				return $source;
 			}
 
 			//Rename the source to match the existing directory.
 			$correctedSource = trailingslashit($remoteSource) . $this->directoryName . '/';
-			if ( $source !== $correctedSource ) {
+			if ($source !== $correctedSource) {
 				//The update archive should contain a single directory that contains the rest of plugin/theme files.
 				//Otherwise, WordPress will try to copy the entire working directory ($source == $remoteSource).
 				//We can't rename $remoteSource because that would break WordPress code that cleans up temporary files
 				//after update.
-				if ( $this->isBadDirectoryStructure($remoteSource) ) {
-					return new WP_Error(
-						'puc-incorrect-directory-structure',
-						sprintf(
-							'The directory structure of the update is incorrect. All files should be inside ' .
-							'a directory named <span class="code">%s</span>, not at the root of the ZIP archive.',
-							htmlentities($this->slug)
-						)
-					);
+				if ($this->isBadDirectoryStructure($remoteSource)) {
+					return new WP_Error('puc-incorrect-directory-structure', sprintf('The directory structure of the update is incorrect. All files should be inside ' . 'a directory named <span class="code">%s</span>, not at the root of the ZIP archive.', htmlentities($this->slug)));
 				}
 
 				/** @var WP_Upgrader_Skin $upgrader ->skin */
-				$upgrader->skin->feedback(sprintf(
-					'Renaming %s to %s&#8230;',
-					'<span class="code">' . basename($source) . '</span>',
-					'<span class="code">' . $this->directoryName . '</span>'
-				));
+				$upgrader->skin->feedback(sprintf('Renaming %s to %s&#8230;', '<span class="code">' . basename($source) . '</span>', '<span class="code">' . $this->directoryName . '</span>'));
 
-				if ( $wp_filesystem->move($source, $correctedSource, true) ) {
+				if ($wp_filesystem->move($source, $correctedSource, true)) {
 					$upgrader->skin->feedback('Directory successfully renamed.');
 					return $correctedSource;
 				} else {
-					return new WP_Error(
-						'puc-rename-failed',
-						'Unable to rename the update to match the existing directory.'
-					);
+					return new WP_Error('puc-rename-failed', 'Unable to rename the update to match the existing directory.');
 				}
 			}
 
@@ -952,7 +897,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 			/** @var WP_Filesystem_Base $wp_filesystem */
 
 			$sourceFiles = $wp_filesystem->dirlist($remoteSource);
-			if ( is_array($sourceFiles) ) {
+			if (is_array($sourceFiles)) {
 				$sourceFiles = array_keys($sourceFiles);
 				$firstFilePath = trailingslashit($remoteSource) . $sourceFiles[0];
 				return (count($sourceFiles) > 1) || (!$wp_filesystem->is_dir($firstFilePath));
@@ -971,7 +916,7 @@ if ( !class_exists('Puc_v4p10_UpdateChecker', false) ):
 		 * Initialize the update checker Debug Bar plugin/add-on thingy.
 		 */
 		public function maybeInitDebugBar() {
-			if ( class_exists('Debug_Bar', false) && file_exists(dirname(__FILE__) . '/DebugBar') ) {
+			if (class_exists('Debug_Bar', false) && file_exists(dirname(__FILE__) . '/DebugBar')) {
 				$this->debugBarExtension = $this->createDebugBarExtension();
 			}
 		}

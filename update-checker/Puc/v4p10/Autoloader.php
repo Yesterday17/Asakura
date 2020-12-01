@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('Puc_v4p10_Autoloader', false) ):
+if (!class_exists('Puc_v4p10_Autoloader', false)):
 
 	class Puc_v4p10_Autoloader {
 		private $prefix = '';
@@ -15,15 +15,14 @@ if ( !class_exists('Puc_v4p10_Autoloader', false) ):
 			$this->prefix = $nameParts[0] . '_' . $nameParts[1] . '_';
 
 			$this->libraryDir = $this->rootDir . '../..';
-			if ( !self::isPhar() ) {
+			if (!self::isPhar()) {
 				$this->libraryDir = realpath($this->libraryDir);
 			}
 			$this->libraryDir = $this->libraryDir . '/';
 
 			$this->staticMap = array(
-				'PucReadmeParser' => 'vendor/PucReadmeParser.php',
-				'Parsedown' => 'vendor/Parsedown.php',
-				'Puc_v4_Factory' => 'Puc/v4/Factory.php',
+				'PucReadmeParser' => 'vendor/PucReadmeParser.php', 'Parsedown' => 'vendor/Parsedown.php',
+				'Puc_v4_Factory'  => 'Puc/v4/Factory.php',
 			);
 
 			spl_autoload_register(array($this, 'autoload'));
@@ -41,9 +40,9 @@ if ( !class_exists('Puc_v4p10_Autoloader', false) ):
 		}
 
 		public function autoload($className) {
-			if ( isset($this->staticMap[$className]) && file_exists($this->libraryDir . $this->staticMap[$className]) ) {
+			if (isset($this->staticMap[$className]) && file_exists($this->libraryDir . $this->staticMap[$className])) {
 				/** @noinspection PhpIncludeInspection */
-				include ($this->libraryDir . $this->staticMap[$className]);
+				include($this->libraryDir . $this->staticMap[$className]);
 				return;
 			}
 

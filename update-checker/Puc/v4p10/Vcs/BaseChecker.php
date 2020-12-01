@@ -1,5 +1,5 @@
 <?php
-if ( !interface_exists('Puc_v4p10_Vcs_BaseChecker', false) ):
+if (!interface_exists('Puc_v4p10_Vcs_BaseChecker', false)):
 
 	interface Puc_v4p10_Vcs_BaseChecker {
 		/**

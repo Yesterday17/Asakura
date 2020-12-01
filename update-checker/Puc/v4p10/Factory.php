@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Factory', false) ):
+if (!class_exists('Puc_v4p10_Factory', false)):
 
 	/**
 	 * A factory that builds update checker instances.
@@ -30,17 +30,13 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 
 			//Set up defaults.
 			$defaults = array(
-				'metadataUrl'  => '',
-				'slug'         => '',
-				'checkPeriod'  => 12,
-				'optionName'   => '',
-				'muPluginFile' => '',
+				'metadataUrl' => '', 'slug' => '', 'checkPeriod' => 12, 'optionName' => '', 'muPluginFile' => '',
 			);
 			$args = array_merge($defaults, array_intersect_key($args, $defaults));
 			extract($args, EXTR_SKIP);
 
 			//Check for the service URI
-			if ( empty($metadataUrl) ) {
+			if (empty($metadataUrl)) {
 				$metadataUrl = self::getServiceURI($fullPath);
 			}
 
@@ -54,8 +50,6 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * This method automatically detects if you're using it for a plugin or a theme and chooses
 		 * the appropriate implementation for your update source (JSON file, GitHub, BitBucket, etc).
 		 *
-		 * @see Puc_v4p10_UpdateChecker::__construct
-		 *
 		 * @param string $metadataUrl The URL of the metadata file, a GitHub repository, or another supported update source.
 		 * @param string $fullPath Full path to the main plugin file or to the theme directory.
 		 * @param string $slug Custom slug. Defaults to the name of the main plugin file or the theme directory.
@@ -63,6 +57,8 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @param string $optionName Where to store book-keeping info about update checks.
 		 * @param string $muPluginFile The plugin filename relative to the mu-plugins directory.
 		 * @return Puc_v4p10_Plugin_UpdateChecker|Puc_v4p10_Theme_UpdateChecker|Puc_v4p10_Vcs_BaseChecker
+		 * @see Puc_v4p10_UpdateChecker::__construct
+		 *
 		 */
 		public static function buildUpdateChecker($metadataUrl, $fullPath, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = '') {
 			$fullPath = self::normalizePath($fullPath);
@@ -70,25 +66,21 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 
 			//Plugin or theme?
 			$themeDirectory = self::getThemeDirectoryName($fullPath);
-			if ( self::isPluginFile($fullPath) ) {
+			if (self::isPluginFile($fullPath)) {
 				$type = 'Plugin';
 				$id = $fullPath;
-			} else if ( $themeDirectory !== null ) {
+			} else if ($themeDirectory !== null) {
 				$type = 'Theme';
 				$id = $themeDirectory;
 			} else {
-				throw new RuntimeException(sprintf(
-					'The update checker cannot determine if "%s" is a plugin or a theme. ' .
-					'This is a bug. Please contact the PUC developer.',
-					htmlentities($fullPath)
-				));
+				throw new RuntimeException(sprintf('The update checker cannot determine if "%s" is a plugin or a theme. ' . 'This is a bug. Please contact the PUC developer.', htmlentities($fullPath)));
 			}
 
 			//Which hosting service does the URL point to?
 			$service = self::getVcsService($metadataUrl);
 
 			$apiClass = null;
-			if ( empty($service) ) {
+			if (empty($service)) {
 				//The default is to get update information from a remote JSON file.
 				$checkerClass = $type . '_UpdateChecker';
 			} else {
@@ -98,42 +90,23 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 			}
 
 			$checkerClass = self::getCompatibleClassVersion($checkerClass);
-			if ( $checkerClass === null ) {
-				trigger_error(
-					sprintf(
-						'PUC %s does not support updates for %ss %s',
-						htmlentities(self::$latestCompatibleVersion),
-						strtolower($type),
-						$service ? ('hosted on ' . htmlentities($service)) : 'using JSON metadata'
-					),
-					E_USER_ERROR
-				);
+			if ($checkerClass === null) {
+				trigger_error(sprintf('PUC %s does not support updates for %ss %s', htmlentities(self::$latestCompatibleVersion), strtolower($type), $service ? ('hosted on ' . htmlentities($service)) : 'using JSON metadata'), E_USER_ERROR);
 				return null;
 			}
 
-			if ( !isset($apiClass) ) {
+			if (!isset($apiClass)) {
 				//Plain old update checker.
 				return new $checkerClass($metadataUrl, $id, $slug, $checkPeriod, $optionName, $muPluginFile);
 			} else {
 				//VCS checker + an API client.
 				$apiClass = self::getCompatibleClassVersion($apiClass);
-				if ( $apiClass === null ) {
-					trigger_error(sprintf(
-						'PUC %s does not support %s',
-						htmlentities(self::$latestCompatibleVersion),
-						htmlentities($service)
-					), E_USER_ERROR);
+				if ($apiClass === null) {
+					trigger_error(sprintf('PUC %s does not support %s', htmlentities(self::$latestCompatibleVersion), htmlentities($service)), E_USER_ERROR);
 					return null;
 				}
 
-				return new $checkerClass(
-					new $apiClass($metadataUrl),
-					$id,
-					$slug,
-					$checkPeriod,
-					$optionName,
-					$muPluginFile
-				);
+				return new $checkerClass(new $apiClass($metadataUrl), $id, $slug, $checkPeriod, $optionName, $muPluginFile);
 			}
 		}
 
@@ -147,12 +120,12 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @return string Normalized path.
 		 */
 		public static function normalizePath($path) {
-			if ( function_exists('wp_normalize_path') ) {
+			if (function_exists('wp_normalize_path')) {
 				return wp_normalize_path($path);
 			}
 			$path = str_replace('\\', '/', $path);
 			$path = preg_replace('|(?<=.)/+|', '/', $path);
-			if ( substr($path, 1, 1) === ':' ) {
+			if (substr($path, 1, 1) === ':') {
 				$path = ucfirst($path);
 			}
 			return $path;
@@ -168,18 +141,18 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 			//Is the file inside the "plugins" or "mu-plugins" directory?
 			$pluginDir = self::normalizePath(WP_PLUGIN_DIR);
 			$muPluginDir = self::normalizePath(WPMU_PLUGIN_DIR);
-			if ( (strpos($absolutePath, $pluginDir) === 0) || (strpos($absolutePath, $muPluginDir) === 0) ) {
+			if ((strpos($absolutePath, $pluginDir) === 0) || (strpos($absolutePath, $muPluginDir) === 0)) {
 				return true;
 			}
 
 			//Is it a file at all? Caution: is_file() can fail if the parent dir. doesn't have the +x permission set.
-			if ( !is_file($absolutePath) ) {
+			if (!is_file($absolutePath)) {
 				return false;
 			}
 
 			//Does it have a valid plugin header?
 			//This is a last-ditch check for plugins symlinked from outside the WP root.
-			if ( function_exists('get_file_data') ) {
+			if (function_exists('get_file_data')) {
 				$headers = get_file_data($absolutePath, array('Name' => 'Plugin Name'), 'plugin');
 				return !empty($headers['Name']);
 			}
@@ -198,11 +171,11 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @return string|null Directory name, or NULL if the path doesn't point to a theme.
 		 */
 		protected static function getThemeDirectoryName($absolutePath) {
-			if ( is_file($absolutePath) ) {
+			if (is_file($absolutePath)) {
 				$absolutePath = dirname($absolutePath);
 			}
 
-			if ( file_exists($absolutePath . '/style.css') ) {
+			if (file_exists($absolutePath . '/style.css')) {
 				return basename($absolutePath);
 			}
 			return null;
@@ -216,25 +189,19 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 */
 		private static function getServiceURI($fullPath) {
 			//Look for the URI
-			if ( is_readable($fullPath) ) {
-				$seek = array(
-					'github' => 'GitHub URI',
-					'gitlab' => 'GitLab URI',
-					'bucket' => 'BitBucket URI',
-				);
+			if (is_readable($fullPath)) {
+				$seek = array('github' => 'GitHub URI', 'gitlab' => 'GitLab URI', 'bucket' => 'BitBucket URI',);
 				$seek = apply_filters('puc_get_source_uri', $seek);
 				$data = get_file_data($fullPath, $seek);
 				foreach ($data as $key => $uri) {
-					if ( $uri ) {
+					if ($uri) {
 						return $uri;
 					}
 				}
 			}
 
 			//URI was not found so throw an error.
-			throw new RuntimeException(
-				sprintf('Unable to locate URI in header of "%s"', htmlentities($fullPath))
-			);
+			throw new RuntimeException(sprintf('Unable to locate URI in header of "%s"', htmlentities($fullPath)));
 		}
 
 		/**
@@ -253,16 +220,14 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 			//Check if the path looks like "/user-name/repository".
 			//For GitLab.com it can also be "/user/group1/group2/.../repository".
 			$repoRegex = '@^/?([^/]+?)/([^/#?&]+?)/?$@';
-			if ( $host === 'gitlab.com' ) {
+			if ($host === 'gitlab.com') {
 				$repoRegex = '@^/?(?:[^/#?&]++/){1,20}(?:[^/#?&]++)/?$@';
 			}
-			if ( preg_match($repoRegex, $path) ) {
+			if (preg_match($repoRegex, $path)) {
 				$knownServices = array(
-					'github.com' => 'GitHub',
-					'bitbucket.org' => 'BitBucket',
-					'gitlab.com' => 'GitLab',
+					'github.com' => 'GitHub', 'bitbucket.org' => 'BitBucket', 'gitlab.com' => 'GitLab',
 				);
-				if ( isset($knownServices[$host]) ) {
+				if (isset($knownServices[$host])) {
 					$service = $knownServices[$host];
 				}
 			}
@@ -278,7 +243,7 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @return string|null Full class name.
 		 */
 		protected static function getCompatibleClassVersion($class) {
-			if ( isset(self::$classVersions[$class][self::$latestCompatibleVersion]) ) {
+			if (isset(self::$classVersions[$class][self::$latestCompatibleVersion])) {
 				return self::$classVersions[$class][self::$latestCompatibleVersion];
 			}
 			return null;
@@ -291,11 +256,11 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @return null|string
 		 */
 		public static function getLatestClassVersion($class) {
-			if ( !self::$sorted ) {
+			if (!self::$sorted) {
 				self::sortVersions();
 			}
 
-			if ( isset(self::$classVersions[$class]) ) {
+			if (isset(self::$classVersions[$class])) {
 				return reset(self::$classVersions[$class]);
 			} else {
 				return null;
@@ -306,7 +271,7 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * Sort available class versions in descending order (i.e. newest first).
 		 */
 		protected static function sortVersions() {
-			foreach ( self::$classVersions as $class => $versions ) {
+			foreach (self::$classVersions as $class => $versions) {
 				uksort($versions, array(__CLASS__, 'compareVersions'));
 				self::$classVersions[$class] = $versions;
 			}
@@ -327,25 +292,22 @@ if ( !class_exists('Puc_v4p10_Factory', false) ):
 		 * @param string $version Version number, e.g. '1.2'.
 		 */
 		public static function addVersion($generalClass, $versionedClass, $version) {
-			if ( empty(self::$myMajorVersion) ) {
+			if (empty(self::$myMajorVersion)) {
 				$nameParts = explode('_', __CLASS__, 3);
 				self::$myMajorVersion = substr(ltrim($nameParts[1], 'v'), 0, 1);
 			}
 
 			//Store the greatest version number that matches our major version.
 			$components = explode('.', $version);
-			if ( $components[0] === self::$myMajorVersion ) {
+			if ($components[0] === self::$myMajorVersion) {
 
-				if (
-					empty(self::$latestCompatibleVersion)
-					|| version_compare($version, self::$latestCompatibleVersion, '>')
-				) {
+				if (empty(self::$latestCompatibleVersion) || version_compare($version, self::$latestCompatibleVersion, '>')) {
 					self::$latestCompatibleVersion = $version;
 				}
 
 			}
 
-			if ( !isset(self::$classVersions[$generalClass]) ) {
+			if (!isset(self::$classVersions[$generalClass])) {
 				self::$classVersions[$generalClass] = array();
 			}
 			self::$classVersions[$generalClass][$version] = $versionedClass;

@@ -2,8 +2,7 @@
 
 namespace Sakura\API;
 
-class Images
-{
+class Images {
     private $chevereto_api_key;
     private $imgur_client_id;
     private $smms_client_id;
@@ -20,12 +19,7 @@ class Images
      */
     public function Chevereto_API($image) {
         $upload_url = akina_option('cheverto_url') . '/api/1/upload';
-        $args = array(
-            'body' => array(
-                'source' => base64_encode($image),
-                'key' => $this->chevereto_api_key,
-            ),
-        );
+        $args = array('body' => array('source' => base64_encode($image), 'key' => $this->chevereto_api_key,),);
 
         $response = wp_remote_post($upload_url, $args);
         $reply = json_decode($response["body"]);
@@ -44,11 +38,7 @@ class Images
             $proxy = akina_option('cmt_image_proxy') . $link;
         }
         $output = array(
-            'status' => $status,
-            'success' => $success,
-            'message' => $message,
-            'link' => $link,
-            'proxy' => $proxy,
+            'status' => $status, 'success' => $success, 'message' => $message, 'link' => $link, 'proxy' => $proxy,
         );
         return $output;
     }
@@ -59,12 +49,8 @@ class Images
     public function Imgur_API($image) {
         $upload_url = akina_option('imgur_upload_image_proxy');
         $args = array(
-            'headers' => array(
-                'Authorization' => 'Client-ID ' . $this->imgur_client_id,
-            ),
-            'body' => array(
-                'image' => base64_encode($image),
-            ),
+            'headers' => array('Authorization' => 'Client-ID ' . $this->imgur_client_id,),
+            'body'    => array('image' => base64_encode($image),),
         );
 
         $response = wp_remote_post($upload_url, $args);
@@ -84,11 +70,7 @@ class Images
             $proxy = akina_option('cmt_image_proxy') . $link;
         }
         $output = array(
-            'status' => $status,
-            'success' => $success,
-            'message' => $message,
-            'link' => $link,
-            'proxy' => $proxy,
+            'status' => $status, 'success' => $success, 'message' => $message, 'link' => $link, 'proxy' => $proxy,
         );
         return $output;
     }
@@ -106,7 +88,7 @@ class Images
 
         $args = array(
             "headers" => "Content-Type: multipart/form-data; boundary=$Boundary\r\n\r\nAuthorization: Basic $client_id\r\n\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97",
-            "body" => "--$Boundary\r\nContent-Disposition: form-data; name=\"smfile\"; filename=\"$filename\"\r\n\r\n$bits\r\n\r\n--$Boundary--"
+            "body"    => "--$Boundary\r\nContent-Disposition: form-data; name=\"smfile\"; filename=\"$filename\"\r\n\r\n$bits\r\n\r\n--$Boundary--"
         );
 
         $response = wp_remote_post($upload_url, $args);
@@ -132,11 +114,7 @@ class Images
             $proxy = akina_option('cmt_image_proxy') . $link;
         }
         $output = array(
-            'status' => $status,
-            'success' => $success,
-            'message' => $message,
-            'link' => $link,
-            'proxy' => $proxy,
+            'status' => $status, 'success' => $success, 'message' => $message, 'link' => $link, 'proxy' => $proxy,
         );
         return $output;
     }
@@ -170,17 +148,17 @@ class Images
             $imgurl = trim($img_array[$img]);
             $imgurl = str_replace(get_template_directory(), get_template_directory_uri(), $imgurl);
         } elseif (akina_option('cover_cdn_options') == "type_3") {
-          //$imgurl = akina_option('cover_cdn');
-           $imgurl = akina_option('cover_cdn_mobile');
+            //$imgurl = akina_option('cover_cdn');
+            $imgurl = akina_option('cover_cdn_mobile');
         } else {
             global $sakura_mobile_image_array;
             $img_array = json_decode($sakura_mobile_image_array, true);
             $img = array_rand($img_array);
             $img_domain = akina_option('cover_cdn') ? akina_option('cover_cdn') : get_template_directory_uri();
             if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp')) {
-              $imgurl = $img_domain . "/manifest/" . $img_array[$img]["webp"][0];
+                $imgurl = $img_domain . "/manifest/" . $img_array[$img]["webp"][0];
             } else {
-              $imgurl = $img_domain . "/manifest/" . $img_array[$img]["jpeg"][0];
+                $imgurl = $img_domain . "/manifest/" . $img_array[$img]["jpeg"][0];
             }
         }
         return $imgurl;
@@ -194,5 +172,5 @@ class Images
         }
         return $imgurl;
     }
-    
+
 }

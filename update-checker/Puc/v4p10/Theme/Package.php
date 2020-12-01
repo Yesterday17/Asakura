@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_Theme_Package', false) ):
+if (!class_exists('Puc_v4p10_Theme_Package', false)):
 
 	class Puc_v4p10_Theme_Package extends Puc_v4p10_InstalledPackage {
 		/**
@@ -24,7 +24,7 @@ if ( !class_exists('Puc_v4p10_Theme_Package', false) ):
 		}
 
 		public function getAbsoluteDirectoryPath() {
-			if ( method_exists($this->theme, 'get_stylesheet_directory') ) {
+			if (method_exists($this->theme, 'get_stylesheet_directory')) {
 				return $this->theme->get_stylesheet_directory(); //Available since WP 3.4.
 			}
 			return get_theme_root($this->stylesheet) . '/' . $this->stylesheet;
@@ -39,25 +39,17 @@ if ( !class_exists('Puc_v4p10_Theme_Package', false) ):
 		 */
 		public function getHeaderValue($headerName, $defaultValue = '') {
 			$value = $this->theme->get($headerName);
-			if ( ($headerName === false) || ($headerName === '') ) {
+			if (($headerName === false) || ($headerName === '')) {
 				return $defaultValue;
 			}
 			return $value;
 		}
 
 		protected function getHeaderNames() {
-			return array(
-				'Name'        => 'Theme Name',
-				'ThemeURI'    => 'Theme URI',
-				'Description' => 'Description',
-				'Author'      => 'Author',
-				'AuthorURI'   => 'Author URI',
-				'Version'     => 'Version',
-				'Template'    => 'Template',
-				'Status'      => 'Status',
-				'Tags'        => 'Tags',
-				'TextDomain'  => 'Text Domain',
-				'DomainPath'  => 'Domain Path',
+			return array('Name'       => 'Theme Name', 'ThemeURI' => 'Theme URI', 'Description' => 'Description',
+						 'Author'     => 'Author', 'AuthorURI' => 'Author URI', 'Version' => 'Version',
+						 'Template'   => 'Template', 'Status' => 'Status', 'Tags' => 'Tags',
+						 'TextDomain' => 'Text Domain', 'DomainPath' => 'Domain Path',
 			);
 		}
 	}

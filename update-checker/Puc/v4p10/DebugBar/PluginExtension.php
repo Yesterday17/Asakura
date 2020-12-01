@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('Puc_v4p10_DebugBar_PluginExtension', false) ):
+if (!class_exists('Puc_v4p10_DebugBar_PluginExtension', false)):
 
 	class Puc_v4p10_DebugBar_PluginExtension extends Puc_v4p10_DebugBar_Extension {
 		/** @var Puc_v4p10_Plugin_UpdateChecker */
@@ -15,12 +15,12 @@ if ( !class_exists('Puc_v4p10_DebugBar_PluginExtension', false) ):
 		 * Request plugin info and output it.
 		 */
 		public function ajaxRequestInfo() {
-			if ( $_POST['uid'] !== $this->updateChecker->getUniqueName('uid') ) {
+			if ($_POST['uid'] !== $this->updateChecker->getUniqueName('uid')) {
 				return;
 			}
 			$this->preAjaxRequest();
 			$info = $this->updateChecker->requestInfo();
-			if ( $info !== null ) {
+			if ($info !== null) {
 				echo 'Successfully retrieved plugin info from the metadata URL:';
 				echo '<pre>', htmlentities(print_r($info, true)), '</pre>';
 			} else {
