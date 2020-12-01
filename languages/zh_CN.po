@@ -1546,7 +1546,7 @@ msgstr "后台背景图"
 
 #: options.php:1174
 msgid "Login Interface Background Image"
-msgstr "后台登陆界面背景图"
+msgstr "后台登录界面背景图"
 
 #: options.php:1175
 msgid "Use the default image if left this blank"
@@ -1558,7 +1558,7 @@ msgstr "后台登录界面背景虚化"
 
 #: options.php:1187
 msgid "Login Interface Logo"
-msgstr "后台登陆界面Logo"
+msgstr "后台登录界面Logo"
 
 #: options.php:1188
 msgid "Used for login interface display"
@@ -1566,7 +1566,7 @@ msgstr "用于登录界面显示"
 
 #: options.php:1194
 msgid "Login/Registration Related Settings"
-msgstr "登陆/注册相关设定"
+msgstr "登录/注册相关设定"
 
 #: options.php:1201
 msgid "Specify Login Address"
@@ -1579,7 +1579,7 @@ msgid ""
 "fill out, test your new page can be opened normally, so as not to enter the "
 "background or other problems happening"
 msgstr ""
-"强制不使用后台地址登陆，填写新建的登陆页面地址，比如 http://www.xxx.com/"
+"强制不使用后台地址登录，填写新建的登录页面地址，比如 http://www.xxx.com/"
 "login【注意】填写前先测试下你新建的页面是可以正常打开的，以免造成无法进入后台"
 "等情况"
 
@@ -3016,7 +3016,7 @@ msgstr ""
 #~ msgstr "动态星星背景"
 
 #~ msgid "Login interface background image Transparency"
-#~ msgstr "后台登陆界面背景图高斯模糊度"
+#~ msgstr "后台登录界面背景图高斯模糊度"
 
 #~ msgid "Fill in the number, the default is 2"
 #~ msgstr "填写数字，默认值是 2"
