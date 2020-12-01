@@ -15,7 +15,7 @@ body {
 }
 
 .wp-submenu-wrap {
-	background: #ffffff99 !important;
+    background: #ffffff99 !important;
 }
 
 .postbox {
@@ -29,15 +29,15 @@ body {
 }
 
 table {
-	background: #ffffff90 !important;
+    background: #ffffff90 !important;
 }
 
 tr {
-	background-color: #ffffff00 !important;
+    background-color: #ffffff00 !important;
 }
 
 #screen-meta {
-	background-color: #ffffff90 !important;
+    background-color: #ffffff90 !important;
 }
 
 .notice, div.error, div.updated {
@@ -45,17 +45,17 @@ tr {
 }
 
 #dolly {
-	background: rgba(255,255,255,.7);
-	border-left: 4px solid #fff;
+    background: rgba(255, 255, 255, .7);
+    border-left: 4px solid #fff;
     border-left-color: rgb(255, 255, 255);
-	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-	border-left-color: #888;
-	font-size: 13px;
-	padding: 6px;
-	padding-right: 15px;
-	padding-top: 5px;
-	float: none !important;
-	width: calc(100% - 46px);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+    border-left-color: #888;
+    font-size: 13px;
+    padding: 6px;
+    padding-right: 15px;
+    padding-top: 5px;
+    float: none !important;
+    width: calc(100% - 46px);
 }
 
 #adminmenu a, #adminmenu .wp-submenu .wp-submenu-head, #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
@@ -63,13 +63,13 @@ tr {
 }
 
 .gadwp-pline a {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	position: absolute;
-	width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    width: 80%;
 }
 
 .wp-submenu .wp-submenu-wrap {
-	background: #ffffff !important;
+    background: #ffffff !important;
 }

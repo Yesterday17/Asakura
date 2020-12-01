@@ -126,7 +126,7 @@ input[type=radio] {
     height: 16px;
     margin: -4px 4px 0 0;
     outline: none;
-    padding: 0!important;
+    padding: 0 !important;
     text-align: center;
     vertical-align: middle;
     width: 16px;
@@ -163,7 +163,8 @@ textarea {
 }
 
 input[type="submit" i],
-input[type="reset" i] {}
+input[type="reset" i] {
+}
 
 #optionsframework h4 {
     font-weight: 300;
@@ -464,7 +465,7 @@ input[type="reset" i] {}
 
 #optionsframework-submit {
     padding: 7px 10px;
-    background-image: -moz-linear-gradient(center top, #F9F9F9, #ECECEC);
+    background-image: linear-gradient(#F9F9F9, #ECECEC);
 }
 
 #optionsframework .button-primary {
