@@ -2905,17 +2905,6 @@ msgstr "暂未开放注册"
 #~ msgid "Theme Style Second Color"
 #~ msgstr "副配色"
 
-#, fuzzy
-#~| msgid ""
-#~| "「ハルジオン　Update」 ｜ 一个多彩，实用，易于上手，具有强大自定义功能的 "
-#~| "WordPress 主题（基于 Sakura 主题）"
-#~ msgid ""
-#~ "「なつはなび　Update」 ｜ 一个多彩，实用，易于上手，具有强大自定义功能的 "
-#~ "WordPress 主题（基于 Sakura 主题）"
-#~ msgstr ""
-#~ "「春紫苑 更新」 ｜ 一个多彩，实用，易于上手，具有强大自定义功能的 "
-#~ "WordPress 主题（基于 Sakura 主题）"
-
 #~ msgid "a brief remark Custom API"
 #~ msgstr "页脚随机话语自定义API"
 
