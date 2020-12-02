@@ -740,7 +740,7 @@ function custom_html() {
     echo '<script>
     $(document).ready(function(){
         $(\'h1 a\').attr(\'style\',\'background-image: url(' . akina_option('logo_img') . '); \');
-		$(".forgetmenot").replaceWith(\'<p class="forgetmenot">Remember Me<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>\');
+		$(".forget-me-not").replaceWith(\'<p class="forget-me-not">Remember Me<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>\');
 	});
     </script>';
 }
