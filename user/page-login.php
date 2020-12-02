@@ -26,7 +26,7 @@ get_header();
                     </form>
                     <div class="ex-new-account" style="padding: 0;"><p>请先注册！Register first, plz!</p>
                         <p>
-                            <a href="<?php echo akina_option('exregister_url') ? akina_option('exregister_url') : bloginfo('url'); ?>"
+                            <a href="<?php echo akina_option('exregister_url') ?: bloginfo('url'); ?>"
                                target="_blank">Register</a>|<a
                                     href="<?php echo site_url(); ?>/wp-login.php?action=lostpassword" target="_blank">Lost
                                 your password?</a></p></div>

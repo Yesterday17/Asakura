@@ -9,6 +9,8 @@
 
 ?>
 
+<!-- TODO: config to disable auto toc -->
+<div class="has-toc have-toc"></div>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <?php if (akina_option('patternimg') || !get_post_thumbnail_id(get_the_ID())) { ?>
         <header class="entry-header">

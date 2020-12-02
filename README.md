@@ -1,16 +1,9 @@
-[![image](https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/readme/readme1.png)](https://github.com/mirai-mamori/Sakurairo)
-
-<h1 align="center"> 「桜いろ」✿ Sakurairo </h1>
+<h1 align="center"> Asakura </h1>
 
 > 一个多彩，轻松上手，体验完善，具有强大自定义功能的WordPress主题（基于 [Sakura](https://github.com/mashirozx/Sakura) 主题）
 
 [![GitHub release](https://img.shields.io/github/v/release/mirai-mamori/Sakurairo.svg?style=for-the-badge&logo=appveyor)](https://github.com/mirai-mamori/Sakurairo/releases/latest)[![GitHub Release Date](https://img.shields.io/github/release-date/mirai-mamori/Sakurairo?style=for-the-badge&logo=appveyor)](https://github.com/mirai-mamori/Sakurairo/releases)![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mirai-mamori/Sakurairo?style=for-the-badge&logo=appveyor)[![jsDelivr hits (GitHub)](https://img.shields.io/jsdelivr/gh/hm/Fuukei/Public_Repository?color=red&logo=jsdelivr&logoColor=red&style=for-the-badge)](https://www.jsdelivr.com/package/gh/mirai-mamori/sakurairo)
 
-## 宣传视频（帮助你更好了解本主题特性）：
-
-- Bilibili： https://www.bilibili.com/video/BV1KK41157Gg
-
-- YouTube：  https://youtu.be/7hskBPe4Yzc
 
 ## 特色：
 
@@ -44,8 +37,6 @@
 
 ## 使用相关：
 
-[![image](https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/readme/readme2.png)](https://asuhe.jp/daily/sakurairo-user-manual)
-
 - 演示站点：https://demo.kyoku.jp/
 
 - 主题交流群：[784229925](https://jq.qq.com/?_wv=1027&k=U5UJjRik)
@@ -63,25 +54,6 @@
 ## 下载：
 
 - [Github 仓库最新版本](https://github.com/mirai-mamori/Sakurairo/releases/latest)
-
-- [Gitee 仓库镜像](https://gitee.com/mirai-mamori/Sakurairo)
-
-### 授权资源下载站：
-
-#### 高更新同步频率：
-- [空木白博客](https://wuzuhua.cn/1004.html)
-- [源码无忧](https://www.ym51.cn/archives/10176)
-- [站长图库](https://www.zztuku.com/wordpress-3260.html)
-
-#### 低更新同步频率：
-- [IT速极网站建设](https://www.vpsqv.cn/4653.html)
-- [子涵小窝](https://zbk52.com/post-51.html)
-- [晨风资源网](https://chenfengwl.com/4394.html)
-- [98素材网](https://www.98sucai.com/wordpress-3666.html)
-- [JAD资源网](http://www.jiuandun.com/13756/)
-- [58源码下载站](https://www.58dir.cn/3351.html)
-- [11素材网](https://www.11sucai.com/wordpress-299.html)
-- [小浣熊 Blog](https://www.mua222.cn/125.html)
 
 ## 贡献者：
 

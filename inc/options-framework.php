@@ -362,7 +362,7 @@ function optionsframework_validate($input) {
  */
 
 function optionsframework_save_options_notice() {
-    add_settings_error('options-framework', 'save_options', __('Options saved.', 'options_framework_theme'), 'updated fade');
+    add_settings_error('options-framework', 'save_options', __('Options saved.', SAKURA_DOMAIN), 'updated fade');
 }
 
 add_action('optionsframework_after_validate', 'optionsframework_save_options_notice');
