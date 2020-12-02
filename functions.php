@@ -7,9 +7,6 @@
  * @package Sakura
  */
 
-require 'update-checker/update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/Yesterday17/Asakura', __FILE__, 'unique-plugin-or-theme-slug');
-
 define('SAKURA_VERSION', wp_get_theme()->get('Version'));
 define('BUILD_VERSION', '1');
 define('SAKURA_DOMAIN', 'asakura');
