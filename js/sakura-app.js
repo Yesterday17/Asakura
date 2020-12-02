@@ -292,14 +292,6 @@ function click_to_view_image() {
 
 click_to_view_image();
 
-function original_emoji_click() {
-    $(".emoji-item").click(function () {
-        grin($(this).text(), type = "custom", before = "`", after = "` ");
-    });
-}
-
-original_emoji_click();
-
 function showPopup(ele) {
     var popup = ele.querySelector("#thePopup");
     popup.classList.toggle("show");
@@ -728,26 +720,22 @@ var pjaxInit = function () {
     add_upload_tips();
     no_right_click();
     click_to_view_image();
-    original_emoji_click();
     mashiro_global.font_control.ini();
     $("p").remove(".head-copyright");
     try {
         code_highlight_style();
     } catch (e) {
     }
-    ;
     try {
         getqqinfo();
     } catch (e) {
     }
-    ;
     lazyload();
     $("#to-load-aplayer").click(function () {
         try {
             reloadHermit();
         } catch (e) {
         }
-        ;
         $("div").remove(".load-aplayer");
     });
     if ($("div").hasClass("aplayer")) {
@@ -755,7 +743,6 @@ var pjaxInit = function () {
             reloadHermit();
         } catch (e) {
         }
-        ;
     }
     $('.iconflat').css('width', '50px').css('height', '50px');
     $('.openNav').css('height', '50px');
@@ -765,7 +752,6 @@ var pjaxInit = function () {
     $("#bg-pre").click(function () {
         preBG();
     });
-    smileBoxToggle();
     timeSeriesReload();
     add_copyright();
     tableOfContentScroll(flag = true);
@@ -803,34 +789,12 @@ POWERMODE.colorful = true;
 POWERMODE.shake = false;
 document.body.addEventListener('input', POWERMODE);
 
-function motionSwitch(ele) {
-    var motionEles = [".bili", ".menhera", ".tieba"];
-    for (var i in motionEles) {
-        $(motionEles[i] + '-bar').removeClass("on-hover");
-        $(motionEles[i] + '-container').css("display", "none");
-    }
-    $(ele + '-bar').addClass("on-hover");
-    $(ele + '-container').css("display", "block");
-}
-
 $('.comt-addsmilies').click(function () {
     $('.comt-smilies').toggle();
 })
 $('.comt-smilies a').click(function () {
     $(this).parent().hide();
 })
-
-function smileBoxToggle() {
-    $(document).ready(function () {
-        $("#emotion-toggle").click(function () {
-            $(".emotion-toggle-off").toggle(0);
-            $(".emotion-toggle-on").toggle(0);
-            $(".emotion-box").toggle(160);
-        });
-    });
-}
-
-smileBoxToggle();
 
 function grin(tag, type, before, after) {
     var myField;

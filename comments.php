@@ -67,30 +67,7 @@ if (post_password_required()) {
                     'cancel_reply_link'    => __('Cancel Reply', SAKURA_DOMAIN),
                     'label_submit'         => __('BiuBiuBiu~', SAKURA_DOMAIN),
                     'comment_field'        => '<p style="font-style:italic"><a href="https://segmentfault.com/markdown" target="_blank"><i class="iconfont icon-markdown" style="color:#000"></i></a> Markdown Supported while <i class="fa fa-code" aria-hidden="true"></i> Forbidden</p><div class="comment-textarea"><textarea placeholder="' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ..." name="comment" class="commentbody" id="comment" rows="5" tabindex="4"></textarea><label class="input-label">' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ...</label></div>
-                        <div id="upload-img-show"></div>
-                        <!--插入表情面版-->
-                        <p id="emotion-toggle" class="no-select">
-                            <span class="emotion-toggle-off">' . __("Click me OωO", SAKURA_DOMAIN)/*戳我试试 OωO*/ . '</span>
-                            <span class="emotion-toggle-on">' . __("Woooooow ヾ(≧∇≦*)ゝ", SAKURA_DOMAIN)/*嘿嘿嘿 ヾ(≧∇≦*)ゝ*/ . '</span>
-                        </p>
-                        <div class="emotion-box no-select">
-                            <table class="motion-switcher-table">
-                                <tr>
-                                    <th onclick="motionSwitch(`.bili`)" 
-                                        class="bili-bar on-hover">bilibili~</th>
-                                    <th onclick="motionSwitch(`.menhera`)"
-                                        class="menhera-bar">(=・ω・=)</th>
-                                    <th onclick="motionSwitch(`.tieba`)"
-                                        class="tieba-bar">Tieba</th>
-                                </tr>
-                            </table>
-                            <div class="bili-container motion-container">' . push_bili_smilies() . '</div>
-                            <div class="menhera-container motion-container" style="display:none;">
-                                ' . push_emoji_panel() . '
-                            </div>
-                            <div class="tieba-container motion-container" style="display:none;">' . push_tieba_smilies() . '</div>
-                        </div>
-                        <!--表情面版完-->',
+                        <div id="upload-img-show"></div>',
                     'comment_notes_after'  => '',
                     'comment_notes_before' => '',
                     'fields'               => apply_filters('comment_form_default_fields', array(

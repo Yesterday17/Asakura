@@ -477,18 +477,6 @@ function customizer_css() { ?>
             background-color: <?php echo akina_option('theme_skin'); ?>; /*!important*/ /*mark*/
         }
 
-        .motion-switcher-table th:hover {
-            color: <?php echo akina_option('theme_skinm'); ?>;
-        }
-
-        .motion-switcher-table .on-hover {
-            color: <?php echo akina_option('theme_skinm'); ?>;
-        }
-
-        .menhera-container .emoji-item {
-            color: <?php echo akina_option('theme_skin'); ?>;
-        }
-
         .float-content i {
             color: <?php echo akina_option('theme_skin'); ?>;
         }
@@ -961,7 +949,6 @@ function customizer_css() { ?>
         body.dark .art-content #archives .al_mon_list .al_mon,
         body.dark .art-content #archives .al_mon_list span,
         body.dark .art .art-content #archives a,
-        body.dark .menhera-container .emoji-item,
         body.dark .ex-login-username,
         body.dark .admin-login-check p,
         body.dark .user-login-check p,
@@ -1280,12 +1267,7 @@ function customizer_css() { ?>
         .aplayer.aplayer-narrow .aplayer-body,
         .aplayer.aplayer-narrow .aplayer-pic,
         button.botui-actions-buttons-button,
-        #emotion-toggle,
-        .emoji-item,
-        .emotion-box,
-        .emotion-item,
         .on-hover,
-        .tieba-container span,
         #moblieGoTop,
         #changskin {
             cursor: url(<?php echo akina_option('cursor-no'); ?>), auto;

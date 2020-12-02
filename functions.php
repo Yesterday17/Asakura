@@ -871,8 +871,6 @@ function comment_mail_notify($comment_id) {
     </div>
 ';
         $message = convert_smilies($message);
-        $message = str_replace("{{", '<img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@0.2.3/vision/smilies/bilipng/emoji_', $message);
-        $message = str_replace("}}", '.png" alt="emoji" style="height: 2em; max-height: 2em;">', $message);
 
         $message = str_replace('{UPLOAD}', 'https://i.loli.net/', $message);
         $message = str_replace('[/img][img]', '[/img^img]', $message);
@@ -942,217 +940,6 @@ function comment_picture_support($content) {
 
 add_filter('comment_text', 'comment_picture_support');
 
-/*
- * 修改评论表情调用路径
- */
-
-// 简单遍历系统表情库，今后应考虑标识表情包名——使用增加的扩展名，同时保留原有拓展名
-// 还有一个思路是根据表情调用路径来判定<-- 此法最好！
-// 贴吧
-
-
-$wpsmiliestrans = array();
-function push_tieba_smilies() {
-    global $wpsmiliestrans;
-    // don't bother setting up smilies if they are disabled
-    if (!get_option('use_smilies'))
-        return;
-    $tiebaname = array(
-        'good',
-        'han',
-        'spray',
-        'Grievance',
-        'shui',
-        'reluctantly',
-        'anger',
-        'tongue',
-        'se',
-        'haha',
-        'rmb',
-        'doubt',
-        'tear',
-        'surprised2',
-        'Happy',
-        'ku',
-        'surprised',
-        'theblackline',
-        'smilingeyes',
-        'spit',
-        'huaji',
-        'bbd',
-        'hu',
-        'shame',
-        'naive',
-        'rbq',
-        'britan',
-        'aa',
-        'niconiconi',
-        'niconiconi_t',
-        'niconiconit',
-        'awesome'
-    );
-    $return_smiles = '';
-    for ($i = 0; $i < count($tiebaname); $i++) {
-        $tieba_Name = $tiebaname[$i];
-        if (is_webp() == 1) {
-            $tiebaimgdir = "tiebawebp/";
-            $smiliesgs = ".webp";
-        } else {
-            $tiebaimgdir = "tiebapng/";
-            $smiliesgs = ".png";
-        }
-        // 选择面版
-        $return_smiles = $return_smiles . '<span title="' . $tieba_Name . '" onclick="grin(' . "'" . $tieba_Name . "'" . ',type = \'tieba\')"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
-        // 正文转换
-        $wpsmiliestrans['::' . $tieba_Name . '::'] = '<span title="' . $tieba_Name . '" onclick="grin(' . "'" . $tieba_Name . "'" . ',type = \'tieba\')"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
-    }
-    return $return_smiles;
-}
-
-push_tieba_smilies();
-
-function tieba_smile_filter($content) {
-    global $wpsmiliestrans;
-    $content = str_replace(array_keys($wpsmiliestrans), $wpsmiliestrans, $content);
-    return $content;
-}
-
-add_filter('the_content', 'tieba_smile_filter'); //替换文章关键词
-add_filter('comment_text', 'tieba_smile_filter');//替换评论关键词
-
-function push_emoji_panel() {
-    return '
-        <a class="emoji-item">(⌒▽⌒)</a>
-        <a class="emoji-item">（￣▽￣）</a>
-        <a class="emoji-item">(=・ω・=)</a>
-        <a class="emoji-item">(｀・ω・´)</a>
-        <a class="emoji-item">(〜￣△￣)〜</a>
-        <a class="emoji-item">(･∀･)</a>
-        <a class="emoji-item">(°∀°)ﾉ</a>
-        <a class="emoji-item">(￣3￣)</a>
-        <a class="emoji-item">╮(￣▽￣)╭</a>
-        <a class="emoji-item">(´_ゝ｀)</a>
-        <a class="emoji-item">←_←</a>
-        <a class="emoji-item">→_→</a>
-        <a class="emoji-item">(&lt;_&lt;)</a>
-        <a class="emoji-item">(&gt;_&gt;)</a>
-        <a class="emoji-item">(;¬_¬)</a>
-        <a class="emoji-item">("▔□▔)/</a>
-        <a class="emoji-item">(ﾟДﾟ≡ﾟдﾟ)!?</a>
-        <a class="emoji-item">Σ(ﾟдﾟ;)</a>
-        <a class="emoji-item">Σ(￣□￣||)</a>
-        <a class="emoji-item">(’；ω；‘)</a>
-        <a class="emoji-item">（/TДT)/</a>
-        <a class="emoji-item">(^・ω・^ )</a>
-        <a class="emoji-item">(｡･ω･｡)</a>
-        <a class="emoji-item">(●￣(ｴ)￣●)</a>
-        <a class="emoji-item">ε=ε=(ノ≧∇≦)ノ</a>
-        <a class="emoji-item">(’･_･‘)</a>
-        <a class="emoji-item">(-_-#)</a>
-        <a class="emoji-item">（￣へ￣）</a>
-        <a class="emoji-item">(￣ε(#￣)Σ</a>
-        <a class="emoji-item">ヽ(‘Д’)ﾉ</a>
-        <a class="emoji-item">（#-_-)┯━┯</a>
-        <a class="emoji-item">(╯°口°)╯(┴—┴</a>
-        <a class="emoji-item">←◡←</a>
-        <a class="emoji-item">( ♥д♥)</a>
-        <a class="emoji-item">_(:3」∠)_</a>
-        <a class="emoji-item">Σ&gt;―(〃°ω°〃)♡→</a>
-        <a class="emoji-item">⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄</a>
-        <a class="emoji-item">(╬ﾟдﾟ)▄︻┻┳═一</a>
-        <a class="emoji-item">･*･:≡(　ε:)</a>
-        <a class="emoji-item">(笑)</a>
-        <a class="emoji-item">(汗)</a>
-        <a class="emoji-item">(泣)</a>
-        <a class="emoji-item">(苦笑)</a>
-    ';
-}
-
-// bilibili smiles
-$bilismiliestrans = array();
-function push_bili_smilies() {
-    global $bilismiliestrans;
-    $name = array(
-        'baiyan',
-        'bishi',
-        'bizui',
-        'chan',
-        'dai',
-        'daku',
-        'dalao',
-        'dalian',
-        'dianzan',
-        'doge',
-        'facai',
-        'fanu',
-        'ganga',
-        'guilian',
-        'guzhang',
-        'haixiu',
-        'heirenwenhao',
-        'huaixiao',
-        'jingxia',
-        'keai',
-        'koubizi',
-        'kun',
-        'lengmo',
-        'liubixue',
-        'liuhan',
-        'liulei',
-        'miantian',
-        'mudengkoudai',
-        'nanguo',
-        'outu',
-        'qinqin',
-        'se',
-        'shengbing',
-        'shengqi',
-        'shuizhao',
-        'sikao',
-        'tiaokan',
-        'tiaopi',
-        'touxiao',
-        'tuxue',
-        'weiqu',
-        'weixiao',
-        'wunai',
-        'xiaoku',
-        'xieyanxiao',
-        'yiwen',
-        'yun',
-        'zaijian',
-        'zhoumei',
-        'zhuakuang'
-    );
-    $return_smiles = '';
-    for ($i = 0; $i < count($name); $i++) {
-        $smilies_Name = $name[$i];
-        if (is_webp() == 1) {
-            $biliimgdir = "biliwebp/";
-            $smiliesgs = ".webp";
-        } else {
-            $biliimgdir = "bilipng/";
-            $smiliesgs = ".png";
-        }
-        // 选择面版
-        $return_smiles = $return_smiles . '<span title="' . $smilies_Name . '" onclick="grin(' . "'" . $smilies_Name . "'" . ',type = \'Math\')"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
-        // 正文转换
-        $bilismiliestrans['{{' . $smilies_Name . '}}'] = '<span title="' . $smilies_Name . '" onclick="grin(' . "'" . $smilies_Name . "'" . ',type = \'Math\')"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
-    }
-    return $return_smiles;
-}
-
-push_bili_smilies();
-
-function bili_smile_filter($content) {
-    global $bilismiliestrans;
-    $content = str_replace(array_keys($bilismiliestrans), $bilismiliestrans, $content);
-    return $content;
-}
-
-add_filter('the_content', 'bili_smile_filter'); //替换文章关键词
-add_filter('comment_text', 'bili_smile_filter');//替换评论关键词
-
 function featuredtoRSS($content) {
     global $post;
     if (has_post_thumbnail($post->ID)) {
@@ -1163,24 +950,6 @@ function featuredtoRSS($content) {
 
 add_filter('the_excerpt_rss', 'featuredtoRSS');
 add_filter('the_content_feed', 'featuredtoRSS');
-
-//
-function bili_smile_filter_rss($content) {
-    if (is_webp() == 1) {
-        $biliimgdir = "biliwebp/";
-        $smilesgs = ".webp";
-    } else {
-        $biliimgdir = "bilipng/";
-        $smilesgs = ".png";
-    }
-    $content = str_replace("{{", '<img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/smilies/' . $biliimgdir, $content);
-    $content = str_replace("}}", $smilesgs . '" alt="emoji" style="height: 2em; max-height: 2em;">', $content);
-    $content = str_replace('[img]', '<img src="', $content);
-    $content = str_replace('[/img]', '" style="display: block;margin-left: auto;margin-right: auto;">', $content);
-    return $content;
-}
-
-add_filter('comment_text_rss', 'bili_smile_filter_rss');//替换评论rss关键词
 
 function toc_support($content) {
     $content = str_replace('[toc]', '<div class="has-toc have-toc"></div>', $content); // TOC 支持
@@ -1375,7 +1144,6 @@ return preg_replace( $old, $new, $url, 1);
 
 function admin_ini() {
     wp_enqueue_style('admin-styles-fix-icon', get_site_url() . '/wp-includes/css/dashicons.css');
-    wp_enqueue_style('cus-styles-fit', get_template_directory_uri() . '/inc/css/dashboard-fix.css');
     wp_enqueue_script('lazyload', 'https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.min.js');
 }
 
