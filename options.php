@@ -6,7 +6,6 @@
  */
 
 function optionsframework_option_name() {
-
     // 从样式表获取主题名称
     $themename = wp_get_theme();
     $themename = preg_replace("/\W/", "_", strtolower($themename));
@@ -27,49 +26,6 @@ function optionsframework_option_name() {
  */
 
 function optionsframework_options() {
-    // 测试数据
-    $test_array = array(
-        'one'   => __('1', SAKURA_DOMAIN),
-        'two'   => __('2', SAKURA_DOMAIN),
-        'three' => __('3', SAKURA_DOMAIN),
-        'four'  => __('4', SAKURA_DOMAIN),
-        'five'  => __('5', SAKURA_DOMAIN),
-        'six'   => __('6', SAKURA_DOMAIN),
-        'seven' => __('7', SAKURA_DOMAIN),
-    );
-
-    // 复选框数组
-    $multicheck_array = array(
-        'one'   => __('1', SAKURA_DOMAIN),
-        'two'   => __('2', SAKURA_DOMAIN),
-        'three' => __('3', SAKURA_DOMAIN),
-        'four'  => __('4', SAKURA_DOMAIN),
-        'five'  => __('5', SAKURA_DOMAIN),
-    );
-
-    // 复选框默认值
-    $multicheck_defaults = array('one' => '1', 'five' => '1',);
-
-    // 背景默认值
-    $background_defaults = array(
-        'color'      => '',
-        'image'      => 'https://view.moezx.cc/images/2018/12/23/knights-of-the-frozen-throne-8k-qa.jpg',
-        'repeat'     => 'repeat',
-        'position'   => 'top center',
-        'attachment' => 'scroll'
-    );
-
-    // 版式默认值
-    $typography_defaults = array('size' => '15px', 'face' => 'georgia', 'style' => 'bold', 'color' => '#bada55');
-
-    // 版式设置选项
-    $typography_options = array(
-        'sizes'  => array('6', '12', '14', '16', '20'),
-        'faces'  => array('Helvetica Neue' => 'Helvetica Neue', 'Arial' => 'Arial'),
-        'styles' => array('normal' => '普通', 'bold' => '粗体'),
-        'color'  => false,
-    );
-
     // 将所有分类（categories）加入数组
     $options_categories = array();
     $options_categories_obj = get_categories();
@@ -98,11 +54,11 @@ function optionsframework_options() {
     $options = array();
 
     //基本设置
-    $options[] = array('name' => __('Basic', SAKURA_DOMAIN), 'type' => 'heading');
+    $options[] = array('name' => ll('Basic'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Basic-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
+        'name'    => ll('Basic-Setting'),
+        'desc'    => ll(' '),
         'id'      => 'setting_basic',
         'std'     => 'tag',
         'type'    => "images",
@@ -110,185 +66,176 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Support For You', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_sfu',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/support.png',),
-    );
-
-    $options[] = array(
-        'name' => __('Site Title', SAKURA_DOMAIN),
-        'desc' => __('Fuukei\'s Blog', SAKURA_DOMAIN),
+        'name' => ll('Site Title'),
+        'desc' => ll('Fuukei\'s Blog'),
         'id'   => 'site_name',
         'std'  => '',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Author', SAKURA_DOMAIN),
-        'desc' => __('Fuukei', SAKURA_DOMAIN),
+        'name' => ll('Author'),
+        'desc' => ll('Fuukei'),
         'id'   => 'author_name',
         'std'  => '',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Personal Avatar', SAKURA_DOMAIN),
-        'desc' => __('The best size is 130px*130px.', SAKURA_DOMAIN),
+        'name' => ll('Personal Avatar'),
+        'desc' => ll('The best size is 130px*130px.'),
         'id'   => 'focus_logo',
         'type' => 'upload'
     );
 
     $options[] = array(
-        'name' => __('Text LOGO', SAKURA_DOMAIN),
-        'desc' => __('The home page does not display the avatar above, but displays a paragraph of text (use the avatar above if left blank).The text is recommended not to be too long, about 16 bytes is appropriate.', SAKURA_DOMAIN),
+        'name' => ll('Text LOGO'),
+        'desc' => ll('The home page does not display the avatar above, but displays a paragraph of text (use the avatar above if left blank).The text is recommended not to be too long, about 16 bytes is appropriate.'),
         'id'   => 'focus_logo_text',
         'std'  => '',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Logo', SAKURA_DOMAIN),
-        'desc' => __('The best height size is 40px。', SAKURA_DOMAIN),
+        'name' => ll('Logo'),
+        'desc' => ll('The best height size is 40px。'),
         'id'   => 'akina_logo',
         'type' => 'upload'
     );
 
     $options[] = array(
-        'name' => __('Favicon', SAKURA_DOMAIN),
-        'desc' => __('It is the small logo on the browser tab, fill in the url', SAKURA_DOMAIN),
+        'name' => ll('Favicon'),
+        'desc' => ll('It is the small logo on the browser tab, fill in the url'),
         'id'   => 'favicon_link',
         'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Custom Keywords and Descriptions ', SAKURA_DOMAIN),
-        'desc' => __('Customize keywords and descriptions after opening', SAKURA_DOMAIN),
+        'name' => ll('Custom Keywords and Descriptions '),
+        'desc' => ll('Customize keywords and descriptions after opening'),
         'id'   => 'akina_meta',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Site Keywords', SAKURA_DOMAIN),
-        'desc' => __('Each keyword is divided by a comma "," and the number is within 5.', SAKURA_DOMAIN),
+        'name' => ll('Site Keywords'),
+        'desc' => ll('Each keyword is divided by a comma "," and the number is within 5.'),
         'id'   => 'akina_meta_keywords',
         'std'  => '',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Site Descriptions', SAKURA_DOMAIN),
-        'desc' => __('Describe the site in concise text, with a maximum of 120 words.', SAKURA_DOMAIN),
+        'name' => ll('Site Descriptions'),
+        'desc' => ll('Describe the site in concise text, with a maximum of 120 words.'),
         'id'   => 'akina_meta_description',
         'std'  => '',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('Expand The Nav Menu', SAKURA_DOMAIN),
-        'desc' => __('By default, it is enabled (checked), and the check and collapse are cancelled.', SAKURA_DOMAIN),
+        'name' => ll('Expand The Nav Menu'),
+        'desc' => ll('By default, it is enabled (checked), and the check and collapse are cancelled.'),
         'id'   => 'shownav',
         'std'  => '1',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Head Decoration', SAKURA_DOMAIN),
-        'desc' => __('Enable by default, check off, display on the article page, separate page and category page', SAKURA_DOMAIN),
+        'name' => ll('Head Decoration'),
+        'desc' => ll('Enable by default, check off, display on the article page, separate page and category page'),
         'id'   => 'patternimg',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name'    => __('Search Button', SAKURA_DOMAIN),
+        'name'    => ll('Search Button'),
         'id'      => 'top_search',
         'std'     => "yes",
         'type'    => "radio",
-        'options' => array('yes' => __('Open', SAKURA_DOMAIN), 'no' => __('Close', SAKURA_DOMAIN),)
+        'options' => array('yes' => ll('Open'), 'no' => ll('Close'),)
     );
 
     $options[] = array(
-        'name'    => __('Home Article Style', SAKURA_DOMAIN),
+        'name'    => ll('Home Article Style'),
         'id'      => 'post_list_style',
         'std'     => "imageflow",
         'type'    => "radio",
         'options' => array(
-            'standard'  => __('Standard', SAKURA_DOMAIN),
-            'imageflow' => __('Graphic', SAKURA_DOMAIN),
+            'standard'  => ll('Standard'),
+            'imageflow' => ll('Graphic'),
         )
     );
 
     $options[] = array(
-        'name'    => __('Home Article Feature Images (Only Valid for Standard Mode)', SAKURA_DOMAIN),
+        'name'    => ll('Home Article Feature Images (Only Valid for Standard Mode)'),
         'id'      => 'list_type',
         'std'     => "round",
         'type'    => "radio",
         'options' => array(
-            'round'  => __('Round', SAKURA_DOMAIN),
-            'square' => __('Square', SAKURA_DOMAIN),
+            'round'  => ll('Round'),
+            'square' => ll('Square'),
         )
     );
 
     $options[] = array(
-        'name'    => __('Home Article Feature Images Alignment (Only for Graphic Mode, Default Left and Right Alternate)', SAKURA_DOMAIN),
+        'name'    => ll('Home Article Feature Images Alignment (Only for Graphic Mode, Default Left and Right Alternate)'),
         'id'      => 'feature_align',
         'std'     => "alternate",
         'type'    => "radio",
         'options' => array(
-            'left'      => __('Left', SAKURA_DOMAIN),
-            'right'     => __('Right', SAKURA_DOMAIN),
-            'alternate' => __('Alternate', SAKURA_DOMAIN),
+            'left'      => ll('Left'),
+            'right'     => ll('Right'),
+            'alternate' => ll('Alternate'),
         )
     );
 
     $options[] = array(
-        'name'    => __('Paging Mode', SAKURA_DOMAIN),
+        'name'    => ll('Paging Mode'),
         'id'      => 'pagenav_style',
         'std'     => "ajax",
         'type'    => "radio",
         'options' => array(
-            'ajax' => __('Ajax load', SAKURA_DOMAIN),
-            'np'   => __('Previous and next page', SAKURA_DOMAIN),
+            'ajax' => ll('Ajax load'),
+            'np'   => ll('Previous and next page'),
         )
     );
 
     $options[] = array(
-        'name'    => __('Automatically Load The Next Page', SAKURA_DOMAIN),
-        'desc'    => __('(seconds) Set to automatically load the next page time, the default is not automatically loaded', SAKURA_DOMAIN),
+        'name'    => ll('Automatically Load The Next Page'),
+        'desc'    => ll('(seconds) Set to automatically load the next page time, the default is not automatically loaded'),
         'id'      => 'auto_load_post',
         'std'     => '233',
         'type'    => 'select',
         'options' => array(
-            '0'   => __('0', SAKURA_DOMAIN),
-            '1'   => __('1', SAKURA_DOMAIN),
-            '2'   => __('2', SAKURA_DOMAIN),
-            '3'   => __('3', SAKURA_DOMAIN),
-            '4'   => __('4', SAKURA_DOMAIN),
-            '5'   => __('5', SAKURA_DOMAIN),
-            '6'   => __('6', SAKURA_DOMAIN),
-            '7'   => __('7', SAKURA_DOMAIN),
-            '8'   => __('8', SAKURA_DOMAIN),
-            '9'   => __('9', SAKURA_DOMAIN),
-            '10'  => __('10', SAKURA_DOMAIN),
-            '233' => __('Do not load automatically', SAKURA_DOMAIN),
+            '0'   => ll('0'),
+            '1'   => ll('1'),
+            '2'   => ll('2'),
+            '3'   => ll('3'),
+            '4'   => ll('4'),
+            '5'   => ll('5'),
+            '6'   => ll('6'),
+            '7'   => ll('7'),
+            '8'   => ll('8'),
+            '9'   => ll('9'),
+            '10'  => ll('10'),
+            '233' => ll('Do not load automatically'),
         )
     );
 
     $options[] = array(
-        'name' => __('Footer Info', SAKURA_DOMAIN),
-        'desc' => __('Footer description, support for HTML code', SAKURA_DOMAIN),
+        'name' => ll('Footer Info'),
+        'desc' => ll('Footer description, support for HTML code'),
         'id'   => 'footer_info',
         'std'  => 'Copyright &copy; by Yesterday17 All Rights Reserved.',
         'type' => 'textarea'
     );
 
     $options[] = array(
-        'name' => __('About', SAKURA_DOMAIN),
+        'name' => ll('About'),
         'desc' => sprintf(ll('Asakura v %s  |  <a href="https://blog.mmf.moe/post/theme-asakura/">Theme document</a>  |  <a href="https://github.com/Yesterday17/Asakura">Source code</a><a href="https://github.com/Yesterday17/Asakura/releases/latest"><img src="https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=flat-square" alt="GitHub release"></a>'), SAKURA_VERSION),
         'id'   => 'theme_intro',
         'std'  => '',
@@ -296,16 +243,7 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Sponsor US', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_sus',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/sponsor.png',),
-    );
-
-    $options[] = array(
-        'name'    => __('Check for Updates', SAKURA_DOMAIN),
+        'name'    => ll('Check for Updates'),
         'desc'    => '<a href="https://github.com/Yesterday17/Asakura/releases/latest">Download the latest version</a>',
         'id'      => "release_info",
         'std'     => "tag",
@@ -318,11 +256,11 @@ function optionsframework_options() {
     );
 
     //首页设置
-    $options[] = array('name' => __('HomePage', SAKURA_DOMAIN), 'type' => 'heading');
+    $options[] = array('name' => ll('HomePage'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('HomePage-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
+        'name'    => ll('HomePage-Setting'),
+        'desc'    => ll(' '),
         'id'      => 'setting_home',
         'std'     => 'tag',
         'type'    => "images",
@@ -330,8 +268,8 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('First Screen', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
+        'name'    => ll('First Screen'),
+        'desc'    => ll(' '),
         'id'      => 'setting_homefs',
         'std'     => 'tag',
         'type'    => "images",
@@ -339,24 +277,24 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Main Switch', SAKURA_DOMAIN),
-        'desc' => __('Default on, check off', SAKURA_DOMAIN),
+        'name' => ll('Main Switch'),
+        'desc' => ll('Default on, check off'),
         'id'   => 'main-switch',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Information Bar', SAKURA_DOMAIN),
-        'desc' => __('It is on by default and checked off to display the avatar / text logo, signature bar and social card.', SAKURA_DOMAIN),
-        'id'   => 'infor-bar',
+        'name' => ll('Information Bar'),
+        'desc' => ll('It is on by default and checked off to display the avatar / text logo, signature bar and social card.'),
+        'id'   => 'info-bar',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Social Card', SAKURA_DOMAIN),
-        'desc' => __('On by default, check off. When the social card is turned off, the switch button of background random graph and social network icon will not be displayed', SAKURA_DOMAIN),
+        'name' => ll('Social Card'),
+        'desc' => ll('On by default, check off. When the social card is turned off, the switch button of background random graph and social network icon will not be displayed'),
         'id'   => 'social-card',
         'std'  => '0',
         'type' => 'checkbox'
@@ -372,7 +310,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'    => __('Information Bar Style', SAKURA_DOMAIN),
-        'id'      => 'infor-bar-style',
+        'id'      => 'info-bar-style',
         'std'     => "v1",
         'type'    => "radio",
         'options' => array(
@@ -686,11 +624,11 @@ function optionsframework_options() {
     );
 
     //文章页
-    $options[] = array('name' => __('Post', SAKURA_DOMAIN), 'type' => 'heading');
+    $options[] = array('name' => ll('Post'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Post-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
+        'name'    => ll('Post-Setting'),
+        'desc'    => ll(' '),
         'id'      => 'setting_post',
         'std'     => 'tag',
         'type'    => "images",
@@ -730,6 +668,14 @@ function optionsframework_options() {
         'std'     => "yes",
         'type'    => "radio",
         'options' => array('yes' => __('Open', SAKURA_DOMAIN), 'no' => __('Close', SAKURA_DOMAIN),)
+    );
+
+    $options[] = array(
+        'name'    => ll('options.post.toc_always_on.name'),
+        'desc'    => ll('options.post.toc_always_on.desc'),
+        'id'      => 'toc_always_on',
+        'std'     => "1",
+        'type'    => "checkbox",
     );
 
     $options[] = array(
@@ -2247,7 +2193,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'  => __('Information Bar Background Color (RGBA) Red', SAKURA_DOMAIN),
-        'id'    => 'infor-bar-bg-cr',
+        'id'    => 'info-bar-bg-cr',
         'std'   => "255",
         'desc'  => __('Fill in the red value from 0 to 255 here', SAKURA_DOMAIN),
         'type'  => "text",
@@ -2256,7 +2202,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'  => __('Information Bar Background Color (RGBA) Green', SAKURA_DOMAIN),
-        'id'    => 'infor-bar-bg-cg',
+        'id'    => 'info-bar-bg-cg',
         'std'   => "255",
         'desc'  => __('Fill in the green value from 0 to 255 here', SAKURA_DOMAIN),
         'type'  => "text",
@@ -2265,7 +2211,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'  => __('Information Bar Background Color (RGBA) Blue', SAKURA_DOMAIN),
-        'id'    => 'infor-bar-bg-cb',
+        'id'    => 'info-bar-bg-cb',
         'std'   => "255",
         'desc'  => __('Fill in the blue value from 0 to 255 here', SAKURA_DOMAIN),
         'type'  => "text",
@@ -2274,7 +2220,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'  => __('Information Bar Background Color (RGBA) Alpha', SAKURA_DOMAIN),
-        'id'    => 'infor-bar-bg-ca',
+        'id'    => 'info-bar-bg-ca',
         'std'   => "0.8",
         'desc'  => __('Fill in the alpha value from 0 to 1 here', SAKURA_DOMAIN),
         'type'  => "text",

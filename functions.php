@@ -158,7 +158,6 @@ if (!function_exists('akina_setup')):
                 'current-menu-parent'
             )) : '';
         }
-
     }
 endif;
 add_action('after_setup_theme', 'akina_setup');
@@ -333,9 +332,9 @@ if (!function_exists('akina_comment_format')) {
                                         $i_private = get_comment_meta($comment_ID, '_private', true);
                                         $flag = ' <i class="fa fa-snowflake-o" aria-hidden="true"></i> <a href="javascript:;" data-actionp="set_private" data-idp="' . get_comment_id() . '" id="sp" class="sm" style="color:rgba(0,0,0,.35)">' . __("Private", SAKURA_DOMAIN) . ': <span class="has_set_private">';
                                         if (!empty($i_private)) {
-                                            $flag .= __("Yes", SAKURA_DOMAIN) . ' <i class="fa fa-lock" aria-hidden="true"></i>';
+                                            $flag .= ll("Yes") . ' <i class="fa fa-lock" aria-hidden="true"></i>';
                                         } else {
-                                            $flag .= __("No", SAKURA_DOMAIN) . ' <i class="fa fa-unlock" aria-hidden="true"></i>';
+                                            $flag .= ll("No") . ' <i class="fa fa-unlock" aria-hidden="true"></i>';
                                         }
                                         $flag .= '</span></a>';
                                         $flag .= edit_comment_link('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> ' . __("Edit", "mashiro"), ' <span style="color:rgba(0,0,0,.35)">', '</span>');
@@ -358,6 +357,8 @@ if (!function_exists('akina_comment_format')) {
 
 /**
  * 获取访客VIP样式
+ * @param $comment_author_email
+ * @param $user_id
  */
 function get_author_class($comment_author_email, $user_id) {
     global $wpdb;
@@ -383,6 +384,8 @@ function get_author_class($comment_author_email, $user_id) {
 
 /**
  * post views
+ * @param $number
+ * @return string
  */
 function restyle_text($number) {
     switch (akina_option('statistics_format')) {
@@ -419,7 +422,7 @@ add_action('get_header', 'set_post_views');
 function get_post_views($post_id) {
     if (akina_option('statistics_api') == 'wp_statistics') {
         if (!function_exists('wp_statistics_pages')) {
-            return __('Please install plugin <a href="https://wordpress.org/plugins/wp-statistics/" target="_blank">WP-Statistics</a>', SAKURA_DOMAIN);
+            return ll('Please install plugin <a href="https://wordpress.org/plugins/wp-statistics/" target="_blank">WP-Statistics</a>');
         } else {
             return restyle_text(wp_statistics_pages('total', 'uri', $post_id));
         }
@@ -543,13 +546,12 @@ function theme_noself_ping(&$links) {
             unset($links[$l]);
         }
     }
-
 }
 
 add_action('pre_ping', 'theme_noself_ping');
 
 /*
- * 订制body类
+ * 定制body类
  */
 function akina_body_classes($classes) {
     // Adds a class of group-blog to blogs with more than 1 published author.

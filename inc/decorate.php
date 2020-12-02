@@ -134,11 +134,11 @@ function customizer_css() { ?>
 
         .header-info {
             color: <?php echo akina_option('theme_skin'); ?>;
-            background: rgba(<?php echo akina_option('infor-bar-bg-cr'); ?>, <?php echo akina_option('infor-bar-bg-cg'); ?>, <?php echo akina_option('infor-bar-bg-cb'); ?>, <?php echo akina_option('infor-bar-bg-ca'); ?>);
+            background: rgba(<?php echo akina_option('info-bar-bg-cr'); ?>, <?php echo akina_option('info-bar-bg-cg'); ?>, <?php echo akina_option('info-bar-bg-cb'); ?>, <?php echo akina_option('info-bar-bg-ca'); ?>);
         }
 
         .top-social img {
-            background: rgba(<?php echo akina_option('infor-bar-bg-cr'); ?>, <?php echo akina_option('infor-bar-bg-cg'); ?>, <?php echo akina_option('infor-bar-bg-cb'); ?>, <?php echo akina_option('infor-bar-bg-ca'); ?>);
+            background: rgba(<?php echo akina_option('info-bar-bg-cr'); ?>, <?php echo akina_option('info-bar-bg-cg'); ?>, <?php echo akina_option('info-bar-bg-cb'); ?>, <?php echo akina_option('info-bar-bg-ca'); ?>);
         }
 
         .skin-menu {

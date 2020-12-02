@@ -10,7 +10,7 @@
 <div id="banner_wave_1"></div>
 <div id="banner_wave_2"></div>
 <figure id="centerbg" class="centerbg">
-    <?php if (!akina_option('infor-bar')) { ?>
+    <?php if (!akina_option('info-bar')) { ?>
         <div class="focusinfo">
             <?php if (akina_option('focus_logo_text')): ?>
                 <h1 class="center-text glitch is-glitching Ubuntu-font"
@@ -43,7 +43,7 @@
                     </script>
                 <?php endif; ?>
                 <p><?php echo akina_option('admin_des', 'Hi, Mashiro?'); ?></p>
-                <?php if (akina_option('infor-bar-style') == "v2"): ?>
+                <?php if (akina_option('info-bar-style') == "v2"): ?>
                     <div class="top-social_v2">
                         <?php if (akina_option('background-rgs', '1')): ?>
                             <li id="bg-pre"><img src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
@@ -135,7 +135,7 @@
                     </div>
                 <?php endif; ?>
             </div>
-            <?php if (akina_option('infor-bar-style') == "v1"): ?>
+            <?php if (akina_option('info-bar-style') == "v1"): ?>
                 <div class="top-social">
                     <?php if (akina_option('background-rgs', '1')): ?>
                         <li id="bg-pre"><img src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
