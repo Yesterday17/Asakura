@@ -20,6 +20,10 @@ if (!function_exists("ll")):
     function ll($key) {
         return __($key, SAKURA_DOMAIN);
     }
+
+    function ee($key) {
+        echo ll($key);
+    }
 endif;
 
 if (!function_exists("asakura_rest_url")):
@@ -345,7 +349,7 @@ if (!function_exists('akina_comment_format')) {
                                 <h4 class="author"><a href="<?php comment_author_url(); ?>" target="_blank"
                                                       rel="nofollow"><?php echo get_avatar($comment->comment_author_email, '24', '', get_comment_author()); ?>
                                         <span class="bb-comment isauthor"
-                                              title="<?php _e('Author', SAKURA_DOMAIN); ?>"><?php _e('Blogger', SAKURA_DOMAIN); /*博主*/ ?></span> <?php comment_author(); ?> <?php echo get_author_class($comment->comment_author_email, $comment->user_id); ?>
+                                              title="<?php _e('Author', SAKURA_DOMAIN); ?>"><?php _e('Blogger', SAKURA_DOMAIN); /*博主*/ ?></span> <?php comment_author(); ?> <?php get_author_class($comment->comment_author_email, $comment->user_id); ?>
                                     </a></h4>
                             </div>
                             <?php comment_reply_link(array_merge($args, array(
@@ -608,7 +612,7 @@ add_filter('body_class', 'akina_body_classes');
 add_filter('upload_dir', 'wpjam_custom_upload_dir');
 function wpjam_custom_upload_dir($uploads) {
     $upload_path = '';
-    $upload_url_path = akina_option('qiniu_cdn');
+    $upload_url_path = akina_option('image_cdn');
 
     if (empty($upload_path) || 'wp-content/uploads' == $upload_path) {
         $uploads['basedir'] = WP_CONTENT_DIR . '/uploads';
@@ -1251,7 +1255,7 @@ function html_tag_parser($content) {
         $url_regex = '((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))';
 
         //With Thumbnail: !{alt}(url)[th_url]
-        if (preg_match_all('/\!\{.*?\)\[.*?\]/i', $content, $matches)) {
+        if (preg_match_all('/!{.*?\)\[.*?]/i', $content, $matches)) {
             for ($i = 0; $i < sizeof($matches); $i++) {
                 $content = str_replace($matches[$i], preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)\[' . $url_regex . '\]/i', '<a data-fancybox="gallery"
                         data-caption="$1"
@@ -1263,7 +1267,7 @@ function html_tag_parser($content) {
         }
 
         //Without Thumbnail :!{alt}(url)
-        $content = preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)/i', '<a data-fancybox="gallery"
+        $content = preg_replace('/!{([^{}]+)*}\(' . $url_regex . '\)/i', '<a data-fancybox="gallery"
                 data-caption="$1"
                 class="fancybox"
                 href="$2"
@@ -1274,12 +1278,12 @@ function html_tag_parser($content) {
     if (is_feed()) {
         //Fancybox
         $url_regex = '((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))';
-        if (preg_match_all('/\!\{.*?\)\[.*?\]/i', $content, $matches)) {
+        if (preg_match_all('/!{.*?\)\[.*?]/i', $content, $matches)) {
             for ($i = 0; $i < sizeof($matches); $i++) {
                 $content = str_replace($matches[$i], preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)\[' . $url_regex . '\]/i', '<a href="$2"><img src="$7" alt="$1" title="$1"></a>', $matches[$i]), $content);
             }
         }
-        $content = preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)/i', '<a href="$2"><img src="$2" alt="$1" title="$1"></a>', $content);
+        $content = preg_replace('/!{([^{}]+)*}\(' . $url_regex . '\)/i', '<a href="$2"><img src="$2" alt="$1" title="$1"></a>', $content);
     }
     return $content;
 }

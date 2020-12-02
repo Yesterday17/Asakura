@@ -18,7 +18,7 @@ function bgvideo() {
     if (!akina_option('focus_amv') || akina_option('focus_height'))
         $dis = 'display:none;';
     $html = '<div id="video-container" style="' . $dis . '">';
-    $html .= '<video id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto"></video>';
+    $html .= '<video id="bgvideo" class="video" src="" width="auto" preload="auto"></video>';
     $html .= '<div id="video-btn" class="loadvideo videolive"></div>';
     $html .= '<div id="video-add"></div>';
     $html .= '<div class="video-stu"></div>';
@@ -126,12 +126,11 @@ function comment_add_at($comment_text, $comment = '') {
 
 add_filter('comment_text', 'comment_add_at', 20, 2);
 
-
 /*
  * Ajax评论
  */
 if (version_compare($GLOBALS['wp_version'], '4.4-alpha', '<')) {
-    wp_die(__('Please upgrade wordpress to version 4.4+', SAKURA_DOMAIN));
+    wp_die(ll('Please upgrade wordpress to version 4.4+'));
 }/*请升级到4.4以上版本*/
 // 提示
 if (!function_exists('siren_ajax_comment_err')) {
@@ -149,21 +148,23 @@ function siren_robot_comment() {
     }
 }
 
-if (akina_option('norobot'))
-    add_action('pre_comment_on_post', 'siren_robot_comment');
 // 纯英文评论拦截
 function scp_comment_post($incoming_comment) {
     // 为什么要拦自己呢？
     global $user_ID;
     if ($user_ID && current_user_can('level_10')) {
         return ($incoming_comment);
-    } elseif (!preg_match('/[一-龥]/u', $incoming_comment['comment_content'])) {
-        siren_ajax_comment_err('写点汉字吧。You should add some Chinese words.');
+    } elseif (mb_detect_encoding($incoming_comment['comment_content'], 'ASCII', true)) {
+        siren_ajax_comment_err('写点汉字吧。You should add some non-ASCII characters.');
     }
     return ($incoming_comment);
 }
 
-// add_filter('preprocess_comment', 'scp_comment_post');
+if (akina_option('norobot')):
+    add_action('pre_comment_on_post', 'siren_robot_comment');
+    add_filter('preprocess_comment', 'scp_comment_post');
+endif;
+
 // 国际化很重要
 // 评论提交
 if (!function_exists('siren_ajax_comment_callback')) {
@@ -181,7 +182,7 @@ if (!function_exists('siren_ajax_comment_callback')) {
         do_action('set_comment_cookies', $comment, $user);
         $GLOBALS['comment'] = $comment; //根据你的评论结构自行修改，如使用默认主题则无需修改
         ?>
-        <li <?php comment_class(); ?> id="comment-<?php echo esc_attr(comment_ID()); ?>">
+        <li <?php comment_class(); ?> id="comment-<?php echo esc_attr(get_comment_ID()); ?>">
             <div class="contents">
                 <div class="comment-arrow">
                     <div class="main shadow">
@@ -236,40 +237,40 @@ if (akina_option('exlogin_url')) {
 
 // 登录跳转
 function Exuser_center() { ?>
-    <script language='javascript' type='text/javascript'>
-        var secs = 5; //倒计时的秒数
-        var URL;
-        var TYPE;
+    <script>
+        let secs = 5; //倒计时的秒数
+        let URL;
+        let TYPE;
 
         function gopage(url, type) {
             URL = url;
-            if (type == 1) {
-                TYPE = <?php _e('dashboard', SAKURA_DOMAIN)/*管理后台*/?>;
+            if (type === 1) {
+                TYPE = <?php ee('dashboard')/*管理后台*/?>;
             } else {
-                TYPE = <?php _e('home', SAKURA_DOMAIN)/*主页*/?>;
+                TYPE = <?php ee('home')/*主页*/?>;
             }
-            for (var i = secs; i >= 0; i--) {
+            for (let i = secs; i >= 0; i--) {
                 window.setTimeout('doUpdate(' + i + ')', (secs - i) * 1000);
             }
         }
 
         function doUpdate(num) {
-            document.getElementById('login-showtime').innerHTML = '<?php _e("Login successful, ", SAKURA_DOMAIN)/*空降成功*/?>' + num + '<?php _e("seconds later automatically transfer to", SAKURA_DOMAIN)/*秒后自动转到*/?>' + TYPE;
-            if (num == 0) {
+            document.getElementById('login-showtime').innerHTML = '<?php ee("Login successful, ")/*空降成功*/?>' + num + '<?php ee("seconds later automatically transfer to")/*秒后自动转到*/?>' + TYPE;
+            if (num === 0) {
                 window.location = URL;
             }
         }
     </script>
     <?php if (current_user_can('level_10')) { ?>
         <div class="admin-login-check">
-            <?php echo login_ok(); ?>
+            <?php login_ok(); ?>
             <?php if (akina_option('login_urlskip')) { ?>
                 <script>window.open("<?php bloginfo('url'); ?>/wp-admin/", 1);
                     gopage("<?php bloginfo('url'); ?>", 0);</script><?php } ?>
         </div>
     <?php } else { ?>
         <div class="user-login-check">
-            <?php echo login_ok(); ?>
+            <?php login_ok(); ?>
             <?php if (akina_option('login_urlskip')) { ?>
                 <script>gopage("<?php bloginfo('url'); ?>", 0);</script><?php } ?>
         </div>
@@ -283,9 +284,9 @@ function login_ok() {
     wp_get_current_user();
     ?>
     <p class="ex-login-avatar"><a href="http://cn.gravatar.com/"
-                                  title="<?php _e('Change avatar', SAKURA_DOMAIN)/*更换头像*/ ?>" target="_blank"
+                                  title="<?php ee('Change avatar')/*更换头像*/ ?>" target="_blank"
                                   rel="nofollow"><?php echo get_avatar($current_user->user_email, '110'); ?></a></p>
-    <p class="ex-login-username"><?php _e('Hello, ', SAKURA_DOMAIN)/*你好，*/ ?>
+    <p class="ex-login-username"><?php ee('Hello, ')/*你好，*/ ?>
         <strong><?php echo $current_user->display_name; ?></strong></p>
     <?php if ($current_user->user_email) {
         echo '<p>' . $current_user->user_email . '</p>';
@@ -313,19 +314,20 @@ function the_headPattern() {
     $full_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full');
     if (is_single()) {
         $full_image_url = $full_image_url[0];
-        if (have_posts()) : while (have_posts()) : the_post();
-            $center = 'single-center';
-            $header = 'single-header';
-            $ava = akina_option('focus_logo', '') ? akina_option('focus_logo', '') : get_avatar_url(get_the_author_meta('user_email'));
-            global $user_ID;
-            if ($user_ID && current_user_can('level_10')) {
-                $edit_this_post_link = '<span class="bull">·</span><a href="' . get_edit_post_link() . '">EDIT</a>';
-            } else {
-                $edit_this_post_link = '';
-            }
-            $t .= the_title('<h1 class="entry-title">', '</h1>', false);
-            $t .= '<span class="toppic-line"></span><p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_url(get_the_author_meta('ID'), 64)/*$ava*/ . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
-        endwhile; endif;
+        if (have_posts()) :
+            while (have_posts()) : the_post();
+                $center = 'single-center';
+                $header = 'single-header';
+                global $user_ID;
+                if ($user_ID && current_user_can('level_10')) {
+                    $edit_this_post_link = '<span class="bull">·</span><a href="' . get_edit_post_link() . '">EDIT</a>';
+                } else {
+                    $edit_this_post_link = '';
+                }
+                $t .= the_title('<h1 class="entry-title">', '</h1>', false);
+                $t .= '<span class="toppic-line"></span><p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_url(get_the_author_meta('ID'), 64)/*$ava*/ . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
+            endwhile;
+        endif;
     } elseif (is_page()) {
         $full_image_url = $full_image_url[0];
         $t .= the_title('<h1 class="entry-title">', '</h1>', false);
@@ -359,87 +361,19 @@ function the_headPattern() {
 }
 
 /*视频封面*/
+//HLS
 function the_video_headPattern_hls() {
-    $t = ''; // 标题
-    $full_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full');
-    $thubm_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'thumbnail');
-
-    $video_cover = get_post_meta(get_the_ID(), 'video_cover', true);
-    $video_cover_thumb = get_post_meta(get_the_ID(), 'video_cover_thumb', true);
-    // 检查这个字段是否有值
-    if (empty ($video_cover_thumb)) { //如果值为空，输出默认值
-        $video_poster_attr = "";
-    } else {
-        $video_poster_attr = ' poster="' . $video_cover_thumb . '" ';
-    }
-
-    if (is_single()) {
-        $full_image_url = $full_image_url[0];
-        $thubm_image_url = $thubm_image_url[0];
-        if (have_posts()) : while (have_posts()) : the_post();
-            $center = 'single-center';
-            $header = 'single-header';
-            $ava = akina_option('focus_logo', '') ? akina_option('focus_logo', '') : get_avatar_url(get_the_author_meta('user_email'));
-            global $user_ID;
-            if ($user_ID && current_user_can('level_10')) {
-                $edit_this_post_link = '<span class="bull">·</span><a href="' . get_edit_post_link() . '">EDIT</a>';
-            } else {
-                $edit_this_post_link = '';
-            }
-            $t .= the_title('<h1 class="entry-title">', '<button id="coverVideo-btn" class=".constant-width-to-height-ratio" onclick="coverVideo()"><i class="fa fa-pause" aria-hidden="true"></i></button></h1>', false);
-            $t .= '<p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_url(get_the_author_meta('ID'), 64)/*$ava*/ . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
-        endwhile; endif;
-    } elseif (is_page()) {
-        $full_image_url = $full_image_url[0];
-        $thubm_image_url = $thubm_image_url[0];
-        $t .= the_title('<h1 class="entry-title">', '</h1>', false);
-    } elseif (is_archive()) {
-        $full_image_url = z_taxonomy_image_url();
-        $thubm_image_url = akina_option('webweb_img') . '/load/outload.svg';
-        $des = category_description() ? category_description() : ''; // 描述
-        $t .= '<h1 class="cat-title">' . single_cat_title('', false) . '</h1>';
-        $t .= ' <span class="cat-des">' . $des . '</span>';
-    } elseif (is_search()) {
-        $full_image_url = get_random_bg_url();
-        $thubm_image_url = akina_option('webweb_img') . '/load/outload.svg';
-        $t .= '<h1 class="entry-title search-title"> ' . sprintf(__("Search results for \" %s \"", SAKURA_DOMAIN), get_search_query()) ./*关于“ '.get_search_query().' ”的搜索结果*/
-            '</h1>';
-    }
-    $thubm_image_url = $thubm_image_url . "#lazyload-blur";
-    $thubm_image_url = str_replace(akina_option('qiniu_cdn'), 'https://cdn.2heng.xin/', $thubm_image_url);
-    if (akina_option('patternimg'))
-        $full_image_url = false;
-    if (!is_home() && $full_image_url) : ?>
-        <div class="pattern-center-blank"></div>
-        <div class="pattern-center <?php if (is_single()) {
-            echo $center;
-        } ?>">
-            <div class="pattern-attachment-img" style="height: auto;">
-                <video loop id="coverVideo" class='hls'
-                       style="width: 100%; height: 100%"
-                    <?php echo $video_poster_attr; ?>
-                       data-src="<?php echo $video_cover; ?>">
-
-                </video>
-            </div>
-
-            <style>.pattern-center::before, .pattern-center-sakura::before {
-                    display: none
-                }</style>
-            <header class="pattern-header <?php if (is_single()) {
-                echo $header;
-            } ?>"><?php echo $t; ?></header>
-        </div>
-    <?php else :
-        echo '<div class="blank"></div>';
-    endif;
+    the_video_headPattern('hls');
 }
 
 //普通视频
 function the_video_headPattern_normal() {
+    the_video_headPattern('normal-cover-video');
+}
+
+function the_video_headPattern($type) {
     $t = ''; // 标题
     $full_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full');
-    $thubm_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'thumbnail');
 
     $video_cover = get_post_meta(get_the_ID(), 'video_cover', true);
     $video_cover_thumb = get_post_meta(get_the_ID(), 'video_cover_thumb', true);
@@ -452,14 +386,12 @@ function the_video_headPattern_normal() {
 
     if (is_single()) {
         $full_image_url = $full_image_url[0];
-        $thubm_image_url = $thubm_image_url[0];
         if (have_posts()) : while (have_posts()) : the_post();
             $center = 'single-center';
             $header = 'single-header';
-            $ava = akina_option('focus_logo', '') ? akina_option('focus_logo', '') : get_avatar_url(get_the_author_meta('user_email'));
             global $user_ID;
             if ($user_ID && current_user_can('level_10')) {
-                $edit_this_post_link = '<span class="bull">·</span><a href="' . get_edit_post_link() . '">' . _e("EDIT", SAKURA_DOMAIN) . '</a>';
+                $edit_this_post_link = '<span class="bull">·</span><a href="' . get_edit_post_link() . '">' . ll("EDIT") . '</a>';
             } else {
                 $edit_this_post_link = '';
             }
@@ -468,22 +400,17 @@ function the_video_headPattern_normal() {
         endwhile; endif;
     } elseif (is_page()) {
         $full_image_url = $full_image_url[0];
-        $thubm_image_url = $thubm_image_url[0];
         $t .= the_title('<h1 class="entry-title">', '</h1>', false);
     } elseif (is_archive()) {
         $full_image_url = z_taxonomy_image_url();
-        $thubm_image_url = akina_option('webweb_img') . '/load/outload.svg';
         $des = category_description() ? category_description() : ''; // 描述
         $t .= '<h1 class="cat-title">' . single_cat_title('', false) . '</h1>';
         $t .= ' <span class="cat-des">' . $des . '</span>';
     } elseif (is_search()) {
         $full_image_url = get_random_bg_url();
-        $thubm_image_url = akina_option('webweb_img') . '/load/outload.svg';
         $t .= '<h1 class="entry-title search-title"> ' . sprintf(__("Search results for \" %s \"", SAKURA_DOMAIN), get_search_query()) ./*关于“ '.get_search_query().' ”的搜索结果*/
             '</h1>';
     }
-    $thubm_image_url = $thubm_image_url . "#lazyload-blur";
-    $thubm_image_url = str_replace(akina_option('qiniu_cdn'), 'https://cdn.2heng.xin/', $thubm_image_url);
     if (akina_option('patternimg'))
         $full_image_url = false;
     if (!is_home() && $full_image_url) : ?>
@@ -492,11 +419,10 @@ function the_video_headPattern_normal() {
             echo $center;
         } ?>">
             <div class="pattern-attachment-img" style="height: auto;">
-                <video autoplay loop id="coverVideo" class="normal-cover-video"
+                <video loop id="coverVideo" class="<?php echo $type; ?>"
                        style="width: 100%; height: 100%"
-                    <?php echo $video_poster_attr; ?>>
-                    <source src="<?php echo $video_cover; ?>" type="video/mp4">
-                    Your browser does not support HTML5 video.
+                    <?php echo $video_poster_attr; ?>
+                       data-src="<?php echo $video_cover; ?>">
                 </video>
             </div>
 
@@ -511,7 +437,6 @@ function the_video_headPattern_normal() {
         echo '<div class="blank"></div>';
     endif;
 }
-
 
 /*
  * 导航栏用户菜单
@@ -572,29 +497,22 @@ function get_prev_thumbnail_url() {
     $prev_post = get_previous_post();
     if (!$prev_post) {
         return get_random_bg_url(); // 首页图
-    } else if (has_post_thumbnail($prev_post->ID)) {
-        $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($prev_post->ID), 'large');
-        return $img_src[0]; // 特色图
     } else {
-        $content = $prev_post->post_content;
-        preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
-        $n = count($strResult[1]);
-        if ($n > 0) {
-            return $strResult[1][0];  // 文章图
-        } else {
-            return get_random_bg_url(); // 首页图
-        }
+        return get_thumbnail_url($prev_post);
     }
 }
 
 // 下一篇
 function get_next_thumbnail_url() {
-    $next_post = get_next_post();
-    if (has_post_thumbnail($next_post->ID)) {
-        $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($next_post->ID), 'large');
+    return get_thumbnail_url(get_next_post());
+}
+
+function get_thumbnail_url($post) {
+    if (has_post_thumbnail($post->ID)) {
+        $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
         return $img_src[0];
     } else {
-        $content = $next_post->post_content;
+        $content = $post->post_content;
         preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
         $n = count($strResult[1]);
         if ($n > 0) {
@@ -915,7 +833,7 @@ function siren_get_browsers($ua) {
         $icon = 'opera';
         if (preg_match('#opera mini#i', $ua))
             $title = 'Opera Mini' . $matches[2];
-    } elseif (preg_match('#Maxthon( |\/)([a-zA-Z0-9.]+)#i', $ua, $matches)) {
+    } elseif (preg_match('#Maxthon([ /])([a-zA-Z0-9.]+)#i', $ua, $matches)) {
         $title = 'Maxthon ' . $matches[2];
         $icon = 'maxthon';
     } elseif (preg_match('#wp-(iphone|android)/([a-zA-Z0-9.]+)#i', $ua, $matches)) { // 1.2 增加 wordpress 客户端的判断

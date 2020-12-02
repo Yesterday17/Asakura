@@ -431,7 +431,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name' => __('Webp Optimization / External API PC Random Graphs Url', SAKURA_DOMAIN),
-        'desc' => sprintf(__('Fill in the manifest path for random picture display, please refer to <a href = "https: //github.com/mashirozx/Sakura/wiki/options">Wiki </a>. If you select webp images above, click <a href = "%s">here</a> to update manifest', SAKURA_DOMAIN), asakura_rest_url('database/update')),
+        'desc' => sprintf(__('Fill in the manifest path for random picture display, please refer to <a href="https://github.com/mashirozx/Sakura/wiki/options">Wiki </a>. If you select webp images above, click <a href="%s">here</a> to update manifest', SAKURA_DOMAIN), asakura_rest_url('database/update')),
         'id'   => 'cover_cdn',
         'std'  => 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images',
         'type' => 'text'
@@ -1339,7 +1339,7 @@ function optionsframework_options() {
     $options[] = array(
         'name' => __('Images CDN', SAKURA_DOMAIN),
         'desc' => __('Note: Fill in the format http(s)://your CDN domain name/. <br>In other words, the original path is http://your.domain/wp-content/uploads/2018/05/xx.png and the picture will load from http://your CDN domain/2018/05/xx.png', SAKURA_DOMAIN),
-        'id'   => 'qiniu_cdn',
+        'id'   => 'image_cdn',
         'std'  => '',
         'type' => 'text'
     );
@@ -2110,7 +2110,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name' => __('Logo Font Link', SAKURA_DOMAIN),
-        'desc' => __('When the font is ready, do this again <a href = "https://www.fontke.com/tool/fontface/">@font-face生成器</a>It can generate a bunch of files, which are all useful. It can be placed on a accessible server, OOS, CDN, etc. here, you only need to fill in the CSS style sheet file link <a href = "https://blog.ukenn.top/sakura6/#toc-head-4">Detailed tutorial</a>', SAKURA_DOMAIN),
+        'desc' => __('When the font is ready, do this again <a href="https://www.fontke.com/tool/fontface/">@font-face生成器</a>It can generate a bunch of files, which are all useful. It can be placed on a accessible server, OOS, CDN, etc. here, you only need to fill in the CSS style sheet file link <a href="https://blog.ukenn.top/sakura6/#toc-head-4">Detailed tutorial</a>', SAKURA_DOMAIN),
         'id'   => 'logo_zt',
         'std'  => 'https://cdn.jsdelivr.net/gh/acai66/mydl/fonts/wenyihei/wenyihei-subfont.css',
         'type' => 'text'

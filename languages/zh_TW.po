@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Asakura\n"
-"POT-Creation-Date: 2020-12-02 19:27+0800\n"
-"PO-Revision-Date: 2020-12-02 19:27+0800\n"
+"POT-Creation-Date: 2020-12-02 20:42+0800\n"
+"PO-Revision-Date: 2020-12-02 20:42+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_TW\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: style.css\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: ll;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"X-Poedit-KeywordsList: ll;ee;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -86,43 +86,35 @@ msgstr "BiuBiuBiu"
 msgid "You are a surprise that I will only meet once in my life"
 msgstr "你是我一生只會遇見一次的驚喜"
 
-#: comments.php:73
-msgid "Click me OωO"
-msgstr "戳我呀 OωO"
-
-#: comments.php:74
-msgid "Woooooow ヾ(≧∇≦*)ゝ"
-msgstr "嘿嘿嘿 ヾ(≧∇≦*)ゝ"
-
-#: comments.php:108
+#: comments.php:85
 msgid "Auto pull nickname and avatar with a QQ num. entered"
 msgstr "輸入QQ號將自動拉取暱稱和頭像"
 
-#: comments.php:109
+#: comments.php:86
 msgid "Nickname or QQ number"
 msgstr "暱稱或QQ號"
 
-#: comments.php:109
+#: comments.php:86
 msgid "Name* "
 msgstr "暱稱 "
 
-#: comments.php:112
+#: comments.php:89
 msgid "You will receive notification by email"
 msgstr "你將收到回復通知"
 
-#: comments.php:113
+#: comments.php:90
 msgid "email"
 msgstr "電子信箱"
 
-#: comments.php:113
+#: comments.php:90
 msgid "Must* "
 msgstr "必須* "
 
-#: comments.php:115
+#: comments.php:92
 msgid "Advertisement is forbidden 😀"
 msgstr "禁止小廣告😀"
 
-#: comments.php:116
+#: comments.php:93
 msgid "Site"
 msgstr "網站"
 
@@ -138,40 +130,40 @@ msgstr "檢索"
 msgid "Widgets"
 msgstr "小工具"
 
-#: functions.php:67
+#: functions.php:71
 msgid "Nav Menus"
 msgstr "導航菜單"
 
-#: functions.php:348 inc/theme_plus.php:197 layouts/authorprofile.php:13
+#: functions.php:352 inc/theme_plus.php:198 layouts/authorprofile.php:13
 #: options.php:130
 msgid "Author"
 msgstr "作者"
 
-#: functions.php:348
+#: functions.php:352
 msgid "Blogger"
 msgstr "部落格作者"
 
-#: functions.php:360
+#: functions.php:364
 msgid "Location"
 msgstr "來自"
 
-#: functions.php:365
+#: functions.php:369
 msgid "Private"
 msgstr "私密"
 
-#: functions.php:367
+#: functions.php:371
 msgid "Yes"
 msgstr "是"
 
-#: functions.php:369
+#: functions.php:373
 msgid "No"
 msgstr "否"
 
-#: functions.php:372
+#: functions.php:376
 msgid "Edit"
 msgstr "編輯"
 
-#: functions.php:453
+#: functions.php:457
 msgid ""
 "Please install plugin <a href=\"https://wordpress.org/plugins/wp-statistics/"
 "\" target=\"_blank\">WP-Statistics</a>"
@@ -179,15 +171,15 @@ msgstr ""
 "請安裝插件 <a href=\"https://wordpress.org/plugins/wp-statistics/\" target="
 "\"_blank\">WP-Statistics</a>"
 
-#: functions.php:507
+#: functions.php:511
 msgid "This guy is so lazy ╮(╯▽╰)╭"
 msgstr "這傢伙好懶╮(╯▽╰)╭"
 
-#: functions.php:1251
+#: functions.php:1024
 msgid "All expand/collapse"
 msgstr "全部展開/收縮"
 
-#: functions.php:1272 options.php:105 options.php:114 options.php:300
+#: functions.php:1045 options.php:105 options.php:114 options.php:300
 #: options.php:325 options.php:334 options.php:504 options.php:693
 #: options.php:793 options.php:940 options.php:949 options.php:1038
 #: options.php:1089 options.php:1206 options.php:1246 options.php:1290
@@ -198,27 +190,27 @@ msgstr "全部展開/收縮"
 msgid " "
 msgstr ""
 
-#: functions.php:1277
+#: functions.php:1050
 msgid " post(s)"
 msgstr " 篇文章"
 
-#: functions.php:1299 functions.php:1302 inc/theme_plus.php:535
+#: functions.php:1072 functions.php:1075 inc/theme_plus.php:460
 msgid "Dashboard"
 msgstr "管理後台"
 
-#: functions.php:1467
+#: functions.php:1239
 msgid "<b>ERROR</b>: This email domain (<b>@"
 msgstr "<b>錯誤</b>: 電子信箱格式出錯 (<b>@"
 
-#: functions.php:1536
+#: functions.php:1308
 msgid "QQ"
 msgstr "QQ"
 
-#: functions.php:1597
+#: functions.php:1369
 msgid "Sidebar"
 msgstr "側欄"
 
-#: functions.php:1719
+#: functions.php:1491
 msgid ""
 "<b> For a better experience, please do not set <a href=\"/wp-admin/options-"
 "permalink.php\"> permalink </a> as plain. To do this, you may need to "
@@ -255,7 +247,7 @@ msgstr "圖像"
 msgid "no image"
 msgstr "暫無"
 
-#: inc/classes/Cache.php:58 inc/theme_plus.php:794
+#: inc/classes/Cache.php:58 inc/theme_plus.php:712
 msgid "The comment is private"
 msgstr "這是一條私密評論"
 
@@ -374,74 +366,74 @@ msgstr " 秒前"
 msgid "Posted on "
 msgstr "發布於 "
 
-#: inc/theme_plus.php:134
+#: inc/theme_plus.php:133
 msgid "Please upgrade wordpress to version 4.4+"
 msgstr "請升級到4.4以上版本"
 
-#: inc/theme_plus.php:247
+#: inc/theme_plus.php:248
 msgid "dashboard"
 msgstr "管理後台"
 
-#: inc/theme_plus.php:249
+#: inc/theme_plus.php:250
 msgid "home"
 msgstr "首頁"
 
-#: inc/theme_plus.php:257
+#: inc/theme_plus.php:258
 msgid "Login successful, "
 msgstr "登錄成功， "
 
-#: inc/theme_plus.php:257
+#: inc/theme_plus.php:258
 msgid "seconds later automatically transfer to"
 msgstr "秒後自動轉到"
 
-#: inc/theme_plus.php:286
+#: inc/theme_plus.php:287
 msgid "Change avatar"
 msgstr "更換頭像"
 
-#: inc/theme_plus.php:288
+#: inc/theme_plus.php:289
 msgid "Hello, "
 msgstr "歡迎"
 
-#: inc/theme_plus.php:296
+#: inc/theme_plus.php:297
 msgid "Home"
 msgstr "首頁"
 
-#: inc/theme_plus.php:298 inc/theme_plus.php:299
+#: inc/theme_plus.php:299 inc/theme_plus.php:300
 msgid "Manage"
 msgstr "管理"
 
-#: inc/theme_plus.php:301
+#: inc/theme_plus.php:302
 msgid "Logout"
 msgstr "退出登錄"
 
-#: inc/theme_plus.php:302
+#: inc/theme_plus.php:303
 msgid "Sign out? "
 msgstr "退出登錄？ "
 
-#: inc/theme_plus.php:327 inc/theme_plus.php:390 inc/theme_plus.php:467
-#: tpl/content-single.php:19 tpl/single-image.php:19
+#: inc/theme_plus.php:328 inc/theme_plus.php:399 tpl/content-single.php:19
+#: tpl/single-image.php:19
 msgid "View"
 msgid_plural "Views"
 msgstr[0] "次閱讀"
 
-#: inc/theme_plus.php:339 inc/theme_plus.php:405 inc/theme_plus.php:482
+#: inc/theme_plus.php:341 inc/theme_plus.php:411
 #, php-format
 msgid "Search results for \" %s \""
 msgstr "關於“ %s ”的搜尋結果"
 
-#: inc/theme_plus.php:462
+#: inc/theme_plus.php:394
 msgid "EDIT"
 msgstr "編輯"
 
-#: inc/theme_plus.php:537
+#: inc/theme_plus.php:462
 msgid "New post"
 msgstr "撰寫文章"
 
-#: inc/theme_plus.php:540
+#: inc/theme_plus.php:465
 msgid "Profile"
 msgstr "個人資料"
 
-#: inc/theme_plus.php:542
+#: inc/theme_plus.php:467
 msgid "Sign out"
 msgstr "退出登錄"
 
@@ -828,16 +820,20 @@ msgid "Webp Optimization / External API PC Random Graphs Url"
 msgstr "Webp最佳化 / 外部API電腦端 隨機圖地址"
 
 #: options.php:434
-#, php-format
+#, fuzzy, php-format
+#| msgid ""
+#| "Fill in the manifest path for random picture display, please refer to <a "
+#| "href=\"https: //github.com/mashirozx/Sakura/wiki/options\">Wiki </a>. If "
+#| "you select webp images above, click <a href=\"%s\">here</a> to update "
+#| "manifest"
 msgid ""
 "Fill in the manifest path for random picture display, please refer to <a "
-"href = \"https: //github.com/mashirozx/Sakura/wiki/options\">Wiki </a>. If "
-"you select webp images above, click <a href = \"%s\">here</a> to update "
-"manifest"
+"href=\"https://github.com/mashirozx/Sakura/wiki/options\">Wiki </a>. If you "
+"select webp images above, click <a href=\"%s\">here</a> to update manifest"
 msgstr ""
 "填寫 Manifest 路徑，更多訊息請參考<a href=\"https://github.com/mashirozx/"
 "Sakura/wiki/options\">Wiki</a>,，如果你在上面選擇了Webp最佳化隨機圖，請點擊"
-"<a href = \"%s\">這裡</a>更新 Manifest，來使用Webp隨機圖"
+"<a href=\"%s\">這裡</a>更新 Manifest，來使用Webp隨機圖"
 
 #: options.php:441
 msgid "External API Mobile Random Graphs Url"
@@ -2396,17 +2392,16 @@ msgstr "Logo字體連結"
 
 #: options.php:2113
 msgid ""
-"When the font is ready, do this again <a href = \"https://www.fontke.com/"
-"tool/fontface/\">@font-face生成器</a>It can generate a bunch of files, which "
-"are all useful. It can be placed on a accessible server, OOS, CDN, etc. "
-"here, you only need to fill in the CSS style sheet file link <a href = "
-"\"https://blog.ukenn.top/sakura6/#toc-head-4\">Detailed tutorial</a>"
+"When the font is ready, do this again <a href=\"https://www.fontke.com/tool/"
+"fontface/\">@font-face生成器</a>It can generate a bunch of files, which are "
+"all useful. It can be placed on a accessible server, OOS, CDN, etc. here, "
+"you only need to fill in the CSS style sheet file link <a href=\"https://"
+"blog.ukenn.top/sakura6/#toc-head-4\">Detailed tutorial</a>"
 msgstr ""
-"準備好字體後在再這個 <a href = \"https://www.fontke.com/tool/fontface/"
-"\">@font-face生成器</a> 裡來轉換為方便網頁使用的格式，在這個能生成一堆文件，"
-"文件都有用，放在一個可以訪問的伺服器、oos、cdn等上，這裡只需要填寫那個css格式"
-"的樣式表文件連結 <a href = \"https://blog.ukenn.top/sakura6/#toc-head-4\">詳"
-"細教學</a>"
+"準備好字體後在再這個 <a href=\"https://www.fontke.com/tool/fontface/\">@font-"
+"face生成器</a> 裡來轉換為方便網頁使用的格式，在這個能生成一堆文件，文件都有"
+"用，放在一個可以訪問的伺服器、oos、cdn等上，這裡只需要填寫那個css格式的樣式表"
+"文件連結 <a href=\"https://blog.ukenn.top/sakura6/#toc-head-4\">詳細教學</a>"
 
 #: options.php:2120
 msgid "Logo Font Name"
@@ -2800,6 +2795,12 @@ msgstr "註冊成功！正在跳轉......"
 #: user/page-register.php:110
 msgid "Registration is not open yet."
 msgstr "暫未開放註冊"
+
+#~ msgid "Click me OωO"
+#~ msgstr "戳我呀 OωO"
+
+#~ msgid "Woooooow ヾ(≧∇≦*)ゝ"
+#~ msgstr "嘿嘿嘿 ヾ(≧∇≦*)ゝ"
 
 #~ msgid "View details"
 #~ msgstr "查看更多內容"
