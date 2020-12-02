@@ -289,7 +289,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name' => __('About', SAKURA_DOMAIN),
-        'desc' => sprintf(__('Asakura v %s  |  <a href="https://blog.mmf.moe/post/theme-asakura/">Theme document</a>  |  <a href="https://github.com/mirai-mamori/Sakurairo">Source code</a><a href="https://github.com/mirai-mamori/Sakurairo/releases/latest"><img src="https://img.shields.io/github/v/release/mirai-mamori/Sakurairo.svg?style=flat-square" alt="GitHub release"></a>', SAKURA_DOMAIN), SAKURA_VERSION),
+        'desc' => sprintf(ll('Asakura v %s  |  <a href="https://blog.mmf.moe/post/theme-asakura/">Theme document</a>  |  <a href="https://github.com/Yesterday17/Asakura">Source code</a><a href="https://github.com/Yesterday17/Asakura/releases/latest"><img src="https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=flat-square" alt="GitHub release"></a>'), SAKURA_VERSION),
         'id'   => 'theme_intro',
         'std'  => '',
         'type' => 'typography '
@@ -306,13 +306,13 @@ function optionsframework_options() {
 
     $options[] = array(
         'name'    => __('Check for Updates', SAKURA_DOMAIN),
-        'desc'    => '<a href="https://github.com/mirai-mamori/Sakurairo/releases/latest">Download the latest version</a>',
+        'desc'    => '<a href="https://github.com/Yesterday17/Asakura/releases/latest">Download the latest version</a>',
         'id'      => "release_info",
         'std'     => "tag",
         'type'    => "images",
         'options' => array(
-            'tag'  => 'https://img.shields.io/github/v/release/mirai-mamori/Sakurairo.svg?style=flat-square',
-            'tag2' => 'https://img.shields.io/github/release-date/mirai-mamori/Sakurairo?style=flat-square',
+            'tag'  => 'https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=flat-square',
+            'tag2' => 'https://img.shields.io/github/release-date/Yesterday17/Asakura?style=flat-square',
             'tag3' => 'https://data.jsdelivr.com/v1/package/gh/Fuukei/Public_Repository/badge',
         ),
     );

@@ -93,7 +93,7 @@ function font_end_js_control() { ?>
         <?php if(akina_option('jsdelivr_cdn_test')){ ?>
         mashiro_option.jsdelivr_css_src = "<?php echo get_template_directory_uri() ?>/cdn/css/lib.css?<?php echo SAKURA_VERSION . akina_option('cookie_version', ''); ?>";
         <?php } else { ?>
-        mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/mirai-mamori/Sakurairo@<?php echo SAKURA_VERSION; ?>/cdn/css/lib.min.css";
+        mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@<?php echo SAKURA_VERSION; ?>/cdn/css/lib.min.css";
         <?php } ?>
         <?php if (akina_option('aplayer_server') != 'off'): ?>
         mashiro_option.float_player_on = true;

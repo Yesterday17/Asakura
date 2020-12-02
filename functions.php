@@ -227,16 +227,16 @@ function sakura_scripts() {
             wp_enqueue_script('SmoothScroll', get_template_directory_uri() . '/cdn/js/src/20.SmoothScroll.js', array(), SAKURA_VERSION . akina_option('cookie_version', ''), true);
         }
     } elseif (akina_option('SmoothScroll')) {
-        wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/combine/gh/mirai-mamori/Sakurairo@' . SAKURA_VERSION . '/cdn/js/lib.min.js,gh/mirai-mamori/Sakurairo@' . SAKURA_VERSION . '/cdn/js/src/20.SmoothScroll.js', array(), SAKURA_VERSION, true);
+        wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/combine/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/lib.min.js,gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/src/20.SmoothScroll.js', array(), SAKURA_VERSION, true);
     } else {
-        wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/gh/mirai-mamori/Sakurairo@' . SAKURA_VERSION . '/cdn/js/lib.min.js', array(), SAKURA_VERSION, true);
+        wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/lib.min.js', array(), SAKURA_VERSION, true);
     }
     if (akina_option('app_no_jsdelivr_cdn')) {
         wp_enqueue_style('saukra_css', get_stylesheet_uri(), array(), SAKURA_VERSION);
         wp_enqueue_script('app', get_template_directory_uri() . '/js/sakura-app.js', array(), SAKURA_VERSION, true);
     } else {
-        wp_enqueue_style('saukra_css', 'https://cdn.jsdelivr.net/gh/mirai-mamori/Sakurairo@' . SAKURA_VERSION . '/style.min.css', array(), SAKURA_VERSION);
-        wp_enqueue_script('app', 'https://cdn.jsdelivr.net/gh/mirai-mamori/Sakurairo@' . SAKURA_VERSION . '/js/sakura-app.min.js', array(), SAKURA_VERSION, true);
+        wp_enqueue_style('saukra_css', 'https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/style.min.css', array(), SAKURA_VERSION);
+        wp_enqueue_script('app', 'https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/js/sakura-app.min.js', array(), SAKURA_VERSION, true);
     }
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {

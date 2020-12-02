@@ -37,7 +37,7 @@ comments_template('', true);
             <?php if (akina_option('loadoq', '1')): ?>
             <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
             <?php endif; ?></p>
-            Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Sakurairo</a>
+            Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Asakura (o・∇・o)</a>
             by <a href="https://mmf.moe/" target="_blank" id="site-info">Yesterday17</a>
             </span>
             </p>
