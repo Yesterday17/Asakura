@@ -189,8 +189,8 @@ function z_quick_edit_custom_box($column_name, $screen, $name) {
 				<span class="title"><img src="" alt="暂无"/></span>
 				<span class="input-text-wrap"><input type="text" name="taxonomy_image" value="" class="tax_list" /></span>
 				<span class="input-text-wrap">
-					<button class="z_upload_image_button button">' . __('add image', SAKURA_DOMAIN) /*添加图像*/ . '</button>
-					<button class="z_remove_image_button button">' . __('remove image', SAKURA_DOMAIN) /*删除图像*/ . '</button>
+					<button class="z_upload_image_button button">' . ll('add image') /*添加图像*/ . '</button>
+					<button class="z_remove_image_button button">' . ll('remove image') /*删除图像*/ . '</button>
 				</span>
 			</label>
 		</div>
@@ -203,8 +203,7 @@ function z_quick_edit_custom_box($column_name, $screen, $name) {
 function z_taxonomy_columns($columns) {
     $new_columns = array();
     $new_columns['cb'] = $columns['cb'];
-    $new_columns['thumb'] = __('image', SAKURA_DOMAIN)/*图像*/
-    ;
+    $new_columns['thumb'] = __('image', SAKURA_DOMAIN);/*图像*/
 
     unset($columns['cb']);
 
@@ -216,7 +215,7 @@ function z_taxonomy_columns($columns) {
  */
 function z_taxonomy_column($columns, $column, $id) {
     if ($column == 'thumb')
-        $columns = '<span><img src="' . z_taxonomy_image_url($id, 'thumbnail', TRUE) . '" alt="' . __('no image', SAKURA_DOMAIN) /*暂无*/ . '" class="wp-post-image" /></span>';
+        $columns = '<span><img src="' . z_taxonomy_image_url($id, 'thumbnail', TRUE) . '" alt="' . ll('no image') /*暂无*/ . '" class="wp-post-image" /></span>';
 
     return $columns;
 }

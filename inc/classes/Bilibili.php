@@ -17,7 +17,8 @@ class Bilibili {
         $url = 'https://api.bilibili.com/x/space/bangumi/follow/list?type=1&pn=' . $page . '&ps=15&follow_status=0&vmid=' . $uid;
         $args = array(
             'headers' => array(
-                'Cookie' => $cookies, 'Host' => 'api.bilibili.com',
+                'Cookie'     => $cookies,
+                'Host'       => 'api.bilibili.com',
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97'
             )
         );
@@ -32,7 +33,7 @@ class Bilibili {
         if ($totalpage - $page < 0) {
             $next = '<span>共追番' . $bgm["total"] . '部，继续加油吧！٩(ˊᗜˋ*)و</span>';
         } else {
-            $next = '<a class="bangumi-next" href="' . rest_url('sakura/v1/bangumi/bilibili') . '?page=' . ++$page . '"><i class="fa fa-bolt" aria-hidden="true"></i> NEXT </a>';
+            $next = '<a class="bangumi-next" href="' . asakura_rest_url('bangumi/bilibili') . '?page=' . ++$page . '"><i class="fa fa-bolt" aria-hidden="true"></i> NEXT </a>';
         }
         $lists = $bgm["list"];
         $html = "";

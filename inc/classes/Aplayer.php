@@ -12,7 +12,7 @@ class Aplayer {
         $this->server = akina_option('aplayer_server');
         $this->playlist_id = akina_option('aplayer_playlistid');
         $this->cookies = akina_option('aplayer_cookie');
-        $this->api_url = rest_url('sakura/v1/meting/aplayer');
+        $this->api_url = asakura_rest_url('meting/aplayer');
         require('Meting.php');
     }
 
@@ -70,7 +70,11 @@ class Aplayer {
             $cover = "$api_url?server=$server&type=pic&id=" . $value->pic_id . '&meting_nonce=' . wp_create_nonce('pic#:' . $value->url_id);
             $lyric = "$api_url?server=$server&type=lyric&id=" . $value->lyric_id . '&meting_nonce=' . wp_create_nonce('lyric#:' . $value->url_id);
             $playlist[] = array(
-                "name" => $name, "artist" => $artists, "url" => $mp3_url, "cover" => $cover, "lrc" => $lyric
+                "name"   => $name,
+                "artist" => $artists,
+                "url"    => $mp3_url,
+                "cover"  => $cover,
+                "lrc"    => $lyric
             );
         }
         return $playlist;

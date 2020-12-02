@@ -27,7 +27,7 @@ function font_end_js_control() { ?>
         mashiro_option.author_name = "<?php echo akina_option('author_name', ''); ?>";
         mashiro_option.template_url = "<?php echo get_template_directory_uri(); ?>";
         mashiro_option.site_url = "<?php echo site_url(); ?>";
-        mashiro_option.qq_api_url = "<?php echo rest_url('sakura/v1/qqinfo/json'); ?>";
+        mashiro_option.qq_api_url = "<?php echo asakura_rest_url('qqinfo/json'); ?>";
         // mashiro_option.qq_avatar_api_url = "https://api.2heng.xin/qqinfo/";
         mashiro_option.live_search = <?php if (akina_option('live_search')) {
             echo 'true';
@@ -97,10 +97,10 @@ function font_end_js_control() { ?>
         <?php } ?>
         <?php if (akina_option('aplayer_server') != 'off'): ?>
         mashiro_option.float_player_on = true;
-        mashiro_option.meting_api_url = "<?php echo rest_url('sakura/v1/meting/aplayer'); ?>";
+        mashiro_option.meting_api_url = "<?php echo asakura_rest_url('meting/aplayer'); ?>";
         <?php endif; ?>
 
-        mashiro_option.cover_api = "<?php echo rest_url('sakura/v1/image/cover'); ?>";
+        mashiro_option.cover_api = "<?php echo asakura_rest_url('image/cover'); ?>";
         <?php if(akina_option('cover_beta')){?>
         mashiro_option.cover_beta = true;
         <?php }else {?>

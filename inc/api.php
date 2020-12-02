@@ -17,38 +17,46 @@ use Sakura\API\Cache;
  * Router
  */
 add_action('rest_api_init', function () {
-    register_rest_route('sakura/v1', '/image/upload', array('methods' => 'POST', 'callback' => 'upload_image',));
-    register_rest_route('sakura/v1', '/cache_search/json', array(
-        'methods' => 'GET', 'callback' => 'cache_search_json',
+    register_rest_route(SAKURA_REST_API, '/image/upload', array('methods' => 'POST', 'callback' => 'upload_image',));
+    register_rest_route(SAKURA_REST_API, '/cache_search/json', array(
+        'methods'  => 'GET',
+        'callback' => 'cache_search_json',
     ));
-    register_rest_route('sakura/v1', '/image/cover', array('methods' => 'GET', 'callback' => 'cover_gallery',));
-    register_rest_route('sakura/v1', '/image/feature', array('methods' => 'GET', 'callback' => 'feature_gallery',));
-    register_rest_route('sakura/v1', '/database/update', array('methods' => 'GET', 'callback' => 'update_database',));
-    register_rest_route('sakura/v1', '/qqinfo/json', array('methods' => 'GET', 'callback' => 'get_qq_info',));
-    register_rest_route('sakura/v1', '/qqinfo/avatar', array('methods' => 'GET', 'callback' => 'get_qq_avatar',));
-    register_rest_route('sakura/v1', '/bangumi/bilibili', array('methods' => 'POST', 'callback' => 'bgm_bilibili',));
-    register_rest_route('sakura/v1', '/meting/aplayer', array('methods' => 'GET', 'callback' => 'meting_aplayer',));
+    register_rest_route(SAKURA_REST_API, '/image/cover', array('methods' => 'GET', 'callback' => 'cover_gallery',));
+    register_rest_route(SAKURA_REST_API, '/image/feature', array('methods' => 'GET', 'callback' => 'feature_gallery',));
+    register_rest_route(SAKURA_REST_API, '/database/update', array('methods'  => 'GET',
+                                                                   'callback' => 'update_database',
+    ));
+    register_rest_route(SAKURA_REST_API, '/qqinfo/json', array('methods' => 'GET', 'callback' => 'get_qq_info',));
+    register_rest_route(SAKURA_REST_API, '/qqinfo/avatar', array('methods' => 'GET', 'callback' => 'get_qq_avatar',));
+    register_rest_route(SAKURA_REST_API, '/bangumi/bilibili', array('methods'  => 'POST',
+                                                                    'callback' => 'bgm_bilibili',
+    ));
+    register_rest_route(SAKURA_REST_API, '/meting/aplayer', array('methods' => 'GET', 'callback' => 'meting_aplayer',));
 });
 
 /**
  * Image uploader response
+ * @param WP_REST_Request $request
+ * @return WP_REST_Response
  */
+// see: https://developer.wordpress.org/rest-api/requests/
 function upload_image(WP_REST_Request $request) {
-    // see: https://developer.wordpress.org/rest-api/requests/
-
-    // handle file params $file === $_FILES
     /**
+     * handle file params $file === $_FILES
      * curl \
      *   -F "filecomment=This is an img file" \
      *   -F "cmt_img_file=@screenshot.jpg" \
-     *   https://dev.2heng.xin/wp-json/sakura/v1/image/upload
+     *   https://dev.2heng.xin/wp-json/$SAKURA_REST_API/image/upload
      */
     // $file = $request->get_file_params();
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
         $output = array(
-            'status' => 403, 'success' => false, 'message' => 'Unauthorized client.',
-            'link'   => "https://view.moezx.cc/images/2019/11/14/step04.md.png",
-            'proxy'  => akina_option('cmt_image_proxy') . "https://view.moezx.cc/images/2019/11/14/step04.md.png",
+            'status'  => 403,
+            'success' => false,
+            'message' => 'Unauthorized client.',
+            'link'    => "https://view.moezx.cc/images/2019/11/14/step04.md.png",
+            'proxy'   => akina_option('cmt_image_proxy') . "https://view.moezx.cc/images/2019/11/14/step04.md.png",
         );
         $result = new WP_REST_Response($output, 403);
         $result->set_headers(array('Content-Type' => 'application/json'));
@@ -78,7 +86,7 @@ function upload_image(WP_REST_Request $request) {
 
 /*
  * 随机封面图 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/sakura/v1/image/cover
+ * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/image/cover
  */
 function cover_gallery() {
     $type = $_GET['type'];
@@ -96,7 +104,7 @@ function cover_gallery() {
 
 /*
  * 随机文章特色图 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/sakura/v1/image/feature
+ * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/image/feature
  */
 function feature_gallery() {
     $imgurl = Images::feature_gallery();
@@ -109,7 +117,7 @@ function feature_gallery() {
 
 /*
  * update database rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/sakura/v1/database/update
+ * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/database/update
  */
 function update_database() {
     if (akina_option('cover_cdn_options') == "type_1") {
@@ -123,7 +131,7 @@ function update_database() {
 
 /*
  * 定制实时搜索 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/sakura/v1/cache_search/json
+ * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/cache_search/json
  * @可在cache_search_json()函数末尾通过设置 HTTP header 控制 json 缓存时间
  */
 function cache_search_json() {
@@ -135,14 +143,15 @@ function cache_search_json() {
         $result = new WP_REST_Response($output, 200);
     }
     $result->set_headers(array(
-        'Content-Type' => 'application/json', 'Cache-Control' => 'max-age=3600', // json 缓存控制
+        'Content-Type'  => 'application/json',
+        'Cache-Control' => 'max-age=3600', // json 缓存控制
     ));
     return $result;
 }
 
 /**
  * QQ info
- * https://sakura.2heng.xin/wp-json/sakura/v1/qqinfo/json
+ * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/json
  */
 function get_qq_info(WP_REST_Request $request) {
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
@@ -161,7 +170,7 @@ function get_qq_info(WP_REST_Request $request) {
 
 /**
  * QQ头像链接解密
- * https://sakura.2heng.xin/wp-json/sakura/v1/qqinfo/avatar
+ * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/avatar
  */
 function get_qq_avatar() {
     $encrypted = $_GET["qq"];

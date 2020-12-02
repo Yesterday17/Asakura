@@ -1,6 +1,6 @@
 对于封面图片主题设置有3个选项：
 webp优化随机图、内置原图随机图、外部随机图API，
-rest-api url调用示例：https://example.com/wp-json/sakura/v1/image/cover ，
+rest-api url调用示例：https://example.com/wp-json/$SAKURA_REST_API/image/cover ，
 请根据个人的情况在 后台-外观-Sakura主题设置-第一屏-封面图片库选项 选择
 
 webp优化随机图

@@ -225,7 +225,7 @@ function attach_image() {
             var formData = new FormData();
             formData.append('cmt_img_file', f);
             $.ajax({
-                url: Poi.api + 'sakura/v1/image/upload?_wpnonce=' + Poi.nonce,
+                url: Poi.api + 'asakura/v1/image/upload?_wpnonce=' + Poi.nonce,
                 type: 'POST',
                 processData: false,
                 contentType: false,
@@ -1549,7 +1549,7 @@ var home = location.href,
                 $('html').css('overflow-y', 'hidden');
                 if (mashiro_option.live_search) {
                     var QueryStorage = [];
-                    search_a(Poi.api + "sakura/v1/cache_search/json?_wpnonce=" + Poi.nonce);
+                    search_a(Poi.api + "asakura/v1/cache_search/json?_wpnonce=" + Poi.nonce);
 
                     var otxt = addComment.I("search-input"),
                         list = addComment.I("PostlistBox"),

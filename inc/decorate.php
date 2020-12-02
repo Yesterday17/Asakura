@@ -665,7 +665,7 @@ function customizer_css() { ?>
 
         <?php } // comments ?>
         <?php
-        //$image_api = 'background-image: url("'.rest_url('sakura/v1/image/cover').'");';
+        //$image_api = 'background-image: url("'.asakura_rest_url('image/cover').'");';
         $bg_style = akina_option('focus_height') ? 'background-position: center center;background-attachment: inherit;' : '';
         ?>
         .centerbg {

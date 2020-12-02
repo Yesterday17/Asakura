@@ -13,6 +13,7 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/Yester
 define('SAKURA_VERSION', wp_get_theme()->get('Version'));
 define('BUILD_VERSION', '1');
 define('SAKURA_DOMAIN', 'asakura');
+define('SAKURA_REST_API', SAKURA_DOMAIN . '/v1');
 
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
@@ -21,6 +22,15 @@ error_reporting(E_ALL ^ E_NOTICE);
 if (!function_exists("ll")):
     function ll($key) {
         return __($key, SAKURA_DOMAIN);
+    }
+endif;
+
+if (!function_exists("asakura_rest_url")):
+    function asakura_rest_url($url, $scheme = 'rest') {
+        if (strpos($url, '/') !== 0) {
+            $url = '/' . $url;
+        }
+        return rest_url(SAKURA_REST_API . $url, $scheme);
     }
 endif;
 
@@ -74,20 +84,20 @@ if (!function_exists('akina_setup')):
 
         // Set up the WordPress core custom background feature.
         add_theme_support('custom-background', apply_filters('akina_custom_background_args', array(
-            'default-color' => 'ffffff', 'default-image' => '',
+            'default-color' => 'ffffff',
+            'default-image' => '',
         )));
 
         add_filter('pre_option_link_manager_enabled', '__return_true');
 
         // 优化代码
-        //去除头部冗余代码
+        // 去除头部冗余代码
         remove_action('wp_head', 'feed_links_extra', 3);
         remove_action('wp_head', 'rsd_link');
         remove_action('wp_head', 'wlwmanifest_link');
         remove_action('wp_head', 'index_rel_link');
-        remove_action('wp_head', 'start_post_rel_link', 10, 0);
-        remove_action('wp_head', 'wp_generator');
-        remove_action('wp_head', 'wp_generator'); //隐藏wordpress版本
+        remove_action('wp_head', 'start_post_rel_link', 10);
+        remove_action('wp_head', 'wp_generator'); // 隐藏wordpress版本
         remove_filter('the_content', 'wptexturize'); //取消标点符号转义
 
         //remove_action('rest_api_init', 'wp_oembed_register_route');
@@ -96,8 +106,9 @@ if (!function_exists('akina_setup')):
         //remove_filter('oembed_response_data', 'get_oembed_response_data_rich', 10, 4);
         //remove_action('wp_head', 'wp_oembed_add_discovery_links');
         //remove_action('wp_head', 'wp_oembed_add_host_js');
-        remove_action('template_redirect', 'rest_output_link_header', 11, 0);
+        remove_action('template_redirect', 'rest_output_link_header', 11);
 
+        // 去除谷歌字体
         function coolwp_remove_open_sans_from_wp_core() {
             wp_deregister_style('open-sans');
             wp_register_style('open-sans', false);
@@ -106,9 +117,7 @@ if (!function_exists('akina_setup')):
 
         add_action('init', 'coolwp_remove_open_sans_from_wp_core');
 
-        /**
-         * Disable the emoji's
-         */
+        // 禁用 emoji
         function disable_emojis() {
             remove_action('wp_head', 'print_emoji_detection_script', 7);
             remove_action('admin_print_scripts', 'print_emoji_detection_script');
@@ -142,7 +151,10 @@ if (!function_exists('akina_setup')):
         add_filter('page_css_class', 'my_css_attributes_filter', 100, 1);
         function my_css_attributes_filter($var) {
             return is_array($var) ? array_intersect($var, array(
-                'current-menu-item', 'current-post-ancestor', 'current-menu-ancestor', 'current-menu-parent'
+                'current-menu-item',
+                'current-post-ancestor',
+                'current-menu-ancestor',
+                'current-menu-parent'
             )) : '';
         }
 
@@ -153,15 +165,32 @@ add_action('after_setup_theme', 'akina_setup');
 //说说页面
 function shuoshuo_custom_init() {
     $labels = array(
-        'name'      => '说说', 'singular_name' => '说说', 'add_new' => '发表说说', 'add_new_item' => '发表说说',
-        'edit_item' => '编辑说说', 'new_item' => '新说说', 'view_item' => '查看说说', 'search_items' => '搜索说说',
-        'not_found' => '暂无说说', 'not_found_in_trash' => '没有已遗弃的说说', 'parent_item_colon' => '', 'menu_name' => '说说'
+        'name'               => '说说',
+        'singular_name'      => '说说',
+        'add_new'            => '发表说说',
+        'add_new_item'       => '发表说说',
+        'edit_item'          => '编辑说说',
+        'new_item'           => '新说说',
+        'view_item'          => '查看说说',
+        'search_items'       => '搜索说说',
+        'not_found'          => '暂无说说',
+        'not_found_in_trash' => '没有已遗弃的说说',
+        'parent_item_colon'  => '',
+        'menu_name'          => '说说'
     );
     $args = array(
-        'labels'       => $labels, 'public' => true, 'publicly_queryable' => true, 'show_ui' => true,
-        'show_in_menu' => true, 'query_var' => true, 'rewrite' => true, 'capability_type' => 'post',
-        'has_archive'  => true, 'hierarchical' => false, 'menu_position' => null,
-        'supports'     => array('title', 'editor', 'author')
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => true,
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array('title', 'editor', 'author')
     );
     register_post_type('shuoshuo', $args);
 }
@@ -217,7 +246,9 @@ function sakura_scripts() {
     // 20161116 @Louie
     $mv_live = akina_option('focus_mvlive') ? 'open' : 'close';
     $movies = akina_option('focus_amv') ? array(
-        'url' => akina_option('amv_url'), 'name' => akina_option('amv_title'), 'live' => $mv_live
+        'url'  => akina_option('amv_url'),
+        'name' => akina_option('amv_title'),
+        'live' => $mv_live
     ) : 'close';
     $auto_height = akina_option('focus_height') ? 'fixed' : 'auto';
     $code_lamp = 'close';
@@ -228,13 +259,18 @@ function sakura_scripts() {
     version_compare($GLOBALS['wp_version'], '5.1', '>=') ? $reply_link_version = 'new' : $reply_link_version = 'old';
     $gravatar_url = akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar';
     wp_localize_script('app', 'Poi', array(
-        'pjax'                => akina_option('poi_pjax'), 'movies' => $movies, 'windowheight' => $auto_height,
-        'codelamp'            => $code_lamp, 'ajaxurl' => admin_url('admin-ajax.php'),
+        'pjax'                => akina_option('poi_pjax'),
+        'movies'              => $movies,
+        'windowheight'        => $auto_height,
+        'codelamp'            => $code_lamp,
+        'ajaxurl'             => admin_url('admin-ajax.php'),
         'order'               => get_option('comment_order'),        // ajax comments
         'formpostion'         => 'bottom', // ajax comments 默认为bottom，如果你的表单在顶部则设置为top。
-        'reply_link_version'  => $reply_link_version, 'api' => esc_url_raw(rest_url()),
+        'reply_link_version'  => $reply_link_version,
+        'api'                 => esc_url_raw(rest_url()),
         'nonce'               => wp_create_nonce('wp_rest'),
-        'google_analytics_id' => akina_option('google_analytics_id', ''), 'gravatar_url' => $gravatar_url
+        'google_analytics_id' => akina_option('google_analytics_id', ''),
+        'gravatar_url'        => $gravatar_url
     ));
 }
 
@@ -298,7 +334,7 @@ if (!function_exists('akina_comment_format')) {
     function akina_comment_format($comment, $args, $depth) {
         $GLOBALS['comment'] = $comment;
         ?>
-        <li <?php comment_class(); ?> id="comment-<?php echo esc_attr(comment_ID()); ?>">
+        <li <?php comment_class(); ?> id="comment-<?php echo esc_attr(get_comment_ID()); ?>">
         <div class="contents">
             <div class="comment-arrow">
                 <div class="main shadow">
@@ -316,7 +352,8 @@ if (!function_exists('akina_comment_format')) {
                                     </a></h4>
                             </div>
                             <?php comment_reply_link(array_merge($args, array(
-                                'depth' => $depth, 'max_depth' => $args['max_depth']
+                                'depth'     => $depth,
+                                'max_depth' => $args['max_depth']
                             ))); ?>
                             <div class="right">
                                 <div class="info">
@@ -385,17 +422,14 @@ function restyle_text($number) {
     switch (akina_option('statistics_format')) {
         case "type_2": //23,333 次访问
             return number_format($number);
-            break;
         case "type_3": //23 333 次访问
             return number_format($number, 0, '.', ' ');
-            break;
         case "type_4": //23k 次访问
             if ($number >= 1000) {
                 return round($number / 1000, 2) . 'k';
             } else {
                 return $number;
             }
-            break;
         default:
             return $number;
     }
@@ -419,7 +453,7 @@ add_action('get_header', 'set_post_views');
 function get_post_views($post_id) {
     if (akina_option('statistics_api') == 'wp_statistics') {
         if (!function_exists('wp_statistics_pages')) {
-            return __('Please install pulgin <a href="https://wordpress.org/plugins/wp-statistics/" target="_blank">WP-Statistics</a>', SAKURA_DOMAIN);
+            return __('Please install plugin <a href="https://wordpress.org/plugins/wp-statistics/" target="_blank">WP-Statistics</a>', SAKURA_DOMAIN);
         } else {
             return restyle_text(wp_statistics_pages('total', 'uri', $post_id));
         }
@@ -509,7 +543,10 @@ function get_link_items() {
  */
 function gravatar_cn($url) {
     $gravatar_url = array(
-        '0.gravatar.com/avatar', '1.gravatar.com/avatar', '2.gravatar.com/avatar', 'secure.gravatar.com/avatar'
+        '0.gravatar.com/avatar',
+        '1.gravatar.com/avatar',
+        '2.gravatar.com/avatar',
+        'secure.gravatar.com/avatar'
     );
     return str_replace($gravatar_url, akina_option('gravatar_proxy'), $url);
 }
@@ -623,7 +660,9 @@ add_action("widgets_init", "unregister_default_widgets", 11);
 function akina_jetpack_setup() {
     // Add theme support for Infinite Scroll.
     add_theme_support('infinite-scroll', array(
-        'container' => 'main', 'render' => 'akina_infinite_scroll_render', 'footer' => 'page',
+        'container' => 'main',
+        'render'    => 'akina_infinite_scroll_render',
+        'footer'    => 'page',
     ));
 
     // Add theme support for Responsive Videos.
@@ -978,9 +1017,38 @@ function push_tieba_smilies() {
     if (!get_option('use_smilies'))
         return;
     $tiebaname = array(
-        'good', 'han', 'spray', 'Grievance', 'shui', 'reluctantly', 'anger', 'tongue', 'se', 'haha', 'rmb', 'doubt',
-        'tear', 'surprised2', 'Happy', 'ku', 'surprised', 'theblackline', 'smilingeyes', 'spit', 'huaji', 'bbd', 'hu',
-        'shame', 'naive', 'rbq', 'britan', 'aa', 'niconiconi', 'niconiconi_t', 'niconiconit', 'awesome'
+        'good',
+        'han',
+        'spray',
+        'Grievance',
+        'shui',
+        'reluctantly',
+        'anger',
+        'tongue',
+        'se',
+        'haha',
+        'rmb',
+        'doubt',
+        'tear',
+        'surprised2',
+        'Happy',
+        'ku',
+        'surprised',
+        'theblackline',
+        'smilingeyes',
+        'spit',
+        'huaji',
+        'bbd',
+        'hu',
+        'shame',
+        'naive',
+        'rbq',
+        'britan',
+        'aa',
+        'niconiconi',
+        'niconiconi_t',
+        'niconiconit',
+        'awesome'
     );
     $return_smiles = '';
     for ($i = 0; $i < count($tiebaname); $i++) {
@@ -1064,11 +1132,56 @@ $bilismiliestrans = array();
 function push_bili_smilies() {
     global $bilismiliestrans;
     $name = array(
-        'baiyan', 'bishi', 'bizui', 'chan', 'dai', 'daku', 'dalao', 'dalian', 'dianzan', 'doge', 'facai', 'fanu',
-        'ganga', 'guilian', 'guzhang', 'haixiu', 'heirenwenhao', 'huaixiao', 'jingxia', 'keai', 'koubizi', 'kun',
-        'lengmo', 'liubixue', 'liuhan', 'liulei', 'miantian', 'mudengkoudai', 'nanguo', 'outu', 'qinqin', 'se',
-        'shengbing', 'shengqi', 'shuizhao', 'sikao', 'tiaokan', 'tiaopi', 'touxiao', 'tuxue', 'weiqu', 'weixiao',
-        'wunai', 'xiaoku', 'xieyanxiao', 'yiwen', 'yun', 'zaijian', 'zhoumei', 'zhuakuang'
+        'baiyan',
+        'bishi',
+        'bizui',
+        'chan',
+        'dai',
+        'daku',
+        'dalao',
+        'dalian',
+        'dianzan',
+        'doge',
+        'facai',
+        'fanu',
+        'ganga',
+        'guilian',
+        'guzhang',
+        'haixiu',
+        'heirenwenhao',
+        'huaixiao',
+        'jingxia',
+        'keai',
+        'koubizi',
+        'kun',
+        'lengmo',
+        'liubixue',
+        'liuhan',
+        'liulei',
+        'miantian',
+        'mudengkoudai',
+        'nanguo',
+        'outu',
+        'qinqin',
+        'se',
+        'shengbing',
+        'shengqi',
+        'shuizhao',
+        'sikao',
+        'tiaokan',
+        'tiaopi',
+        'touxiao',
+        'tuxue',
+        'weiqu',
+        'weixiao',
+        'wunai',
+        'xiaoku',
+        'xieyanxiao',
+        'yiwen',
+        'yun',
+        'zaijian',
+        'zhoumei',
+        'zhuakuang'
     );
     $return_smiles = '';
     for ($i = 0; $i < count($name); $i++) {
@@ -1348,7 +1461,10 @@ function dash_scheme($key, $name, $col1, $col2, $col3, $col4, $base, $focus, $cu
     $hash = "color_1=" . str_replace("#", "", $col1) . "&color_2=" . str_replace("#", "", $col2) . "&color_3=" . str_replace("#", "", $col3) . "&color_4=" . str_replace("#", "", $col4) . "&rules=" . urlencode($rules);
 
     wp_admin_css_color($key, $name, get_template_directory_uri() . "/inc/dash-scheme.php?" . $hash, array(
-        $col1, $col2, $col3, $col4
+        $col1,
+        $col2,
+        $col3,
+        $col4
     ), array('base' => $base, 'focus' => $focus, 'current' => $current));
 }
 
@@ -1508,7 +1624,7 @@ function change_avatar($avatar) {
                 $iv = str_repeat($sakura_privkey, 2);
                 $encrypted = openssl_encrypt($qq_number, 'aes-128-cbc', $sakura_privkey, 0, $iv);
                 $encrypted = urlencode(base64_encode($encrypted));
-                return '<img src="' . rest_url("sakura/v1/qqinfo/avatar") . '?qq=' . $encrypted . '"class="lazyload avatar avatar-24 photo" alt="😀" width="24" height="24" onerror="imgError(this,1)">';
+                return '<img src="' . asakura_rest_url("qqinfo/avatar") . '?qq=' . $encrypted . '"class="lazyload avatar avatar-24 photo" alt="😀" width="24" height="24" onerror="imgError(this,1)">';
             }
         } else {
             return $avatar;
@@ -1520,7 +1636,7 @@ function change_avatar($avatar) {
 
 // default feature image
 function DEFAULT_FEATURE_IMAGE() {
-    return rest_url('sakura/v1/image/feature') . '?' . rand(1, 1000);
+    return asakura_rest_url('image/feature') . '?' . rand(1, 1000);
 }
 
 //评论回复
@@ -1537,9 +1653,12 @@ add_action('comment_post', 'sakura_comment_notify');
 if (akina_option('sakura_widget')) {
     if (function_exists('register_sidebar')) {
         register_sidebar(array(
-            'name'         => __('Sidebar'), //侧栏
-            'id'           => 'sakura_widget', 'before_widget' => '<div class="widget %2$s">',
-            'after_widget' => '</div>', 'before_title' => '<div class="title"><h2>', 'after_title' => '</h2></div>',
+            'name'          => __('Sidebar'), //侧栏
+            'id'            => 'sakura_widget',
+            'before_widget' => '<div class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<div class="title"><h2>',
+            'after_title'   => '</h2></div>',
         ));
     }
 }
