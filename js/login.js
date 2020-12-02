@@ -1,16 +1,22 @@
 Element.prototype.css = function (key, value) {
+    const setValue = (key, value) => {
+        if ((key === "width" || key === "height") && typeof value === 'number') {
+            value = `${value}px`;
+        }
+        this.style[key] = String(value);
+    }
+
     if (typeof this.style === 'object') {
         if (arguments.length === 1 && typeof key === 'string') {
             return this.style[key];
-        }
-        else if (arguments.length === 1 && typeof key === 'object') {
+        } else if (arguments.length === 1 && typeof key === 'object') {
             for (const k in key) {
                 if (key.hasOwnProperty(k)) {
-                    this.style[k] = key[k];
+                    setValue(k, key[k]);
                 }
             }
         } else {
-            this.style[key] = value;
+            setValue(key, value);
         }
     }
 }
@@ -20,9 +26,6 @@ function getFloat(sel, key) {
     return parseFloat(getComputedStyle(el, null)[key].replace(/px/, ''));
 }
 
-/*
- *	Resize Image
-*/
 function resizeImage(id) {
     document.getElementById(id).css({
         'position': 'absolute',
@@ -36,44 +39,28 @@ function resizeImage(id) {
     const w = getFloat(document.body, 'width');
     const h = getFloat(document.body, 'height');
     const o = document.getElementById(id).querySelector('img');
-    const iW = getFloat(o, 'width');
-    const iH = getFloat(o, 'height');
+    const imageWidth = getFloat(o, 'width');
+    const imageHeight = getFloat(o, 'height');
     o.css({
         'display': 'block',
         'opacity': 0
     });
     if (w > h) {
-        if (iW > iH) {
-            o.css({
-                'width': w
-            });
-            o.css({
-                'height': Math.round((iH / iW) * w)
-            });
-            const newIh = Math.round((iH / iW) * w);
+        if (imageWidth > imageHeight) {
+            const newIh = Math.round((imageHeight / imageWidth) * w);
+            o.css('width', w);
+            o.css('height', newIh);
             if (newIh < h) {
-                o.css({
-                    'height': h
-                });
-                o.css({
-                    'width': Math.round((iW / iH) * h)
-                })
+                o.css('height', h);
+                o.css('width', Math.round((imageWidth / imageHeight) * h))
             }
         } else {
-            o.css({
-                'height': h
-            });
-            o.css({
-                'width': Math.round((iW / iH) * h)
-            })
+            o.css('height', h);
+            o.css('width', Math.round((imageWidth / imageHeight) * h))
         }
     } else {
-        o.css({
-            'height': h
-        });
-        o.css({
-            'width': Math.round((iW / iH) * h)
-        })
+        o.css('height', h);
+        o.css('width', Math.round((imageWidth / imageHeight) * h))
     }
     const newIW = getFloat(o, 'width');
     const newIH = getFloat(o, 'height');

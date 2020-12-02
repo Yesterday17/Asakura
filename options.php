@@ -1282,22 +1282,6 @@ function optionsframework_options() {
         'type' => 'checkbox'
     );
 
-    $options[] = array(
-        'name' => __('Login Validation', SAKURA_DOMAIN),
-        'desc' => __('Check to enable slide verification', SAKURA_DOMAIN),
-        'id'   => 'login_pf',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Registration Verification (Frontend Only, Backend Forced Open)', SAKURA_DOMAIN),
-        'desc' => __('Check to enable slide verification', SAKURA_DOMAIN),
-        'id'   => 'login_validate',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
     //进阶
     $options[] = array('name' => __('Advanced', SAKURA_DOMAIN), 'type' => 'heading');
 
