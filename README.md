@@ -5,7 +5,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=for-the-badge&logo=appveyor)](https://github.com/Yesterday17/Asakura/releases/latest)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Yesterday17/Asakura?style=for-the-badge&logo=appveyor)](https://github.com/Yesterday17/Asakura/releases)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Yeterday17/Asakura?style=for-the-badge&logo=appveyor)
-[![jsDelivr hits (GitHub)](https://img.shields.io/jsdelivr/gh/hm/Fuukei/Public_Repository?color=red&logo=jsdelivr&logoColor=red&style=for-the-badge)](https://www.jsdelivr.com/package/gh/mirai-mamori/sakurairo)
+[![jsDelivr hits (GitHub)](https://img.shields.io/jsdelivr/gh/hm/Fuukei/Public_Repository?color=red&logo=jsdelivr&logoColor=red&style=for-the-badge)](https://www.jsdelivr.com/package/gh/Yesterday17/Asakura)
 
 
 ## 特色：
