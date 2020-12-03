@@ -237,6 +237,7 @@ function sakura_scripts() {
         'google_analytics_id' => akina_option('google_analytics_id', ''),
         'gravatar_url'        => $gravatar_url
     ));
+    wp_add_inline_script('app', 'var mashiro_option = ' . json_encode(get_asakura_option()) . ';', 'before');
 }
 
 add_action('wp_enqueue_scripts', 'sakura_scripts');

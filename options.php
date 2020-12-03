@@ -568,11 +568,11 @@ function optionsframework_options() {
     $options[] = array(
         'name'    => __('Post Style', SAKURA_DOMAIN),
         'id'      => 'entry_content_theme',
-        'std'     => SAKURA_DOMAIN,
+        'std'     => 'sakura',
         'type'    => "radio",
         'options' => array(
-            SAKURA_DOMAIN => __('Default Style', SAKURA_DOMAIN),
-            'github'      => __('GitHub Style', SAKURA_DOMAIN),
+            'sakura' => __('Default Style', SAKURA_DOMAIN),
+            'github' => __('GitHub Style', SAKURA_DOMAIN),
         )
     );
 

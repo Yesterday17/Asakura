@@ -365,7 +365,7 @@ function checkDarkMode(setTimer = true) {
     let dark = localStorage.getItem('dark');
 
     // no dark session
-    if (!dark && mashiro_option.darkmode) {
+    if (!dark && mashiro_option.dark_mode) {
         // default auto
         dark = 'auto';
         localStorage.setItem('dark', dark);
@@ -748,7 +748,7 @@ function grin(tag, type, before, after) {
 
 function add_copyright() {
     document.body.addEventListener("copy", function (e) {
-        if (window.getSelection().toString().length > 30 && mashiro_option.clipboardCopyright) {
+        if (window.getSelection().toString().length > 30 && mashiro_option.clipboard_copyright) {
             setClipboardText(e);
         }
         addComment.createButterbar("复制成功！<br>Copied to clipboard successfully!", 1000);
@@ -1195,7 +1195,7 @@ var home = location.href,
                 $(this).next().slideToggle('fast');
                 return false;
             });
-            /*if (mashiro_option.baguetteBoxON) {
+            /*if (mashiro_option.baguette_box_on) {
                 baguetteBox.run('.entry-content', {
                     captions: function (element) {
                         return element.getElementsByTagName('img')[0].alt;
@@ -1608,13 +1608,13 @@ $(function () {
             });
         }).on('pjax:send', function () {
             $("#bar").css("width", "0%");
-            if (mashiro_option.NProgressON) NProgress.start();
+            if (mashiro_option.nprogress_on) NProgress.start();
             Siren.MNH();
         }).on('pjax:complete', function () {
             Siren.AH();
             Siren.PE();
             Siren.CE();
-            if (mashiro_option.NProgressON) NProgress.done();
+            if (mashiro_option.nprogress_on) NProgress.done();
             mashiro_global.ini.pjax();
             $("#loading").fadeOut(500);
             if (Poi.codelamp == 'open') {
