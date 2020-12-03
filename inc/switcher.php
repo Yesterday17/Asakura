@@ -37,7 +37,7 @@ function frontend_js_control() { ?>
         const mashiro_option = {};
         mashiro_option.NProgressON = <?= akina_option('nprogress_on') ? 'true' : 'false'; ?>;
         mashiro_option.audio = <?= akina_option('audio') ? 'true' : 'false'; ?>;
-        mashiro_option.darkmode = <?= akina_option('darkmode') ? 'true' : 'false'; ?>;
+        mashiro_option.darkmode = <?= akina_option('dark_mode') ? 'true' : 'false'; ?>;
         mashiro_option.email_domain = "<?php echo akina_option('email_domain', ''); ?>";
         mashiro_option.email_name = "<?php echo akina_option('email_name', ''); ?>";
         mashiro_option.cookie_version_control = "<?php echo akina_option('cookie_version', ''); ?>";

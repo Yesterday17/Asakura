@@ -38,23 +38,22 @@ const mashiro_global = {
                 $("body").removeClass("serif");
                 $(".control-btn-serif").removeClass("selected");
                 $(".control-btn-sans-serif").addClass("selected");
-                setCookie("font_family", "sans-serif", 30);
+                localStorage.setItem("font_family", "sans-serif");
             } else {
                 $("body").addClass("serif");
                 $(".control-btn-serif").addClass("selected");
                 $(".control-btn-sans-serif").removeClass("selected");
-                setCookie("font_family", "serif", 30);
-                if (document.body.clientWidth <= 860) {
-                    addComment.createButterbar("将从网络加载字体，流量请注意");
-                }
+                localStorage.setItem("font_family", "serif");
             }
         },
-        ini: () => {
+        init: () => {
+            const f = localStorage.getItem("font_family");
             if (document.body.clientWidth > 860) {
-                if (!getCookie("font_family") || getCookie("font_family") === "serif")
+                if (!f || f === "serif") {
                     $("body").addClass("serif");
+                }
             }
-            if (getCookie("font_family") === "sans-serif") {
+            if (f === "sans-serif") {
                 $("body").removeClass("sans-serif");
                 $(".control-btn-serif").removeClass("selected");
                 $(".control-btn-sans-serif").addClass("selected");
@@ -63,7 +62,7 @@ const mashiro_global = {
     }
 }
 
-mashiro_global.font_control.ini();
+mashiro_global.font_control.init();
 
 function setCookie(name, value, days) {
     let expires = "";
@@ -335,81 +334,57 @@ function scrollBar() {
     }
 }
 
-function checkBgImgCookie() {
-    var bgurl = getCookie("bgImgSetting");
-    if (!bgurl) {
-        $("#white-bg").click();
-    } else {
-        $("#" + bgurl).click();
-    }
-}
-
-function checkDarkModeCookie() {
-    var dark = getCookie("dark"),
-        today = new Date()
-    cWidth = document.body.clientWidth;
-    if (!dark) {
-        if ((today.getHours() > 21 || today.getHours() < 7) && mashiro_option.darkmode) {
-            setTimeout(function () {
-                $("#dark-bg").click();
-            }, 100);
-            console.log('夜间模式开启');
-        } else {
-            if (cWidth > 860) {
-                setTimeout(function () {
-                    checkBgImgCookie();
-                }, 100);
-                console.log('夜间模式关闭');
-            } else {
-                $("html").css("background", "unset");
-                $("body").removeClass("dark");
-                $("#mobileDarkLight").html('<i class="fa fa-moon-o" aria-hidden="true"></i>');
-                setCookie("dark", "0", 0.33);
-            }
+function changeTheme(dark, save) {
+    const sc = document.querySelector('.site-content');
+    if (dark) {
+        console.log("Toggling to dark mode.")
+        document.body.style.background = '#31363b';
+        sc && (sc.style.backgroundColor = '#fff');
+        document.body.classList.add('dark');
+        if (save) {
+            localStorage.setItem('dark', '1');
         }
     } else {
-        if (dark == '1' && (today.getHours() >= 22 || today.getHours() <= 6) && mashiro_option.darkmode) {
-            setTimeout(function () {
-                $("#dark-bg").click();
-            }, 100);
-            console.log('夜间模式开启');
-        } else if (dark == '0' || today.getHours() < 22 || today.getHours() > 6) {
-            if (cWidth > 860) {
-                setTimeout(function () {
-                    checkBgImgCookie();
-                }, 100);
-                console.log('夜间模式关闭');
-            } else {
-                $("html").css("background", "unset");
-                $("body").removeClass("dark");
-                $("#mobileDarkLight").html('<i class="fa fa-moon-o" aria-hidden="true"></i>');
-                setCookie("dark", "0", 0.33);
-            }
+        console.log("Toggling to light mode.")
+        document.body.style.background = 'unset';
+        sc && (sc.style.backgroundColor = 'rgba(255, 255, 255, .8)');
+        document.body.classList.remove('dark');
+        document.body.style.backgroundImage = mashiro_option.skin_bg === 'none' ? '' : `url(${mashiro_option.skin_bg})`;
+        if (save) {
+            localStorage.setItem('dark', '0');
         }
     }
 }
 
-if (!getCookie("darkcache") && (new Date().getHours() > 21 || new Date().getHours() < 7)) {
-    removeCookie("dark");
-    setCookie("darkcache", "cached", 0.4);
-}
-setTimeout(function () {
-    checkDarkModeCookie();
-}, 100);
+function checkDarkMode() {
+    let dark = localStorage.getItem('dark');
 
-function mobile_dark_light() {
-    if ($("body").hasClass("dark")) {
-        $("html").css("background", "unset");
-        $("body").removeClass("dark");
-        $("#mobileDarkLight").html('<i class="fa fa-moon-o" aria-hidden="true"></i>');
-        setCookie("dark", "0", 0.33);
-    } else {
-        $("html").css("background", "#31363b");
-        $("#mobileDarkLight").html('<i class="fa fa-sun-o" aria-hidden="true"></i>');
-        $("body").addClass("dark");
-        setCookie("dark", "1", 0.33);
+    // no dark session
+    if (!dark && mashiro_option.darkmode) {
+        // default auto
+        dark = 'auto';
+        localStorage.setItem('dark', dark);
+    }
+
+    if (dark === '1') {
+        // dark mode
+        changeTheme(true, true);
+    } else if (dark === '0') {
+        // light mode
+        changeTheme(false, true);
+    } else if (dark === 'auto') {
+        // auto mode
+        function auto_switch_theme() {
+            const now = new Date()
+            changeTheme(now.getHours() > 21 || now.getHours() < 7, false);
+        }
+
+        auto_switch_theme();
+        setTimeout(auto_switch_theme, 5 * 60 * 1000); // check every 5 minutes
     }
 }
+
+checkDarkMode();
 
 function no_right_click() {
     $('.post-thumb img').bind('contextmenu', function (e) {
@@ -430,30 +405,12 @@ $(document).ready(function () {
 
     cover_bg();
 
-    function checkskin_bg(a) {
-        return a === "none" ? "" : a
-    }
-
     function changeBG() {
-        var cached = $(".menu-list");
+        const cached = $(".menu-list");
         cached.find("li").each(function () {
-            var tagid = this.id;
-            cached.on("click", "#" + tagid, function () {
-                if (tagid === "dark-bg") {
-                    $("html").css("background", "#31363b");
-                    $(".site-content").css("background-color", "#fff");
-                    $("body").addClass("dark");
-                    setCookie("dark", "1", 0.33);
-                } else {
-                    $("html").css("background", "unset");
-                    $("body").removeClass("dark");
-                    $(".site-content").css("background-color", "rgba(255, 255, 255, .8)");
-                    setCookie("dark", "0", 0.33);
-                    setCookie("bgImgSetting", tagid, 30);
-
-                    $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg) + ")");
-                    $("body").removeClass("dynamic");
-                }
+            const tagId = this.id;
+            cached.on("click", "#" + tagId, function () {
+                changeTheme(tagId === 'dark-bg', true);
                 closeSkinMenu();
             });
         });
@@ -505,8 +462,8 @@ $(document).ready(function () {
     });
 });
 
-function topFunction() {
-    window.scrollTo({top: 0, behavior: "smooth"});
+function scrollTop(top) {
+    window.scrollTo({top, behavior: "smooth"});
 }
 
 function timeSeriesReload(flag) {
@@ -673,7 +630,7 @@ var pjaxInit = function () {
     add_upload_tips();
     no_right_click();
     click_to_view_image();
-    mashiro_global.font_control.ini();
+    mashiro_global.font_control.init();
     $("p").remove(".head-copyright");
     try {
         code_highlight_style();
@@ -1620,7 +1577,7 @@ var home = location.href,
                     mb_to_top.style.transform = "scale(0)";
                 }
             });
-            mb_to_top.onclick = topFunction;
+            mb_to_top.onclick = () => scrollTop(0);
         }
     }
 $(function () {
@@ -1709,6 +1666,7 @@ $(function () {
     console.log("%c Mashiro %c", "background:#24272A; color:#ffffff", "", "https://2heng.xin/");
     console.log("%c Github %c", "background:#24272A; color:#ffffff", "", "https://github.com/mashirozx");
 });
+
 var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1,
     isOpera = navigator.userAgent.toLowerCase().indexOf('opera') > -1,
     isIe = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
@@ -1731,11 +1689,8 @@ if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventL
 
 /* 首页下拉箭头 */
 function headertop_down() {
-    var coverOffset = $('#content').offset().top;
-    $('html,body').animate({
-            scrollTop: coverOffset
-        },
-        600);
+    const coverOffset = $('#content').offset().top;
+    scrollTop(coverOffset);
 }
 
 window.onload = function () {

@@ -1846,7 +1846,7 @@ function optionsframework_options() {
     $options[] = array(
         'name' => __('Automatic Switching Dark Mode (22:00-7:00)', SAKURA_DOMAIN),
         'desc' => __('Check open', SAKURA_DOMAIN),
-        'id'   => 'darkmode',
+        'id'   => 'dark_mode',
         'std'  => '1',
         'type' => 'checkbox'
     );
