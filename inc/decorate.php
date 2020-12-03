@@ -1147,14 +1147,18 @@ body.dark .skin-menu {
 }
 
 body.dark .headertop-down i {
-  color: rgba(0, 0, 0, ' . akina_option('dark-widget-tmd') . ');
+  color: rgba(255, 255, 255, ' . akina_option('dark-widget-tmd') . ');
+  background: rgba(0, 0, 0, ' . akina_option('dark-widget-tmd') . ');
+  border-radius: 5px;
+  padding: 2px 2px 5px 2px;
 }
 
 /*深色模式图像亮度*/
 body.dark img,
 body.dark .highlight-wrap,
 body.dark iframe,
-body.dark .entry-content .aplayer {
+body.dark .entry-content .aplayer,
+body.dark .headertop-down i {
   filter: brightness(' . akina_option('dark_imgbri') . ');
 }
 
