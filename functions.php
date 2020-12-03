@@ -245,7 +245,7 @@ add_action('wp_enqueue_scripts', 'sakura_scripts');
  * load .php.
  */
 require get_template_directory() . '/inc/decorate.php';
-require get_template_directory() . '/inc/swicher.php';
+require get_template_directory() . '/inc/switcher.php';
 require get_template_directory() . '/inc/api.php';
 
 /**
@@ -923,7 +923,7 @@ add_filter('the_excerpt_rss', 'featuredtoRSS');
 add_filter('the_content_feed', 'featuredtoRSS');
 
 function toc_support($content) {
-    $content = str_replace('[toc]', '<div class="has-toc have-toc"></div>', $content); // TOC 支持
+    $content = str_replace('[toc]', '<div class="have-toc"></div>', $content); // TOC 支持
     $content = str_replace('[begin]', '<span class="begin">', $content); // 首字格式支持
     $content = str_replace('[/begin]', '</span>', $content); // 首字格式支持
     return $content;

@@ -11,7 +11,7 @@
 
 <!-- TODO: config to disable auto toc -->
 <?php if (akina_option('toc_always_on')) { ?>
-    <div class="has-toc have-toc"></div>
+    <div class="have-toc"></div>
 <?php } ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <?php if (akina_option('patternimg') || !get_post_thumbnail_id(get_the_ID())) { ?>

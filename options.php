@@ -915,8 +915,8 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Default Foreground Background', SAKURA_DOMAIN),
-        'desc' => __('Default Foreground Background, Fill in URL', SAKURA_DOMAIN),
+        'name' => ll('Default Foreground Background'),
+        'desc' => ll('Default Foreground Background, Fill in URL'),
         'id'   => 'sakura_skin_bg1',
         'std'  => 'none',
         'type' => 'text'

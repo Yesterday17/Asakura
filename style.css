@@ -7467,13 +7467,13 @@ li > ol {
 }
 
 .toc-container {
+    --toc-width: 300px;
     z-index: 98;
-    width: 200px;
+    width: var(--toc-width);
     height: 100%;
     background-color: rgba(255, 255, 255, 0);
     transform: translateX(0);
-    right: calc((100% - 1040px - 250px) / 2);
-    position: absolute !important;
+    right: calc((100% - 860px - 40px - 2 * var(--toc-width)) / 2);
     top: 480px;
     position: absolute;
     padding-top: 10px;
@@ -7486,7 +7486,8 @@ li > ol {
     top: 100px
 }
 
-@media (max-width: 1080px) {
+/* calc(860px + 2 * var(--toc-width)) */
+@media (max-width: calc(860px + 2 * 300px)) {
     .toc-container {
         display: none
     }
@@ -8501,6 +8502,15 @@ h6[id*=toc-head]::before {
     height: 80px;
     margin-top: -80px;
     visibility: hidden
+}
+
+h1[id*=toc-head]:focus,
+h2[id*=toc-head]:focus,
+h3[id*=toc-head]:focus,
+h4[id*=toc-head]:focus,
+h5[id*=toc-head]:focus,
+h6[id*=toc-head]:focus {
+    outline: none;
 }
 
 @media (max-width: 860px) {

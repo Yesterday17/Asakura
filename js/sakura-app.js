@@ -4,51 +4,85 @@
  * @url https://2heng.xin
  * @date 2019.8.3
  */
-mashiro_global.variables = new function () {
-    this.has_hls = false;
-    this.skinSecter = true;
-}
-mashiro_global.ini = new function () {
-    this.normalize = function () { // initial functions when page first load (首次加载页面时的初始化函数)
-        lazyload();
-        social_share();
-        post_list_show_animation();
-        copy_code_block();
-        web_audio();
-        coverVideoIni();
-        checkskinSecter();
-        scrollBar();
-        load_bangumi();
-    }
-    this.pjax = function () { // pjax reload functions (pjax 重载函数)
-        pjaxInit();
-        social_share();
-        post_list_show_animation();
-        copy_code_block();
-        web_audio();
-        coverVideoIni();
-        checkskinSecter();
-        load_bangumi();
+
+const mashiro_global = {
+    variables: {
+        has_hls: false,
+        skinSector: true,
+    },
+    ini: {
+        normalize: () => {
+            // initial functions when page first load (首次加载页面时的初始化函数)
+            lazyload();
+            social_share();
+            post_list_show_animation();
+            copy_code_block();
+            web_audio();
+            coverVideoIni();
+            checkskinSector();
+            scrollBar();
+            load_bangumi();
+        },
+        pjax: () => {
+            // pjax reload functions (pjax 重载函数)
+            pjaxInit();
+            social_share();
+            post_list_show_animation();
+            copy_code_block();
+            web_audio();
+            coverVideoIni();
+            checkskinSector();
+            load_bangumi();
+        }
+    },
+    font_control: {
+        change_font: () => {
+            if ($("body").hasClass("serif")) {
+                $("body").removeClass("serif");
+                $(".control-btn-serif").removeClass("selected");
+                $(".control-btn-sans-serif").addClass("selected");
+                setCookie("font_family", "sans-serif", 30);
+            } else {
+                $("body").addClass("serif");
+                $(".control-btn-serif").addClass("selected");
+                $(".control-btn-sans-serif").removeClass("selected");
+                setCookie("font_family", "serif", 30);
+                if (document.body.clientWidth <= 860) {
+                    addComment.createButterbar("将从网络加载字体，流量请注意");
+                }
+            }
+        },
+        ini: () => {
+            if (document.body.clientWidth > 860) {
+                if (!getCookie("font_family") || getCookie("font_family") === "serif")
+                    $("body").addClass("serif");
+            }
+            if (getCookie("font_family") === "sans-serif") {
+                $("body").removeClass("sans-serif");
+                $(".control-btn-serif").removeClass("selected");
+                $(".control-btn-sans-serif").addClass("selected");
+            }
+        }
     }
 }
 
+mashiro_global.font_control.ini();
+
 function setCookie(name, value, days) {
-    var expires = "";
+    let expires = "";
     if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
+        expires = "; expires=" + new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
     }
     document.cookie = name + mashiro_option.cookie_version_control + "=" + (value || "") + expires + "; path=/";
 }
 
 function getCookie(name) {
-    var nameEQ = name + mashiro_option.cookie_version_control + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    const nameEQ = name + mashiro_option.cookie_version_control + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.startsWith(nameEQ)) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
@@ -107,39 +141,7 @@ function post_list_show_animation() {
     }
 }
 
-mashiro_global.font_control = new function () {
-    this.change_font = function () {
-        if ($("body").hasClass("serif")) {
-            $("body").removeClass("serif");
-            $(".control-btn-serif").removeClass("selected");
-            $(".control-btn-sans-serif").addClass("selected");
-            setCookie("font_family", "sans-serif", 30);
-        } else {
-            $("body").addClass("serif");
-            $(".control-btn-serif").addClass("selected");
-            $(".control-btn-sans-serif").removeClass("selected");
-            setCookie("font_family", "serif", 30);
-            if (document.body.clientWidth <= 860) {
-                addComment.createButterbar("将从网络加载字体，流量请注意");
-            }
-        }
-    }
-    this.ini = function () {
-        if (document.body.clientWidth > 860) {
-            if (!getCookie("font_family") || getCookie("font_family") == "serif")
-                $("body").addClass("serif");
-        }
-        if (getCookie("font_family") == "sans-serif") {
-            $("body").removeClass("sans-serif");
-            $(".control-btn-serif").removeClass("selected");
-            $(".control-btn-sans-serif").addClass("selected");
-        }
-    }
-}
-mashiro_global.font_control.ini();
-
 function social_share_limit() {
-
     if ($(".top-social").length > 0 || $(".top-social_v2").length > 0) {
         $(".top-social").length > 0 ? a = $(".top-social li") : a = $(".top-social_v2 li");
         for (var i = a.length - 2; i >= 11; i--) {
@@ -201,7 +203,7 @@ try {
 } catch (e) {
 }
 
-if (Poi.reply_link_version == 'new') {
+if (Poi.reply_link_version === 'new') {
     $('body').on('click', '.comment-reply-link', function () {
         addComment.moveForm("comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
         return false;
@@ -336,8 +338,8 @@ function scrollBar() {
     }
 }
 
-function checkskinSecter() {
-    if (mashiro_global.variables.skinSecter === false) {
+function checkskinSector() {
+    if (mashiro_global.variables.skinSector === false) {
         $(".pattern-center").removeClass('pattern-center').addClass('pattern-center-sakura');
         $(".headertop-bar").removeClass('headertop-bar').addClass('headertop-bar-sakura');
     } else {
@@ -432,7 +434,7 @@ no_right_click();
 
 $(document).ready(function () {
     function cover_bg() {
-        if (document.body.clientWidth < 860 && mashiro_option.cover_beta == true) {
+        if (document.body.clientWidth < 860 && mashiro_option.cover_beta) {
             $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?type=mobile" + ")");
         } else {
             $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + ")");
@@ -451,11 +453,11 @@ $(document).ready(function () {
             var tagid = this.id;
             cached.on("click", "#" + tagid, function () {
                 if (tagid == "white-bg" || tagid == "dark-bg") {
-                    mashiro_global.variables.skinSecter = true;
-                    checkskinSecter();
+                    mashiro_global.variables.skinSector = true;
+                    checkskinSector();
                 } else {
-                    mashiro_global.variables.skinSecter = false;
-                    checkskinSecter();
+                    mashiro_global.variables.skinSector = false;
+                    checkskinSector();
                 }
                 if (tagid == "dark-bg") {
                     $("html").css("background", "#31363b");
@@ -509,24 +511,24 @@ $(document).ready(function () {
     });
     add_upload_tips();
 });
-var bgn = 1;
+let bgn = 1;
 
-function nextBG() {
-    if (document.body.clientWidth < 860 && mashiro_option.cover_beta == true) {
+function bg_update() {
+    if (document.body.clientWidth < 860 && mashiro_option.cover_beta) {
         $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?type=mobile&" + bgn + ")");
     } else {
         $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?" + bgn + ")");
     }
+}
+
+function nextBG() {
+    bg_update();
     bgn = bgn + 1;
 }
 
 function preBG() {
     bgn = bgn - 1;
-    if (document.body.clientWidth < 860 && mashiro_option.cover_beta == true) {
-        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?type=mobile&" + bgn + ")");
-    } else {
-        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?" + bgn + ")");
-    }
+    bg_update();
 }
 
 $(document).ready(function () {
@@ -539,14 +541,12 @@ $(document).ready(function () {
 });
 
 function topFunction() {
-    $('body,html').animate({
-        scrollTop: 0
-    })
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
 function timeSeriesReload(flag) {
-    var cached = $('#archives');
-    if (flag == true) {
+    const cached = $('#archives');
+    if (flag) {
         cached.find('span.al_mon').click(function () {
             $(this).next().slideToggle(400);
             return false;
@@ -575,16 +575,10 @@ function timeSeriesReload(flag) {
                     $(this).children('.al_post_list').show(400);
                     return false;
                 });
-                if (false) {
-                    cached.find('li.al_li').mouseout(function () {
-                        $(this).children('.al_post_list').hide(400);
-                        return false;
-                    });
-                }
             }
-            var al_expand_collapse_click = 0;
+            let al_expand_collapse_click = 0;
             $('#al_expand_collapse').click(function () {
-                if (al_expand_collapse_click == 0) {
+                if (al_expand_collapse_click === 0) {
                     $al_post_list.each(function (index) {
                         var $this = $(this),
                             s = setTimeout(function () {
@@ -592,7 +586,7 @@ function timeSeriesReload(flag) {
                             }, 50 * index);
                     });
                     al_expand_collapse_click++;
-                } else if (al_expand_collapse_click == 1) {
+                } else if (al_expand_collapse_click === 1) {
                     $al_post_list.each(function (index) {
                         var $this = $(this),
                             h = setTimeout(function () {
@@ -619,7 +613,6 @@ function coverVideo() {
             btn.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
         } catch (e) {
         }
-        ;
         //console.info('play:coverVideo()');
     } else {
         video.pause();
@@ -627,25 +620,7 @@ function coverVideo() {
             btn.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
         } catch (e) {
         }
-        ;
         //console.info('pause:coverVideo()');
-    }
-}
-
-function killCoverVideo() {
-    var video = addComment.I("coverVideo");
-    var btn = addComment.I("coverVideo-btn");
-
-    if (video.paused) {
-        //console.info('none:killCoverVideo()');
-    } else {
-        video.pause();
-        try {
-            btn.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-        } catch (e) {
-        }
-        ;
-        //console.info('pause:killCoverVideo()');
     }
 }
 
@@ -694,24 +669,37 @@ function copy_code_block() {
 function tableOfContentScroll(flag) {
     if (document.body.clientWidth <= 1200) {
         return;
-    } else if ($("div").hasClass("have-toc") == false && $("div").hasClass("has-toc") == false) {
-        $(".toc-container").remove();
-    } else {
+    }
+    if (document.querySelector('.have-toc')) {
         if (flag) {
-            var id = 1,
-                heading_fix = mashiro_option.entry_content_theme == "asakura" ? $("article").hasClass("type-post") ? $("div").hasClass("pattern-attachment-img") ? -75 : 200 : 375 : window.innerHeight / 2;
-            $(".entry-content , .links").children("h1,h2,h3,h4,h5").each(function () {
-                var hyphenated = "toc-head-" + id;
-                this.id = hyphenated;
-                id++;
-            });
+            let id = 1,
+                heading_fix;
+            if (mashiro_option.entry_content_theme === "asakura") {
+                if ($("article").hasClass("type-post")) {
+                    if ($("div").hasClass("pattern-attachment-img")) {
+                        heading_fix = -75;
+                    } else {
+                        heading_fix = 200;
+                    }
+                } else {
+                    heading_fix = 375;
+                }
+                heading_fix += 80;
+                heading_fix -= window.innerHeight / 2;
+            }
+
+            document.querySelectorAll('.entry-content, .links').forEach((el) => {
+                el.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((e) => e.id = `toc-head-${id++}`)
+            })
             tocbot.init({
                 tocSelector: '.toc',
                 contentSelector: ['.entry-content', '.links'],
-                headingSelector: 'h1, h2, h3, h4, h5',
-                headingsOffset: heading_fix - window.innerHeight / 2,
+                headingSelector: 'h1, h2, h3, h4, h5, h6',
+                headingsOffset: heading_fix,
             });
         }
+    } else {
+        document.querySelector(".toc-container").remove()
     }
 }
 
@@ -1937,7 +1925,6 @@ $(function () {
             if (Poi.codelamp == 'open') {
                 self.Prism.highlightAll(event)
             }
-            ;
         }).on('pjax:end', function () {
             if (window.gtag) {
                 gtag('config', Poi.google_analytics_id, {
