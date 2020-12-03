@@ -201,12 +201,10 @@ try {
 } catch (e) {
 }
 
-if (Poi.reply_link_version === 'new') {
-    $('body').on('click', '.comment-reply-link', function () {
-        addComment.moveForm("comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
-        return false;
-    });
-}
+$('body').on('click', '.comment-reply-link', function () {
+    addComment.moveForm("comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
+    return false;
+});
 
 function attach_image() {
     var cached = $('.insert-image-tips');
@@ -225,7 +223,7 @@ function attach_image() {
             var formData = new FormData();
             formData.append('cmt_img_file', f);
             $.ajax({
-                url: Poi.api + 'asakura/v1/image/upload?_wpnonce=' + Poi.nonce,
+                url: mashiro_option.api + 'asakura/v1/image/upload?_wpnonce=' + mashiro_option.nonce,
                 type: 'POST',
                 processData: false,
                 contentType: false,
@@ -836,7 +834,7 @@ if (mashiro_option.float_player_on) {
                     });
                 }
 
-                var b = mashiro_option.meting_api_url + '?server=:server&type=:type&id=:id&_wpnonce=' + Poi.nonce;
+                var b = mashiro_option.meting_api_url + '?server=:server&type=:type&id=:id&_wpnonce=' + mashiro_option.nonce;
                 'undefined' != typeof meting_api && (b = meting_api);
                 for (var f = 0; f < aplayers.length; f++) try {
                     aplayers[f].destroy()
@@ -904,7 +902,7 @@ function getqqinfo() {
         if ($reg.test(qq)) {
             $.ajax({
                 type: 'get',
-                url: mashiro_option.qq_api_url + '?qq=' + qq + '&_wpnonce=' + Poi.nonce,
+                url: mashiro_option.qq_api_url + '?qq=' + qq + '&_wpnonce=' + mashiro_option.nonce,
                 dataType: 'json',
                 success: function (data) {
                     cached.filter('#author').val(data.name);
@@ -1016,7 +1014,7 @@ function load_bangumi() {
         $('body').on('click', '#bangumi-pagination a', function () {
             $("#bangumi-pagination a").addClass("loading").text("");
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', this.href + "&_wpnonce=" + Poi.nonce, true);
+            xhr.open('POST', this.href + "&_wpnonce=" + mashiro_option.nonce, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
@@ -1105,9 +1103,9 @@ var home = location.href,
             $('.video-stu').html('正在载入视频 ...').css({
                 "bottom": "0px"
             });
-            var t = Poi.movies.name.split(","),
+            var t = mashiro_option.movies.name.split(","),
                 _t = t[Math.floor(Math.random() * t.length)];
-            $('#bgvideo').attr('src', Poi.movies.url + '/' + _t + '.mp4');
+            $('#bgvideo').attr('src', mashiro_option.movies.url + '/' + _t + '.mp4');
             $('#bgvideo').attr('video-name', _t);
         },
         LV: function () {
@@ -1147,7 +1145,7 @@ var home = location.href,
             });
         },
         AH: function () {
-            if (Poi.windowheight == 'auto') {
+            if (mashiro_option.window_height == 'auto') {
                 if ($('h1.main-title').length > 0) {
                     var _height = $(window).height() + "px";
                     $('#centerbg').css({
@@ -1170,7 +1168,7 @@ var home = location.href,
                     $('.headertop').css({
                         "height": "auto"
                     }).show();
-                    if (Poi.movies.live == 'open') Siren.liveplay();
+                    if (mashiro_option.movies.live == 'open') Siren.liveplay();
                 } else {
                     $('.blank').css({
                         "padding-top": "75px"
@@ -1209,7 +1207,7 @@ var home = location.href,
                 $('html').css('overflow-y', 'hidden');
                 if (mashiro_option.live_search) {
                     var QueryStorage = [];
-                    search_a(Poi.api + "asakura/v1/cache_search/json?_wpnonce=" + Poi.nonce);
+                    search_a(mashiro_option.api + "asakura/v1/cache_search/json?_wpnonce=" + mashiro_option.nonce);
 
                     var otxt = addComment.I("search-input"),
                         list = addComment.I("PostlistBox"),
@@ -1427,7 +1425,7 @@ var home = location.href,
                 __list = 'commentwrap';
             jQuery(document).on("submit", "#commentform", function () {
                 jQuery.ajax({
-                    url: Poi.ajaxurl,
+                    url: mashiro_option.ajax_url,
                     data: jQuery(this).serialize() + "&action=ajax_comment",
                     type: jQuery(this).attr('method'),
                     beforeSend: addComment.createButterbar("提交中(Commiting)...."),
@@ -1445,16 +1443,16 @@ var home = location.href,
                             respond = t.I(t.respondId),
                             post = t.I('comment_post_ID').value,
                             parent = t.I('comment_parent').value;
-                        if (parent != '0') {
+                        if (parent !== '0') {
                             jQuery('#respond').before('<ol class="children">' + data + '</ol>');
                         } else if (!jQuery('.' + __list).length) {
-                            if (Poi.formpostion == 'bottom') {
+                            if (mashiro_option.form_position === 'bottom') {
                                 jQuery('#respond').before('<ol class="' + __list + '">' + data + '</ol>');
                             } else {
                                 jQuery('#respond').after('<ol class="' + __list + '">' + data + '</ol>');
                             }
                         } else {
-                            if (Poi.order == 'asc') {
+                            if (mashiro_option.comment_order === 'asc') {
                                 jQuery('.' + __list).append(data);
                             } else {
                                 jQuery('.' + __list).prepend(data);
@@ -1562,7 +1560,7 @@ var home = location.href,
                         $('ul.commentwrap').after(nextlink);
                         lazyload();
                         if (window.gtag) {
-                            gtag('config', Poi.google_analytics_id, {
+                            gtag('config', mashiro_option.google_analytics_id, {
                                 'page_path': path
                             });
                         }
@@ -1596,7 +1594,7 @@ $(function () {
     Siren.CE();
     Siren.MN();
     Siren.LV();
-    if (Poi.pjax) {
+    if (mashiro_option.pjax) {
         $(document).pjax('a[target!=_top]', '#page', {
             fragment: '#page',
             timeout: 8000,
@@ -1617,12 +1615,12 @@ $(function () {
             if (mashiro_option.nprogress_on) NProgress.done();
             mashiro_global.ini.pjax();
             $("#loading").fadeOut(500);
-            if (Poi.codelamp == 'open') {
+            if (mashiro_option.code_lamp === 'open') {
                 self.Prism.highlightAll(event)
             }
         }).on('pjax:end', function () {
             if (window.gtag) {
-                gtag('config', Poi.google_analytics_id, {
+                gtag('config', mashiro_option.google_analytics_id, {
                     'page_path': window.location.pathname
                 });
             }
@@ -1659,7 +1657,7 @@ $(function () {
                 um_id: id,
                 um_action: action
             };
-            $.post(Poi.ajaxurl, ajax_data, function (data) {
+            $.post(mashiro_option.ajax_url, ajax_data, function (data) {
                 $(rateHolder).html(data);
             });
             return false;

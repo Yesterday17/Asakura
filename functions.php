@@ -208,35 +208,10 @@ function sakura_scripts() {
         wp_enqueue_script('comment-reply');
     }
 
-    // 20161116 @Louie
-    $mv_live = akina_option('focus_mvlive') ? 'open' : 'close';
-    $movies = akina_option('focus_amv') ? array(
-        'url'  => akina_option('amv_url'),
-        'name' => akina_option('amv_title'),
-        'live' => $mv_live
-    ) : 'close';
-    $auto_height = akina_option('focus_height') ? 'fixed' : 'auto';
-    $code_lamp = 'close';
+    //拦截移动端
     // if (wp_is_mobile()) {
     //     $auto_height = 'fixed';
     // }
-    //拦截移动端
-    version_compare($GLOBALS['wp_version'], '5.1', '>=') ? $reply_link_version = 'new' : $reply_link_version = 'old';
-    $gravatar_url = akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar';
-    wp_localize_script('app', 'Poi', array(
-        'pjax'                => akina_option('poi_pjax'),
-        'movies'              => $movies,
-        'windowheight'        => $auto_height,
-        'codelamp'            => $code_lamp,
-        'ajaxurl'             => admin_url('admin-ajax.php'),
-        'order'               => get_option('comment_order'),        // ajax comments
-        'formpostion'         => 'bottom', // ajax comments 默认为bottom，如果你的表单在顶部则设置为top。
-        'reply_link_version'  => $reply_link_version,
-        'api'                 => esc_url_raw(rest_url()),
-        'nonce'               => wp_create_nonce('wp_rest'),
-        'google_analytics_id' => akina_option('google_analytics_id', ''),
-        'gravatar_url'        => $gravatar_url
-    ));
     wp_add_inline_script('app', 'var mashiro_option = ' . json_encode(get_asakura_option()) . ';', 'before');
 }
 
@@ -925,8 +900,6 @@ add_filter('the_content_feed', 'featuredtoRSS');
 
 function toc_support($content) {
     $content = str_replace('[toc]', '<div class="have-toc"></div>', $content); // TOC 支持
-    $content = str_replace('[begin]', '<span class="begin">', $content); // 首字格式支持
-    $content = str_replace('[/begin]', '</span>', $content); // 首字格式支持
     return $content;
 }
 
