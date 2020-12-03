@@ -709,7 +709,7 @@ $bg_style
 }
 ";
 
-    if (akina_option('yjzdh', '1')):
+    if (akina_option('preload_animation', '1')):
         $result .= '
 /*预加载部分*/
 #preload {

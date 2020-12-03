@@ -1384,7 +1384,7 @@ function optionsframework_options() {
     $options[] = array(
         'name' => __('Preload Animation', SAKURA_DOMAIN),
         'desc' => __('Check open', SAKURA_DOMAIN),
-        'id'   => 'yjzdh',
+        'id'   => 'preload_animation',
         'std'  => '0',
         'type' => 'checkbox'
     );

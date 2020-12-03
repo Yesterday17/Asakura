@@ -91,7 +91,7 @@
     <?php endif; ?>
 </head>
 <body <?php body_class(); ?>>
-<?php if (akina_option('yjzdh', '1')): ?>
+<?php if (akina_option('preload_animation', '1')): ?>
     <div id="preload">
         <li data-id="3" class="active">
             <div id="preloader_3"></div>

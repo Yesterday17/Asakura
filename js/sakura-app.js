@@ -338,10 +338,12 @@ function scrollBar() {
 
 function changeTheme(dark, save) {
     const sc = document.querySelector('.site-content');
+    const pl = document.querySelector('#preload');
     if (dark) {
         console.log("Toggling to dark mode.")
         document.body.style.background = '#31363b';
         sc && (sc.style.backgroundColor = '#fff');
+        pl && (pl.style.backgroundColor = '#31363b');
         document.body.classList.add('dark');
         if (save) {
             localStorage.setItem('dark', '1');
@@ -350,6 +352,7 @@ function changeTheme(dark, save) {
         console.log("Toggling to light mode.")
         document.body.style.background = 'unset';
         sc && (sc.style.backgroundColor = 'rgba(255, 255, 255, .8)');
+        pl && (pl.style.backgroundColor = '#fff');
         document.body.classList.remove('dark');
         document.body.style.backgroundImage = mashiro_option.skin_bg === 'none' ? '' : `url(${mashiro_option.skin_bg})`;
         if (save) {
@@ -358,7 +361,7 @@ function changeTheme(dark, save) {
     }
 }
 
-function checkDarkMode() {
+function checkDarkMode(setTimer = true) {
     let dark = localStorage.getItem('dark');
 
     // no dark session
@@ -382,7 +385,9 @@ function checkDarkMode() {
         }
 
         auto_switch_theme();
-        setTimeout(auto_switch_theme, 5 * 60 * 1000); // check every 5 minutes
+        if (setTimer) {
+            setTimeout(auto_switch_theme, 5 * 60 * 1000); // check every 5 minutes
+        }
     }
 }
 
@@ -752,7 +757,6 @@ function add_copyright() {
     function setClipboardText(event) {
         event.preventDefault();
         var htmlData = "# 商业转载请联系作者获得授权，非商业转载请注明出处。<br>" + "# For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source.<br>" + "# 协议(License)：署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)<br>" + "# 作者(Author)：" + mashiro_option.author_name + "<br>" + "# 链接(URL)：" + window.location.href + "<br>" + "# 来源(Source)：" + mashiro_option.site_name + "<br><br>" + window.getSelection().toString().replace(/\r\n/g, "<br>");
-        ;
         var textData = "# 商业转载请联系作者获得授权，非商业转载请注明出处。\n" + "# For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source.\n" + "# 协议(License)：署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)\n" + "# 作者(Author)：" + mashiro_option.author_name + "\n" + "# 链接(URL)：" + window.location.href + "\n" + "# 来源(Source)：" + mashiro_option.site_name + "\n\n" + window.getSelection().toString().replace(/\r\n/g, "\n");
         if (event.clipboardData) {
             event.clipboardData.setData("text/html", htmlData);
@@ -1699,8 +1703,8 @@ window.onload = function () {
 
     function load() {
         $("html").css('overflow-y', 'unset');
+        checkDarkMode(false);
         $("#preload").fadeOut();
-        setTimeout('$("#preload").remove()', 666);
     }
 
     InstantClick.on("change", () => {
