@@ -395,14 +395,6 @@ pre {
     color: #000
 }
 
-code,
-kbd,
-tt,
-var {
-    font-size: 15px;
-    font-size: .9375rem
-}
-
 abbr,
 acronym {
     border-bottom: 1px dotted #666;

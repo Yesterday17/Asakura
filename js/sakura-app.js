@@ -699,7 +699,7 @@ function tableOfContentScroll(flag) {
             });
         }
     } else {
-        document.querySelector(".toc-container").remove()
+        document.querySelector(".toc-container")?.remove()
     }
 }
 
