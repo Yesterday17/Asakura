@@ -1405,12 +1405,6 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
   -webkit-animation: fadeInDown ' . akina_option('hp-ani-t') . 's;
   animation: fadeInDown ' . akina_option('hp-ani-t') . 's;
 }
-
-.site-top ul li a {
-  -moz-animation: fadeInLeft ' . akina_option('hp-ani-t') . 's;
-  -webkit-animation: fadeInLeft ' . akina_option('hp-ani-t') . 's;
-  animation: fadeInLeft ' . akina_option('hp-ani-t') . 's;
-}
 ';
     }
 
@@ -1546,73 +1540,6 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
     -ms-transform: translateY(0%);
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
-    opacity: 1
-  }
-}
-
-/*向左*/
-@-moz-keyframes fadeInLeft {
-  0% {
-    -moz-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  50% {
-    -moz-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  100% {
-    -moz-transform: translateX(0%);
-    transform: translateX(0%);
-    opacity: 1
-  }
-}
-
-@-webkit-keyframes fadeInLeft {
-  0% {
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  50% {
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  100% {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-    opacity: 1
-  }
-}
-
-@keyframes fadeInLeft {
-  0% {
-    -moz-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  50% {
-    -moz-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    opacity: 0
-  }
-
-  100% {
-    -moz-transform: translateX(0%);
-    -ms-transform: translateX(0%);
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
     opacity: 1
   }
 }

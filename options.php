@@ -988,10 +988,10 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'  => __('Homepage Animation Time', SAKURA_DOMAIN),
-        'desc'  => __('Fill in Number', SAKURA_DOMAIN),
+        'name'  => ll('Homepage Animation Time'),
+        'desc'  => ll('Fill in Number'),
         'id'    => 'hp-ani-t',
-        'std'   => '2',
+        'std'   => '0.5',
         'class' => 'mini',
         'type'  => 'text'
     );

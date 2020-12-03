@@ -1151,7 +1151,9 @@ a:hover {
     float: left;
     margin-left: 28px;
     position: relative;
-    -webkit-transition: all 1s ease
+    -webkit-transition: all 1s ease;
+    display: flex;
+    justify-content: center;
 }
 
 .site-top ul li a {
@@ -1263,7 +1265,6 @@ a:hover {
     background: #fff;
     padding: 10px;
     top: 46px;
-    right: -13px;
     min-width: 80px;
     text-align: center;
     white-space: nowrap;
