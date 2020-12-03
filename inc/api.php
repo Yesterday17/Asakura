@@ -9,6 +9,8 @@ include_once('classes/Cache.php');
 include_once('classes/Images.php');
 include_once('classes/QQ.php');
 
+use Sakura\API\Aplayer;
+use Sakura\API\Bilibili;
 use Sakura\API\Images;
 use Sakura\API\QQ;
 use Sakura\API\Cache;
@@ -69,7 +71,7 @@ function upload_image(WP_REST_Request $request) {
         $result->set_headers(array('Content-Type' => 'application/json'));
         return $result;
     }
-    $images = new \Sakura\API\Images();
+    $images = new Images();
     switch (akina_option("img_upload_api")) {
         case 'imgur':
             $image = file_get_contents($_FILES["cmt_img_file"]["tmp_name"]);
@@ -201,7 +203,7 @@ function bgm_bilibili() {
         $response = new WP_REST_Response($output, 403);
     } else {
         $page = $_GET["page"] ?: 2;
-        $bgm = new \Sakura\API\Bilibili();
+        $bgm = new Bilibili();
         $html = preg_replace("/\s+|\n+|\r/", ' ', $bgm->get_bgm_items($page));
         $response = new WP_REST_Response($html, 200);
     }
@@ -212,12 +214,12 @@ function meting_aplayer() {
     $type = $_GET['type'];
     $id = $_GET['id'];
     $wpnonce = $_GET['_wpnonce'];
-    $meting_pnonce = $_GET['meting_pnonce'];
+    //$meting_pnonce = $_GET['meting_pnonce'];
     if ((isset($wpnonce) && !check_ajax_referer('wp_rest', $wpnonce, false)) || (isset($nonce) && !wp_verify_nonce($nonce, $type . '#:' . $id))) {
         $output = array('status' => 403, 'success' => false, 'message' => 'Unauthorized client.');
         $response = new WP_REST_Response($output, 403);
     } else {
-        $Meting_API = new \Sakura\API\Aplayer();
+        $Meting_API = new Aplayer();
         $data = $Meting_API->get_data($type, $id);
         if ($type === 'playlist') {
             $response = new WP_REST_Response($data, 200);
@@ -237,5 +239,6 @@ function meting_aplayer() {
 
 function get_customizer_css() {
     $data = customizer_css();
+    header("Content-Type: text/css");
     echo $data;
 }

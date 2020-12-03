@@ -7,11 +7,11 @@
 
 function optionsframework_option_name() {
     // 从样式表获取主题名称
-    $themename = wp_get_theme();
-    $themename = preg_replace("/\W/", "_", strtolower($themename));
+    $theme_name = wp_get_theme();
+    $theme_name = preg_replace("/\W/", "_", strtolower($theme_name));
 
     $optionsframework_settings = get_option('optionsframework');
-    $optionsframework_settings['id'] = $themename;
+    $optionsframework_settings['id'] = $theme_name;
     update_option('optionsframework', $optionsframework_settings);
 }
 
@@ -26,31 +26,6 @@ function optionsframework_option_name() {
  */
 
 function optionsframework_options() {
-    // 将所有分类（categories）加入数组
-    $options_categories = array();
-    $options_categories_obj = get_categories();
-    foreach ($options_categories_obj as $category) {
-        $options_categories[$category->cat_ID] = $category->cat_name;
-    }
-
-    // 将所有标签（tags）加入数组
-    $options_tags = array();
-    $options_tags_obj = get_tags();
-    foreach ($options_tags_obj as $tag) {
-        $options_tags[$tag->term_id] = $tag->name;
-    }
-
-    // 将所有页面（pages）加入数组
-    $options_pages = array();
-    $options_pages_obj = get_pages('sort_column=post_parent,menu_order');
-    $options_pages[''] = 'Select a page:';
-    foreach ($options_pages_obj as $page) {
-        $options_pages[$page->ID] = $page->post_title;
-    }
-
-    // 如果使用图片单选按钮, define a directory path
-    $imagepath = get_template_directory_uri() . '/images/';
-
     $options = array();
 
     //基本设置
@@ -2071,11 +2046,11 @@ function optionsframework_options() {
     );
 
     //主题
-    $options[] = array('name' => __('Theme', SAKURA_DOMAIN), 'type' => 'heading');
+    $options[] = array('name' => ll('Theme'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Theme-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
+        'name'    => ll('Theme-Setting'),
+        'desc'    => ll(' '),
         'id'      => 'setting_theme',
         'std'     => 'tag',
         'type'    => "images",
@@ -2083,8 +2058,8 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Display Icon Selection', SAKURA_DOMAIN),
-        'desc'    => __('Choose icon color', SAKURA_DOMAIN),
+        'name'    => ll('Display Icon Selection'),
+        'desc'    => ll('Choose icon color'),
         'id'      => 'webweb_img',
         'std'     => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/theme/sakura',
         'type'    => 'select',
@@ -2105,18 +2080,18 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Theme Color', SAKURA_DOMAIN),
+        'name' => ll('Theme Color'),
         'id'   => 'theme_skin',
         'std'  => "#FB98C0",
-        'desc' => __('Custom theme color', SAKURA_DOMAIN),
+        'desc' => ll('Custom theme color'),
         'type' => "color",
     );
 
     $options[] = array(
-        'name' => __('Theme Color Matching Color', SAKURA_DOMAIN),
+        'name' => ll('Theme Color Matching Color'),
         'id'   => 'theme_skinm',
         'std'  => "#87B6FA",
-        'desc' => __('Custom theme color', SAKURA_DOMAIN),
+        'desc' => ll('Custom theme color'),
         'type' => "color",
     );
 
