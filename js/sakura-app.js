@@ -4,61 +4,63 @@
  * @url https://2heng.xin
  * @date 2019.8.3
  */
-
-const mashiro_global = {
-    variables: {
-        has_hls: false,
-    },
-    ini: {
-        normalize: () => {
-            // initial functions when page first load (首次加载页面时的初始化函数)
-            lazyload();
-            social_share();
-            post_list_show_animation();
-            copy_code_block();
-            web_audio();
-            coverVideoIni();
-            scrollBar();
-            load_bangumi();
+if (!window.mashiro_global) {
+    window.mashiro_global = {
+        variables: {
+            has_hls: false,
         },
-        pjax: () => {
-            // pjax reload functions (pjax 重载函数)
-            pjaxInit();
-            social_share();
-            post_list_show_animation();
-            copy_code_block();
-            web_audio();
-            coverVideoIni();
-            load_bangumi();
-        }
-    },
-    font_control: {
-        change_font: () => {
-            if ($("body").hasClass("serif")) {
-                $("body").removeClass("serif");
-                $(".control-btn-serif").removeClass("selected");
-                $(".control-btn-sans-serif").addClass("selected");
-                localStorage.setItem("font_family", "sans-serif");
-            } else {
-                $("body").addClass("serif");
-                $(".control-btn-serif").addClass("selected");
-                $(".control-btn-sans-serif").removeClass("selected");
-                localStorage.setItem("font_family", "serif");
+        ini: {
+            normalize: () => {
+                // initial functions when page first load (首次加载页面时的初始化函数)
+                lazyload();
+                social_share();
+                post_list_show_animation();
+                copy_code_block();
+                web_audio();
+                coverVideoIni();
+                scrollBar();
+                load_bangumi();
+            },
+            pjax: () => {
+                // pjax reload functions (pjax 重载函数)
+                pjaxInit();
+                social_share();
+                post_list_show_animation();
+                copy_code_block();
+                web_audio();
+                coverVideoIni();
+                load_bangumi();
             }
         },
-        init: () => {
-            const f = localStorage.getItem("font_family");
-            if (document.body.clientWidth > 860) {
-                if (!f || f === "serif") {
+        font_control: {
+            change_font: () => {
+                if ($("body").hasClass("serif")) {
+                    $("body").removeClass("serif");
+                    $(".control-btn-serif").removeClass("selected");
+                    $(".control-btn-sans-serif").addClass("selected");
+                    localStorage.setItem("font_family", "sans-serif");
+                } else {
                     $("body").addClass("serif");
+                    $(".control-btn-serif").addClass("selected");
+                    $(".control-btn-sans-serif").removeClass("selected");
+                    localStorage.setItem("font_family", "serif");
+                }
+            },
+            init: () => {
+                const f = localStorage.getItem("font_family");
+                if (document.body.clientWidth > 860) {
+                    if (!f || f === "serif") {
+                        $("body").addClass("serif");
+                    }
+                }
+                if (f === "sans-serif") {
+                    $("body").removeClass("sans-serif");
+                    $(".control-btn-serif").removeClass("selected");
+                    $(".control-btn-sans-serif").addClass("selected");
                 }
             }
-            if (f === "sans-serif") {
-                $("body").removeClass("sans-serif");
-                $(".control-btn-serif").removeClass("selected");
-                $(".control-btn-sans-serif").addClass("selected");
-            }
-        }
+        },
+        bgn: 1,
     }
 }
 
@@ -433,23 +435,22 @@ $(document).ready(function () {
     });
     add_upload_tips();
 });
-let bgn = 1;
 
 function bg_update() {
     if (document.body.clientWidth < 860 && mashiro_option.cover_beta) {
-        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?type=mobile&" + bgn + ")");
+        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?type=mobile&" + mashiro_global.bgn + ")");
     } else {
-        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?" + bgn + ")");
+        $(".centerbg").css("background-image", "url(" + mashiro_option.cover_api + "?" + mashiro_global.bgn + ")");
     }
 }
 
 function nextBG() {
     bg_update();
-    bgn = bgn + 1;
+    mashiro_global.bgn++;
 }
 
 function preBG() {
-    bgn = bgn - 1;
+    mashiro_global.bgn--;
     bg_update();
 }
 
@@ -1704,7 +1705,7 @@ window.onload = function () {
 
     InstantClick.on("change", () => {
         load();
-        if (SyntaxHighlighter) {
+        if (window.SyntaxHighlighter) {
             SyntaxHighlighter.highlight();
         }
     })

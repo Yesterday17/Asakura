@@ -44,7 +44,7 @@ function get_avatar_profile_url($id = "") {
  * 随机图
  */
 function get_random_bg_url() {
-    return rest_url('/v1/image/feature') . '?' . rand(1, 1000);
+    return asakura_rest_url('image/feature') . '?' . rand(1, 1000);
 }
 
 
