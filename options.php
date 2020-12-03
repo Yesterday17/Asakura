@@ -32,15 +32,6 @@ function optionsframework_options() {
     $options[] = array('name' => ll('Basic'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => ll('Basic-Setting'),
-        'desc'    => ll(' '),
-        'id'      => 'setting_basic',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/basic.png',),
-    );
-
-    $options[] = array(
         'name' => ll('Site Title'),
         'desc' => ll('Fuukei\'s Blog'),
         'id'   => 'site_name',
@@ -234,24 +225,6 @@ function optionsframework_options() {
     $options[] = array('name' => ll('HomePage'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => ll('HomePage-Setting'),
-        'desc'    => ll(' '),
-        'id'      => 'setting_home',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/homepage.png',),
-    );
-
-    $options[] = array(
-        'name'    => ll('First Screen'),
-        'desc'    => ll(' '),
-        'id'      => 'setting_homefs',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/homepage-firstscreen.png',),
-    );
-
-    $options[] = array(
         'name' => ll('Main Switch'),
         'desc' => ll('Default on, check off'),
         'id'   => 'main-switch',
@@ -410,15 +383,6 @@ function optionsframework_options() {
             'filter-grid'      => __('Grid', SAKURA_DOMAIN),
             'filter-dot'       => __('Dot', SAKURA_DOMAIN),
         )
-    );
-
-    $options[] = array(
-        'name'    => __('Second Screen', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_homess',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/homepage-secondscreen.png',),
     );
 
     $options[] = array(
@@ -602,15 +566,6 @@ function optionsframework_options() {
     $options[] = array('name' => ll('Post'), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => ll('Post-Setting'),
-        'desc'    => ll(' '),
-        'id'      => 'setting_post',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/post.png',),
-    );
-
-    $options[] = array(
         'name'    => __('Post Style', SAKURA_DOMAIN),
         'id'      => 'entry_content_theme',
         'std'     => SAKURA_DOMAIN,
@@ -708,15 +663,6 @@ function optionsframework_options() {
 
     //社交选项
     $options[] = array('name' => __('Social', SAKURA_DOMAIN), 'type' => 'heading');
-
-    $options[] = array(
-        'name'    => __('Social-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_social',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/social.png',),
-    );
 
     $options[] = array(
         'name' => __('Wechat', SAKURA_DOMAIN),
@@ -857,24 +803,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Foreground', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Foreground-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_fore',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/foreground.png',),
-    );
-
-    $options[] = array(
-        'name'    => __('Settings Menu', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_foresm',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/foreground-settings.png',),
-    );
-
-    $options[] = array(
         'name' => __('Foreground Switch Full Mode', SAKURA_DOMAIN),
         'desc' => __('Check on by default, uncheck to switch to simple mode', SAKURA_DOMAIN),
         'id'   => 'full-mode',
@@ -955,15 +883,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Animation', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_foreani',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/foreground-animation.png',),
-    );
-
-    $options[] = array(
         'name' => __('Homepage Animation', SAKURA_DOMAIN),
         'desc' => __('Check open', SAKURA_DOMAIN),
         'id'   => 'homepage-ani',
@@ -1003,15 +922,6 @@ function optionsframework_options() {
         'std'   => '2',
         'class' => 'mini',
         'type'  => 'text'
-    );
-
-    $options[] = array(
-        'name'    => __('Others', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_foreot',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/foreground-others.png',),
     );
 
     $options[] = array(
@@ -1123,15 +1033,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Backstage', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Backstage-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_back',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/backstage.png',),
-    );
-
-    $options[] = array(
         'name' => __('Backstage Background Image', SAKURA_DOMAIN),
         'desc' => __('Backstage Background Image', SAKURA_DOMAIN),
         'id'   => 'admin_menu_bg',
@@ -1207,24 +1108,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Advanced', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Advanced-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_adv',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/advanced.png',),
-    );
-
-    $options[] = array(
-        'name'    => __('Localize', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_advlo',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/advanced-local.png',),
-    );
-
-    $options[] = array(
         'name' => __('Use The Front-end Library Locally (lib.js、lib.css)', SAKURA_DOMAIN),
         'desc' => __('The front-end library don\'t load from jsDelivr, not recommand', SAKURA_DOMAIN),
         'id'   => 'jsdelivr_cdn_test',
@@ -1238,15 +1121,6 @@ function optionsframework_options() {
         'id'   => 'app_no_jsdelivr_cdn',
         'std'  => '1',
         'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name'    => __('Others', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_advot',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/advanced-others.png',),
     );
 
     $options[] = array(
@@ -1333,15 +1207,6 @@ function optionsframework_options() {
 
     //功能
     $options[] = array('name' => __('Function', SAKURA_DOMAIN), 'type' => 'heading');
-
-    $options[] = array(
-        'name'    => __('Function-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_func',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/function.png',),
-    );
 
     $options[] = array(
         'name' => __('Bilibili UID', SAKURA_DOMAIN),
@@ -1581,24 +1446,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Enhanced', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name'    => __('Enhanced-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_enhan',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/enhanced.png',),
-    );
-
-    $options[] = array(
-        'name'    => __('Effect', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_enhanef',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/enhanced-effect.png',),
-    );
-
-    $options[] = array(
         'name' => __('Open SmoothScroll', SAKURA_DOMAIN),
         'desc' => __('Check open。', SAKURA_DOMAIN),
         'id'   => 'SmoothScroll',
@@ -1799,15 +1646,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Morse', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_enhanmo',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/enhanced-morse.png',),
-    );
-
-    $options[] = array(
         'name' => __('Custom Mouse Style - Standard', SAKURA_DOMAIN),
         'desc' => __('Apply to global, fill in link.', SAKURA_DOMAIN),
         'id'   => 'cursor-nor',
@@ -1849,24 +1687,6 @@ function optionsframework_options() {
 
     //字体
     $options[] = array('name' => __('Fonts', SAKURA_DOMAIN), 'type' => 'heading');
-
-    $options[] = array(
-        'name'    => __('Fonts-Setting', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_fonts',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/fonts.png',),
-    );
-
-    $options[] = array(
-        'name'    => __('Custom', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_fontscu',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/fonts-custom.png',),
-    );
 
     $options[] = array(
         'name'  => __('Fontweight', SAKURA_DOMAIN),
@@ -1958,15 +1778,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Size', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_fontssi',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/fonts-size.png',),
-    );
-
-    $options[] = array(
         'name'  => __('Global Fontsize', SAKURA_DOMAIN),
         'desc'  => __('Fill in Number. Between 10 and 20 is recommended', SAKURA_DOMAIN),
         'id'    => 'global-fontsize',
@@ -2021,15 +1832,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Others', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_fontsot',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/fonts-others.png',),
-    );
-
-    $options[] = array(
         'name' => __('Logo Font Link', SAKURA_DOMAIN),
         'desc' => __('When the font is ready, do this again <a href="https://www.fontke.com/tool/fontface/">@font-face生成器</a>It can generate a bunch of files, which are all useful. It can be placed on a accessible server, OOS, CDN, etc. here, you only need to fill in the CSS style sheet file link <a href="https://blog.ukenn.top/sakura6/#toc-head-4">Detailed tutorial</a>', SAKURA_DOMAIN),
         'id'   => 'logo_zt',
@@ -2047,15 +1849,6 @@ function optionsframework_options() {
 
     //主题
     $options[] = array('name' => ll('Theme'), 'type' => 'heading');
-
-    $options[] = array(
-        'name'    => ll('Theme-Setting'),
-        'desc'    => ll(' '),
-        'id'      => 'setting_theme',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/theme.png',),
-    );
 
     $options[] = array(
         'name'    => ll('Display Icon Selection'),
@@ -2115,15 +1908,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Darkmode', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_themedm',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/theme-darkmode.png',),
-    );
-
-    $options[] = array(
         'name' => __('Theme Color (Dark mode)', SAKURA_DOMAIN),
         'id'   => 'theme_dark',
         'std'  => "#BD144A",
@@ -2155,15 +1939,6 @@ function optionsframework_options() {
         'desc'  => __('Fill in the alpha value from 0 to 1 here', SAKURA_DOMAIN),
         'type'  => "text",
         'class' => 'mini',
-    );
-
-    $options[] = array(
-        'name'    => __('Homepage', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_themehp',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/theme-homepage.png',),
     );
 
     $options[] = array(
@@ -2352,15 +2127,6 @@ function optionsframework_options() {
         'std'  => "#FB98C0",
         'desc' => __('Custom colors', SAKURA_DOMAIN),
         'type' => "color",
-    );
-
-    $options[] = array(
-        'name'    => __('Backstage Color', SAKURA_DOMAIN),
-        'desc'    => __(' ', SAKURA_DOMAIN),
-        'id'      => 'setting_themebs',
-        'std'     => 'tag',
-        'type'    => "images",
-        'options' => array('tag' => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/setting/tips/theme-backstage.png',),
     );
 
     $options[] = array(
