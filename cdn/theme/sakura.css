@@ -55,11 +55,12 @@
     position: relative
 }
 
-.entry-content h3, .entry-content h4, .entry-content h5 {
+.entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6 {
     padding-left: 16px;
 }
 
 .entry-content h3 {
+    font-size: 1.35em;
     padding-bottom: 8px;
     border-bottom: 1px dashed #ddd;
     color: #737373
@@ -72,6 +73,10 @@
     color: #FF6D6D
 }
 
+.entry-content h4 {
+    font-size: 1.2em;
+}
+
 .entry-content h4:after {
     content: ">";
     position: absolute;
@@ -79,8 +84,23 @@
     color: #FF6D6D
 }
 
+.entry-content h5 {
+    font-size: 1.1em;
+}
+
 .entry-content h5:after {
-    content: "?";
+    content: "$";
+    position: absolute;
+    left: 0;
+    color: #FF6D6D
+}
+
+.entry-content h6 {
+    font-size: 1em;
+}
+
+.entry-content h6:after {
+    content: "|";
     position: absolute;
     left: 0;
     color: #FF6D6D
