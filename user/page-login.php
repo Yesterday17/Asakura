@@ -17,9 +17,9 @@ get_header();
                                   placeholder="Name" required/></p>
                         <p><input type="password" name="pwd" id="pwd" value="<?php echo $_POST['pwd']; ?>" size="25"
                                   placeholder="Password" required/></p>
-                        <p class="forget-me-not"><label for="rememberme"><input name="rememberme" type="checkbox"
+                        <p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox"
                                                                               id="rememberme"
-                                                                              value="forever"/> <?php esc_html_e('Remember_Me'); ?>
+                                                                              value="forever"/> <?php esc_html_e('Remember_Me', SAKURA_DOMAIN); ?>
                             </label></p>
                         <input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
                         <input class="button login-button" name="submit" type="submit" value="登 入">

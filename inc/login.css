@@ -137,7 +137,7 @@ input:-webkit-autofill {
     border-bottom: 1px solid #ccc;
 }
 
-#login form .forget-me-not {
+#login form .forgetmenot {
     float: none;
 }
 
@@ -270,7 +270,7 @@ input[type=checkbox]:checked:before {
     display: none
 }
 
-.login form .forget-me-not label {
+.login form .forgetmenot label {
     font-size: 14px !important;
 }
 
@@ -279,13 +279,13 @@ input[type=checkbox]:checked:before {
     margin-top: 0;
 }
 
-.forget-me-not input[type=checkbox] {
+.forgetmenot input[type=checkbox] {
     height: 0;
     width: 0;
     visibility: hidden;
 }
 
-.forget-me-not label {
+.forgetmenot label {
     cursor: pointer;
     text-indent: -999.9px;
     width: 21px;
@@ -296,7 +296,7 @@ input[type=checkbox]:checked:before {
     position: relative;
 }
 
-.forget-me-not label:after {
+.forgetmenot label:after {
     content: '';
     position: absolute;
     top: 1px;
@@ -308,12 +308,12 @@ input[type=checkbox]:checked:before {
     transition: 0.3s;
 }
 
-.forget-me-not input:checked + label:after {
+.forgetmenot input:checked + label:after {
     left: calc(100% - 1px);
     transform: translateX(-100%);
 }
 
-.forget-me-not label:active:after {
+.forgetmenot label:active:after {
     width: 13px;
 }
 

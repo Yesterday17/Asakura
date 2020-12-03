@@ -6475,7 +6475,7 @@ button.botui-actions-buttons-button {
     text-decoration-line: none
 }
 
-.forget-me-not input[type=checkbox] {
+.forgetmenot input[type=checkbox] {
     border: 1px solid #b4b9be;
     background: #fff;
     color: #555;
@@ -6498,13 +6498,13 @@ button.botui-actions-buttons-button {
     transition: .05s border-color ease-in-out
 }
 
-.forget-me-not input[type=checkbox]:checked:before {
+.forgetmenot input[type=checkbox]:checked:before {
     content: "✔";
     margin: -3px 0 0 -4px;
     color: #1e8cbe
 }
 
-.forget-me-not input[type=checkbox]:checked:before,
+.forgetmenot input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
     float: left;
     display: inline-block;
@@ -6516,13 +6516,13 @@ input[type=radio]:checked:before {
     -moz-osx-font-smoothing: grayscale
 }
 
-.forget-me-not input[type=checkbox]:checked:before {
+.forgetmenot input[type=checkbox]:checked:before {
     content: "✔";
     margin: -3px 0 0 -4px;
     color: #1e8cbe
 }
 
-.forget-me-not input[type=checkbox]:checked:before,
+.forgetmenot input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
     float: left;
     display: inline-block;

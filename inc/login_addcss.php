@@ -1,5 +1,5 @@
 <style type="text/css">
-    .forget-me-not input:checked + label {
+    .forgetmenot input:checked + label {
         background: <?php echo akina_option('theme_skin'); ?>;
     }
 

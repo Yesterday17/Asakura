@@ -261,10 +261,6 @@ body.dark .entry-content tr:nth-child(even) {
     float: left;
     z-index: 1;
     border-radius: 5px 5px 0 0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
     pointer-events: none
 }
 

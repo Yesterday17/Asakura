@@ -471,7 +471,7 @@ function header_user_menu() {
         <?php
     } else {
         $ava = akina_option('webweb_img') . '/ui/none.png';
-        $login_url = akina_option('exlogin_url') ? akina_option('exlogin_url') : get_bloginfo('url') . '/wp-login.php';
+        $login_url = akina_option('exlogin_url') ?: get_bloginfo('url') . '/wp-login.php';
         ?>
         <div class="header-user-avatar">
             <a href="<?php echo $login_url; ?>">
