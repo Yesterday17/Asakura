@@ -33,7 +33,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name' => ll('Site Title'),
-        'desc' => ll('Fuukei\'s Blog'),
+        'desc' => ll('options.basic.site_title.desc'),
         'id'   => 'site_name',
         'std'  => '',
         'type' => 'text'
@@ -41,7 +41,7 @@ function optionsframework_options() {
 
     $options[] = array(
         'name' => ll('Author'),
-        'desc' => ll('Fuukei'),
+        'desc' => ll('options.basic.author.desc'),
         'id'   => 'author_name',
         'std'  => '',
         'type' => 'text'
