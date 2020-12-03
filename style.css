@@ -1118,7 +1118,7 @@ a:hover {
 
 @media (max-width: 1200px) {
     .site-top .lower nav {
-        right: calc(-150px - 100%);
+        right: calc(-240px - 100%);
         position: absolute;
         float: right;
         animation: searchbox .2s;
@@ -5163,6 +5163,10 @@ i.iconfont.down {
         line-height: 43px;
     }
 
+    .site-branding ruby {
+        display: none;
+    }
+
     .site-title img {
         height: 40px;
         line-height: 40px;
@@ -6386,13 +6390,9 @@ button.botui-actions-buttons-button {
 .logolink a {
     color: #FB98C0;
     float: left;
-    font-size: 25px;
+    font-size: 1.5em;
     font-weight: 800;
     height: 56px;
-    line-height: 56px;
-    padding-left: 35px;
-    padding-right: 15px;
-    padding-top: 11px;
     text-decoration-line: none
 }
 

@@ -170,6 +170,11 @@ i.iconfont.js-toggle-search.iconsearch {
   background-color: var(--fore-menu-bg);
 }
 
+.entry-title,
+.entry-census {
+  text-shadow: 2px 2px 4px black;
+}
+
 .post-more i:hover, #pagination a:hover, .post-content a:hover, .float-content i:hover, .entry-content a:hover, .site-info a:hover, .comment h4 a:hover, .site-top ul li a:hover, .entry-title a:hover, .sorry li a:hover, .site-title a:hover, i.iconfont.js-toggle-search.iconsearch:hover, .comment-respond input[type=\'submit\']:hover {
   color: var(--theme-color-matching);
 }
