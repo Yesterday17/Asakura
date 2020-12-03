@@ -34,7 +34,7 @@ comments_template('', true);
                                 src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
 						<div id="yan"><script>text()</script></div>
                 <?php endif; ?></p>
-            <?php if (akina_option('loadoq', '1')): // TODO: i18n         ?>
+            <?php if (akina_option('loadoq', '1')): // TODO: i18n            ?>
             <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
             <?php endif; ?></p>
             Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Asakura (o・∇・o)</a>
@@ -111,41 +111,19 @@ comments_template('', true);
     </div>
 <?php } ?>
 <div class="skin-menu no-select">
-    <?php if (akina_option('full-mode', '1')): ?>
-        </p>Style
-    <?php endif; ?>
+    <p>Style
     <div class="theme-controls row-container">
         <ul class="menu-list">
             <li id="white-bg">
                 <i class="fa fa-television" aria-hidden="true"></i>
             </li><!--Default-->
-            <?php if (akina_option('extra-bg', '1')): ?>
-                <li id="diy1-bg">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                </li><!--Diy1-->
-            <?php endif; ?>
-            <?php if (akina_option('extra-bg2', '1')): ?>
-                <li id="diy2-bg">
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </li><!--Diy2-->
-            <?php endif; ?>
-            <?php if (akina_option('extra-bg3', '1')): ?>
-                <li id="diy3-bg">
-                    <i class="fa fa-delicious" aria-hidden="true"></i>
-                </li><!--Diy3-->
-            <?php endif; ?>
-            <?php if (akina_option('extra-bg4', '1')): ?>
-                <li id="diy4-bg">
-                    <i class="fa fa-lemon-o" aria-hidden="true"></i>
-                </li><!--Diy4-->
-            <?php endif; ?>
             <li id="dark-bg">
                 <i class="fa fa-moon-o" aria-hidden="true"></i>
             </li><!--Night-->
         </ul>
     </div>
-    <?php if (akina_option('full-mode', '1')): ?></p>
-Font
+    </p>
+    Font
     <div class="font-family-controls row-container">
         <button type="button" class="control-btn-serif selected" data-mode="serif"
                 onclick="mashiro_global.font_control.change_font()"><i class="fa fa-font" aria-hidden="true"></i>
@@ -154,7 +132,6 @@ Font
                 onclick="mashiro_global.font_control.change_font()"><i class="fa fa-bold" aria-hidden="true"></i>
         </button>
     </div>
-<?php endif; ?>
 </div>
 <?php if (akina_option('sakura_widget')) : ?>
     <aside id="secondary" class="widget-area" role="complementary" style="left: -400px;">

@@ -426,7 +426,7 @@ function the_video_headPattern($type) {
                 </video>
             </div>
 
-            <style>.pattern-center::before, .pattern-center-sakura::before {
+            <style>.pattern-center::before {
                     display: none
                 }</style>
             <header class="pattern-header <?php if (is_single()) {

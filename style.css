@@ -858,10 +858,8 @@ a:hover {
     color: #FB98C0;
     cursor: pointer;
     padding: 15px;
-    border-radius: 10px;
     border-radius: 12px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
-    transform: scale(0);
     transition: transform .8s
 }
 
@@ -887,41 +885,15 @@ a:hover {
     }
 }
 
-.pattern-center-sakura {
-    position: relative;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    margin: 0 auto
-}
-
 .pattern-center-blank {
     padding-top: 75px;
     background-color: #fff
 }
 
 @media (max-width: 860px) {
-    .pattern-center-sakura {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100%;
-        overflow: hidden
-    }
-
     .pattern-center-blank {
         padding-top: 0
     }
-}
-
-.pattern-center-sakura::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, .3)
 }
 
 .pattern-attachment-img {
@@ -933,44 +905,8 @@ a:hover {
     height: 400px
 }
 
-.pattern-center-sakura header.pattern-header {
-    position: absolute;
-    top: 45%;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: #FFF;
-    z-index: 1
-}
-
-.pattern-center-sakura h1.cat-title,
-.pattern-center-sakura h1.entry-title {
-    color: #FFF;
-    font-size: 40px;
-    font-weight: 500;
-    width: 80%;
-    margin: auto;
-    padding: 0;
-    border: 0
-}
-
-.pattern-center-sakura .cat-des {
-    font-size: 16px;
-    display: block
-}
-
 .single-center::after {
     display: none
-}
-
-.pattern-center-sakura header.single-header {
-    max-width: 800px;
-    padding: 0 10px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    top: auto;
-    bottom: 20px
 }
 
 .single-center .single-header h1.entry-title {
@@ -1003,16 +939,10 @@ a:hover {
 }
 
 @media (max-width: 860px) {
-    .pattern-center-sakura header.single-header {
-        padding: 0 4%
-    }
-
     .pattern-attachment-img {
         height: 280px
     }
 
-    .pattern-center-sakura h1.cat-title,
-    .pattern-center-sakura h1.entry-title,
     .single-center .single-header h1.entry-title {
         font-size: 26px
     }
@@ -5231,9 +5161,6 @@ i.iconfont.down {
         float: right;
         height: 50px;
         line-height: 43px;
-        margin-right: -30px;
-        /*移动端logo位置*/
-        margin-top: -10px;
     }
 
     .site-title img {
@@ -5475,7 +5402,8 @@ i.iconfont.down {
     #mo-nav ul {
         width: 200px;
         height: auto;
-        margin: 10px 9px
+        margin: 10px 9px;
+        padding-inline-start: 0;
     }
 
     #mo-nav ul:hover li {
@@ -5485,7 +5413,7 @@ i.iconfont.down {
     #mo-nav ul li {
         transition-duration: .25s;
         display: block;
-        padding: 6px 40px;
+        padding: 6px 20px;
         color: #fff;
         letter-spacing: .02em;
         text-align: left

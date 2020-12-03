@@ -8,7 +8,6 @@
 const mashiro_global = {
     variables: {
         has_hls: false,
-        skinSector: true,
     },
     ini: {
         normalize: () => {
@@ -19,7 +18,6 @@ const mashiro_global = {
             copy_code_block();
             web_audio();
             coverVideoIni();
-            checkskinSector();
             scrollBar();
             load_bangumi();
         },
@@ -31,7 +29,6 @@ const mashiro_global = {
             copy_code_block();
             web_audio();
             coverVideoIni();
-            checkskinSector();
             load_bangumi();
         }
     },
@@ -338,16 +335,6 @@ function scrollBar() {
     }
 }
 
-function checkskinSector() {
-    if (mashiro_global.variables.skinSector === false) {
-        $(".pattern-center").removeClass('pattern-center').addClass('pattern-center-sakura');
-        $(".headertop-bar").removeClass('headertop-bar').addClass('headertop-bar-sakura');
-    } else {
-        $(".pattern-center-sakura").removeClass('pattern-center-sakura').addClass('pattern-center');
-        $(".headertop-bar-sakura").removeClass('headertop-bar-sakura').addClass('headertop-bar');
-    }
-}
-
 function checkBgImgCookie() {
     var bgurl = getCookie("bgImgSetting");
     if (!bgurl) {
@@ -444,7 +431,7 @@ $(document).ready(function () {
     cover_bg();
 
     function checkskin_bg(a) {
-        return a == "none" ? "" : a
+        return a === "none" ? "" : a
     }
 
     function changeBG() {
@@ -452,14 +439,7 @@ $(document).ready(function () {
         cached.find("li").each(function () {
             var tagid = this.id;
             cached.on("click", "#" + tagid, function () {
-                if (tagid == "white-bg" || tagid == "dark-bg") {
-                    mashiro_global.variables.skinSector = true;
-                    checkskinSector();
-                } else {
-                    mashiro_global.variables.skinSector = false;
-                    checkskinSector();
-                }
-                if (tagid == "dark-bg") {
+                if (tagid === "dark-bg") {
                     $("html").css("background", "#31363b");
                     $(".site-content").css("background-color", "#fff");
                     $("body").addClass("dark");
@@ -470,24 +450,9 @@ $(document).ready(function () {
                     $(".site-content").css("background-color", "rgba(255, 255, 255, .8)");
                     setCookie("dark", "0", 0.33);
                     setCookie("bgImgSetting", tagid, 30);
-                }
-                switch (tagid) {
-                    case "white-bg":
-                        $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg0) + ")");
-                        $("body").removeClass("dynamic");
-                        break;
-                    case "diy1-bg":
-                        $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg1) + ")");
-                        break;
-                    case "diy2-bg":
-                        $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg2) + ")");
-                        break;
-                    case "diy3-bg":
-                        $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg3) + ")");
-                        break;
-                    case "diy4-bg":
-                        $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg4) + ")");
-                        break;
+
+                    $("body").css("background-image", "url(" + checkskin_bg(mashiro_option.skin_bg) + ")");
+                    $("body").removeClass("dynamic");
                 }
                 closeSkinMenu();
             });
@@ -1870,23 +1835,16 @@ var home = location.href,
             document.body.addEventListener('input', POWERMODE)
         },
         GT: function () {
-            var cwidth = document.body.clientWidth,
-                mb_to_top = document.querySelector("#mobileGoTop"),
-                changeSkin = document.querySelector("#changeSkin");
+            const mb_to_top = document.querySelector("#mobileGoTop");
 
             $(window).scroll(function () {
                 if ($(this).scrollTop() > 20) {
                     mb_to_top.style.transform = "scale(1)";
-                    changeSkin.style.transform = "scale(1)";
                 } else {
                     mb_to_top.style.transform = "scale(0)";
-                    changeSkin.style.transform = "scale(0)";
                 }
-
             });
-            mb_to_top.onclick = function () {
-                topFunction();
-            }
+            mb_to_top.onclick = topFunction;
         }
     }
 $(function () {

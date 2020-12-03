@@ -15,11 +15,7 @@ function get_frontend_js_control() {
         'site_url'                => site_url(),
         'qq_api_url'              => asakura_rest_url('qqinfo/json'),
         'live_search'             => (bool)akina_option('live_search'),
-        'skin_bg0'                => akina_option('sakura_skin_bg1') ?: "none",
-        'skin_bg1'                => akina_option('sakura_skin_bg2') ?: "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg1.png",
-        'skin_bg2'                => akina_option('sakura_skin_bg3') ?: "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg2.png",
-        'skin_bg3'                => akina_option('sakura_skin_bg4') ?: "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg3.png",
-        'skin_bg4'                => akina_option('sakura_skin_bg5') ?: "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg4.png",
+        'skin_bg'                => akina_option('sakura_skin_bg') ?: "none",
         'land_at_home'            => is_home(),
         'baguette_box_on'         => akina_option('image_viewer') == 0,
         'clipboard_copyright'     => akina_option('clipboard_copyright') == 0,
@@ -53,34 +49,10 @@ function frontend_js_control() { ?>
         mashiro_option.qq_api_url = "<?php echo asakura_rest_url('qqinfo/json'); ?>";
         mashiro_option.live_search = <?= akina_option('live_search') ? 'true' : 'false'; ?>;
 
-        <?php if( akina_option('sakura_skin_bg1')){ $bg_arry = explode(",", akina_option('sakura_skin_bg1'));?>
-        mashiro_option.skin_bg0 = "<?php echo $bg_arry[0] ?>";
+        <?php if( akina_option('sakura_skin_bg')){ $bg_arry = explode(",", akina_option('sakura_skin_bg'));?>
+        mashiro_option.skin_bg = "<?php echo $bg_arry[0] ?>";
         <?php }else {?>
-        mashiro_option.skin_bg0 = "none";
-        <?php } ?>
-
-        <?php if( akina_option('sakura_skin_bg2')){ $bg_arry = explode(",", akina_option('sakura_skin_bg2'));?>
-        mashiro_option.skin_bg1 = "<?php echo $bg_arry[0] ?>";
-        <?php }else {?>
-        mashiro_option.skin_bg1 = "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg1.png";
-        <?php } ?>
-
-        <?php if( akina_option('sakura_skin_bg3')){ $bg_arry = explode(",", akina_option('sakura_skin_bg3'));?>
-        mashiro_option.skin_bg2 = "<?php echo $bg_arry[0] ?>";
-        <?php }else {?>
-        mashiro_option.skin_bg2 = "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg2.png";
-        <?php } ?>
-
-        <?php if( akina_option('sakura_skin_bg4')){ $bg_arry = explode(",", akina_option('sakura_skin_bg4'));?>
-        mashiro_option.skin_bg3 = "<?php echo $bg_arry[0] ?>";
-        <?php }else {?>
-        mashiro_option.skin_bg3 = "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg3.png";
-        <?php } ?>
-
-        <?php if( akina_option('sakura_skin_bg5')){ $bg_arry = explode(",", akina_option('sakura_skin_bg5'));?>
-        mashiro_option.skin_bg4 = "<?php echo $bg_arry[0] ?>";
-        <?php }else {?>
-        mashiro_option.skin_bg4 = "https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg4.png";
+        mashiro_option.skin_bg = "none";
         <?php } ?>
 
         <?php if( is_home() ){ ?>

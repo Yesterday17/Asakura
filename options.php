@@ -601,11 +601,11 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => ll('options.post.toc_always_on.name'),
-        'desc'    => ll('options.post.toc_always_on.desc'),
-        'id'      => 'toc_always_on',
-        'std'     => "1",
-        'type'    => "checkbox",
+        'name' => ll('options.post.toc_always_on.name'),
+        'desc' => ll('options.post.toc_always_on.desc'),
+        'id'   => 'toc_always_on',
+        'std'  => "1",
+        'type' => "checkbox",
     );
 
     $options[] = array(
@@ -803,82 +803,10 @@ function optionsframework_options() {
     $options[] = array('name' => __('Foreground', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name' => __('Foreground Switch Full Mode', SAKURA_DOMAIN),
-        'desc' => __('Check on by default, uncheck to switch to simple mode', SAKURA_DOMAIN),
-        'id'   => 'full-mode',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Extra Background Switching(Heart-shaped icon)', SAKURA_DOMAIN),
-        'desc' => __('Check on by default', SAKURA_DOMAIN),
-        'id'   => 'extra-bg',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Extra Background Switching(Star-shaped icon)', SAKURA_DOMAIN),
-        'desc' => __('Check on by default', SAKURA_DOMAIN),
-        'id'   => 'extra-bg2',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Extra Background Switching(Square-shaped icon)', SAKURA_DOMAIN),
-        'desc' => __('Check on by default', SAKURA_DOMAIN),
-        'id'   => 'extra-bg3',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Extra Background Switching(Lemon-shaped icon)', SAKURA_DOMAIN),
-        'desc' => __('Check on by default', SAKURA_DOMAIN),
-        'id'   => 'extra-bg4',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name' => ll('Default Foreground Background'),
         'desc' => ll('Default Foreground Background, Fill in URL'),
-        'id'   => 'sakura_skin_bg1',
+        'id'   => 'sakura_skin_bg',
         'std'  => 'none',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('DIY(heart-shaped icon) Foreground Background', SAKURA_DOMAIN),
-        'desc' => __('DIY(heart-shaped icon) Foreground Background, Fill in URL', SAKURA_DOMAIN),
-        'id'   => 'sakura_skin_bg2',
-        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg1.png',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('DIY(Star-shaped icon) Foreground Background', SAKURA_DOMAIN),
-        'desc' => __('DIY(Star-shaped icon) Foreground Background, Fill in URL', SAKURA_DOMAIN),
-        'id'   => 'sakura_skin_bg3',
-        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg2.png',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('DIY(Square-shaped icon) Foreground Background', SAKURA_DOMAIN),
-        'desc' => __('DIY(Square-shaped icon) Foreground Background, Fill in URL', SAKURA_DOMAIN),
-        'id'   => 'sakura_skin_bg4',
-        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg3.png',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('DIY(Lemon-shaped icon) Foreground Background', SAKURA_DOMAIN),
-        'desc' => __('DIY(Lemon-shaped icon) Foreground Background, Fill in URL', SAKURA_DOMAIN),
-        'id'   => 'sakura_skin_bg5',
-        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/foreground/bg4.png',
         'type' => 'text'
     );
 
