@@ -1194,7 +1194,6 @@ add_action('login_head', 'custom_admin_open_sans_font_login_page');
 add_action('register_post', 'codecheese_register_post', 10, 3);
 
 function codecheese_register_post($sanitized_user_login, $user_email, $errors) {
-
     // Blocked domains
     $domains = array('net.buzzcluby.com', 'buzzcluby.com', 'mail.ru', 'h.captchaeu.info', 'edge.codyting.com');
 
@@ -1205,7 +1204,6 @@ function codecheese_register_post($sanitized_user_login, $user_email, $errors) {
     if (in_array($email[1], $domains)) {
         $errors->add('invalid_email', __('<b>ERROR</b>: This email domain (<b>@' . $email[1] . '</b>) has been blocked. Please use another email.'));
     }
-
 }
 
 // html 标签处理器
@@ -1272,7 +1270,7 @@ function sql_insert_qq_field($comment_ID, $commmentdata) {
 add_filter('manage_edit-comments_columns', 'add_comments_columns');
 add_action('manage_comments_custom_column', 'output_comments_qq_columns', 10, 2);
 function add_comments_columns($columns) {
-    $columns['new_field_qq'] = __('QQ'); // 新增列名称
+    $columns['new_field_qq'] = ll('QQ'); // 新增列名称
     return $columns;
 }
 
@@ -1324,7 +1322,6 @@ function sakura_comment_notify($comment_id) {
     if (!$_POST['mail-notify']) {
         update_comment_meta($comment_id, 'mail_notify', 'false');
     }
-
 }
 
 add_action('comment_post', 'sakura_comment_notify');
@@ -1510,18 +1507,18 @@ add_filter('file_is_displayable_image', 'mimvp_file_is_displayable_image', 10, 2
 //code end
 
 //展开收缩功能
-function xcollapse($atts, $content = null) {
-    extract(shortcode_atts(array("title" => ""), $atts));
+function x_collapse($atts, $content = null) {
+    $attrs = shortcode_atts(array("title" => ""), $atts);
     return '<div style="margin: 0.5em 0;">
     <div class="xControl">
     <i class="fa fa-arrow-down" style="color: #9F6F26;"></i> &nbsp;&nbsp;
-    <span class="xTitle">' . $title . '</span>&nbsp;&nbsp;==>&nbsp;&nbsp;<a href="javascript:void(0)" class="collapseButton xButton"><span class="xbtn02">展开 / 收缩</span></a>
+    <span class="xTitle">' . $attrs['title'] . '</span>&nbsp;&nbsp;==>&nbsp;&nbsp;<a href="javascript:void(0)" class="collapseButton xButton"><span class="xbtn02">展开 / 收缩</span></a>
     <div style="clear: both;"></div>
     </div>
-    <div class="xContent" style="display: none;">' . $content . '</div>
+    <div class="xContent" style="display: none;">' . $attrs['content'] ?: $content . '</div>
     </div>';
 }
 
-add_shortcode('collapse', 'xcollapse');
+add_shortcode('collapse', 'x_collapse');
 
 //code end

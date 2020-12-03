@@ -161,6 +161,8 @@ function cache_search_json() {
 /**
  * QQ info
  * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/json
+ * @param WP_REST_Request $request
+ * @return WP_REST_Response
  */
 function get_qq_info(WP_REST_Request $request) {
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {

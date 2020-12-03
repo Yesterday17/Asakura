@@ -835,7 +835,7 @@ a:hover {
     color: #fff
 }
 
-#moblieGoTop {
+#mobileGoTop {
     position: fixed;
     bottom: 70px;
     right: 10px;
@@ -854,7 +854,7 @@ a:hover {
     transition: transform .3s
 }
 
-#changskin {
+#changeSkin {
     position: fixed;
     bottom: 70px;
     right: 10px;
@@ -873,8 +873,8 @@ a:hover {
     transition: transform .8s
 }
 
-#moblieGoTop:hover,
-#changskin:hover {
+#mobileGoTop:hover,
+#changeSkin:hover {
     background-color: #fff;
     opacity: .8
 }

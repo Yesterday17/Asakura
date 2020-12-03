@@ -1,48 +1,27 @@
 <?php
 /*
- * https://2heng.xin/wp-content/themes/Sakura/inc/dash-schame.php?color_1=&color_2=&color_3=&color_4=
+ * /wp-content/themes/Sakura/inc/dash-scheme.php?color_1=&color_2=&color_3=&color_4=
  */
 
-ini_set('display_errors', true);
-error_reporting(E_ALL);
+//ini_set('display_errors', true);
+//error_reporting(E_ALL);
 
 header("Content-type: text/css; charset: UTF-8");
 #header('Access-Control-Allow-Origin: *');
 
-function _get($str) {
-    $val = !empty($_GET[$str]) ? $_GET[$str] : null;
+function _get($str, $default, $prefix = '') {
+    $val = !empty($_GET[$str]) ? $_GET[$str] : $default;
+    if (gettype($val) === 'string' && strpos($val, $prefix) !== 0) {
+        $val = $prefix . $val;
+    }
     return $val;
 }
 
-if (_get('color_1') == NULL) {
-    $color_1 = "#85ABFC";
-} else {
-    $color_1 = "#" . _get('color_1');
-}
-
-if (_get('color_2') == NULL) {
-    $color_2 = "#99B8FC";
-} else {
-    $color_2 = "#" . _get('color_2');
-}
-
-if (_get('color_3') == NULL) {
-    $color_3 = "#F181A2";
-} else {
-    $color_3 = "#" . _get('color_3');
-}
-
-if (_get('color_4') == NULL) {
-    $color_4 = "#F181A2";
-} else {
-    $color_4 = "#" . _get('color_4');
-}
-
-if (_get('rules') == NULL) {
-    $rules = "";
-} else {
-    $rules = urldecode(_get('rules'));
-}
+$color_1 = _get('color_1', '#85ABFC', '#');
+$color_2 = _get('color_2', '#99B8FC', '#');
+$color_3 = _get('color_3', '#F181A2', '#');
+$color_4 = _get('color_4', '#F181A2', '#');
+$rules = urldecode(_get('rules', ''));
 
 ?>
 

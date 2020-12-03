@@ -325,11 +325,11 @@ h1.cat-title {
   color: var(--theme-color);
 }
 
-#moblieGoTop {
+#mobileGoTop {
   color: var(--theme-color);
 }
 
-#changskin {
+#changeSkin {
   color: var(--theme-color);
 }
 
@@ -527,8 +527,8 @@ h1.cat-title {
   color: var(--theme-color);
 }
 
-#moblieGoTop:hover,
-#changskin:hover {
+#mobileGoTop:hover,
+#changeSkin:hover {
   color: var(--theme-color-matching);
   background-color: #fff;
   opacity: .8;
@@ -1119,8 +1119,8 @@ body.dark .site-header:hover {
   background: #31363b;
 }
 
-body.dark #moblieGoTop,
-body.dark #changskin {
+body.dark #mobileGoTop,
+body.dark #changeSkin {
   background-color: #232629;
 }
 
@@ -1178,8 +1178,8 @@ body.dark .site-top ul li a:after {
   background-color: ' . akina_option('theme_dark') . ';
 }
 
-body.dark #moblieGoTop,
-body.dark #changskin,
+body.dark #mobileGoTop,
+body.dark #changeSkin,
 body.dark .the-feature.from_left_and_right a:hover .info p,
 body.dark .the-feature.from_left_and_right .info,
 body.dark .ins-section .ins-search-item:hover,
@@ -1198,8 +1198,8 @@ body.dark .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon
   fill: ' . akina_option('theme_dark') . ';
 }
 
-body.dark #moblieGoTop:hover,
-body.dark #changskin:hover {
+body.dark #mobileGoTop:hover,
+body.dark #changeSkin:hover {
   color: ' . akina_option('theme_dark') . ';
   opacity: .8;
 }
@@ -1215,7 +1215,7 @@ body.dark .focusinfo .header-tou img {
 }
 
 /*切换动画*/
-html, #main-container, .pattern-center:after, #mo-nav, .headertop-bar::after, .comments, .site-footer, .pattern-center-blank, .yya, .blank, .toc, .search-form input, .wrapper, .site-footer, .site-wrapper, #moblieGoTop:hover, #changskin:hover, .post-list-show, .post-list hr, .post-date, .float-content i:hover {
+html, #main-container, .pattern-center:after, #mo-nav, .headertop-bar::after, .comments, .site-footer, .pattern-center-blank, .yya, .blank, .toc, .search-form input, .wrapper, .site-footer, .site-wrapper, #mobileGoTop:hover, #changeSkin:hover, .post-list-show, .post-list hr, .post-date, .float-content i:hover {
   transition: background 1s;
 }
 
@@ -1308,8 +1308,8 @@ i.iconfont.js-toggle-search.iconsearch,
 .aplayer.aplayer-narrow .aplayer-pic,
 button.botui-actions-buttons-button,
 .on-hover,
-#moblieGoTop,
-#changskin {
+#mobileGoTop,
+#changeSkin {
   cursor: url(' . akina_option('cursor-no') . '), auto;
 }
 

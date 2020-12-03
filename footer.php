@@ -34,7 +34,7 @@ comments_template('', true);
                                 src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
 						<div id="yan"><script>text()</script></div>
                 <?php endif; ?></p>
-            <?php if (akina_option('loadoq', '1')): ?>
+            <?php if (akina_option('loadoq', '1')): // TODO: i18n         ?>
             <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
             <?php endif; ?></p>
             Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Asakura (o・∇・o)</a>
@@ -49,169 +49,173 @@ comments_template('', true);
         <div class="icon"></div>
     </div>
     <div class="site-branding">
-        <?php if (akina_option('akina_logo')){ ?>
-        <div class="site-title">
-            <?php } else { ?>
-                <h1 class="site-title"></h1>
-            <?php } ?>
-        </div>
-    </div><!-- m-nav-bar -->
-    </section><!-- #section -->
-    <!-- m-nav-center -->
-    <div id="mo-nav">
-        <div class="m-avatar">
-            <?php $ava = akina_option('focus_logo') ? akina_option('focus_logo') : 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpg'; ?>
-            <img src="<?php echo $ava ?>">
-        </div>
-        <div class="m-search">
-            <form class="m-search-form" method="get" action="<?php echo home_url(); ?>" role="search">
-                <input class="m-search-input" type="search" name="s"
-                       placeholder="<?php _e('Search...', SAKURA_DOMAIN) /*搜索...*/ ?>" required>
-            </form>
-        </div>
-        <?php wp_nav_menu(array('depth' => 2, 'theme_location' => 'primary', 'container' => false)); ?>
-    </div><!-- m-nav-center end -->
-    <a class="cd-top faa-float animated "></a>
-    <button id="moblieGoTop" title="Go to top"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-    <button id="changskin" style="bottom: 15px;"><i class="iconfont icon-gear inline-block rotating"></i></button>
-    <!-- search start -->
-    <form class="js-search search-form search-form--modal" method="get" action="<?php echo home_url(); ?>"
-          role="search">
-        <div class="search-form__inner">
-            <?php if (akina_option('live_search')) { ?>
-                <div class="micro">
-                    <i class="iconfont icon-search"></i>
-                    <input id="search-input" class="text-input" type="search" name="s"
-                           placeholder="<?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?>" required>
-                </div>
-                <div class="ins-section-wrapper">
-                    <a id="Ty" href="#"></a>
-                    <div class="ins-section-container" id="PostlistBox"></div>
-                </div>
-            <?php } else { ?>
-                <div class="micro">
-                    <p class="micro mb-"><?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?></p>
-                    <i class="iconfont icon-search"></i>
-                    <input class="text-input" type="search" name="s" placeholder="<?php _e('Search', SAKURA_DOMAIN) ?>"
-                           required>
-                </div>
-            <?php } ?>
-        </div>
-        <div class="search_close"></div>
-    </form>
-    <!-- search end -->
-    <?php wp_footer(); ?>
-    <?php if (akina_option('site_statistics')) { ?>
-        <div class="site-statistics">
-            <script type="text/javascript"><?php echo akina_option('site_statistics'); ?></script>
-        </div>
-    <?php } ?>
-    <div class="skin-menu no-select">
-        <?php if (akina_option('full-mode', '1')): ?>
-            </p>Style
-        <?php endif; ?>
-        <div class="theme-controls row-container">
-            <ul class="menu-list">
-                <li id="white-bg">
-                    <i class="fa fa-television" aria-hidden="true"></i>
-                </li><!--Default-->
-                <?php if (akina_option('extra-bg', '1')): ?>
-                    <li id="diy1-bg">
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                    </li><!--Diy1-->
-                <?php endif; ?>
-                <?php if (akina_option('extra-bg2', '1')): ?>
-                    <li id="diy2-bg">
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                    </li><!--Diy2-->
-                <?php endif; ?>
-                <?php if (akina_option('extra-bg3', '1')): ?>
-                    <li id="diy3-bg">
-                        <i class="fa fa-delicious" aria-hidden="true"></i>
-                    </li><!--Diy3-->
-                <?php endif; ?>
-                <?php if (akina_option('extra-bg4', '1')): ?>
-                    <li id="diy4-bg">
-                        <i class="fa fa-lemon-o" aria-hidden="true"></i>
-                    </li><!--Diy4-->
-                <?php endif; ?>
-                <li id="dark-bg">
-                    <i class="fa fa-moon-o" aria-hidden="true"></i>
-                </li><!--Night-->
-            </ul>
-        </div>
-        <?php if (akina_option('full-mode', '1')): ?></p>
-    Font
-        <div class="font-family-controls row-container">
-            <button type="button" class="control-btn-serif selected" data-mode="serif"
-                    onclick="mashiro_global.font_control.change_font()"><i class="fa fa-font" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="control-btn-sans-serif" data-mode="sans-serif"
-                    onclick="mashiro_global.font_control.change_font()"><i class="fa fa-bold" aria-hidden="true"></i>
-            </button>
-        </div>
-    <?php endif; ?>
+        <?php if (akina_option('akina_logo')) { ?>
+            <div class="site-title">
+                <a href="<?php bloginfo('url'); ?>">
+                    <img src="<?php echo akina_option('akina_logo'); ?>">
+                </a>
+            </div>
+        <?php } else { ?>
+            <h1 class="site-title"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
+        <?php } ?>
     </div>
-    <?php if (akina_option('sakura_widget')) : ?>
-        <aside id="secondary" class="widget-area" role="complementary" style="left: -400px;">
-            <div class="heading"><?php _e('Widgets') /*小工具*/ ?></div>
-            <div class="sakura_widget">
-                <?php if (function_exists('dynamic_sidebar') && dynamic_sidebar('sakura_widget')) : endif; ?>
+</div><!-- m-nav-bar -->
+</section><!-- #section -->
+<!-- m-nav-center -->
+<div id="mo-nav">
+    <div class="m-avatar">
+        <?php $ava = akina_option('focus_logo') ? akina_option('focus_logo') : 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpg'; ?>
+        <img src="<?php echo $ava ?>">
+    </div>
+    <div class="m-search">
+        <form class="m-search-form" method="get" action="<?php echo home_url(); ?>" role="search">
+            <input class="m-search-input" type="search" name="s"
+                   placeholder="<?php _e('Search...', SAKURA_DOMAIN) /*搜索...*/ ?>" required>
+        </form>
+    </div>
+    <?php wp_nav_menu(array('depth' => 2, 'theme_location' => 'primary', 'container' => false)); ?>
+</div><!-- m-nav-center end -->
+<a class="cd-top faa-float animated "></a>
+<button id="mobileGoTop" title="Go to top"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+<button id="changeSkin" style="bottom: 15px;"><i class="iconfont icon-gear inline-block rotating"></i></button>
+<!-- search start -->
+<form class="js-search search-form search-form--modal" method="get" action="<?php echo home_url(); ?>"
+      role="search">
+    <div class="search-form__inner">
+        <?php if (akina_option('live_search')) { ?>
+            <div class="micro">
+                <i class="iconfont icon-search"></i>
+                <input id="search-input" class="text-input" type="search" name="s"
+                       placeholder="<?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?>" required>
             </div>
-            <div class="show-hide-wrap">
-                <button class="show-hide">
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
-                        <path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path>
-                    </svg>
-                </button>
+            <div class="ins-section-wrapper">
+                <a id="Ty" href="#"></a>
+                <div class="ins-section-container" id="PostlistBox"></div>
             </div>
-        </aside>
+        <?php } else { ?>
+            <div class="micro">
+                <p class="micro mb-"><?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?></p>
+                <i class="iconfont icon-search"></i>
+                <input class="text-input" type="search" name="s" placeholder="<?php _e('Search', SAKURA_DOMAIN) ?>"
+                       required>
+            </div>
+        <?php } ?>
+    </div>
+    <div class="search_close"></div>
+</form>
+<!-- search end -->
+<?php wp_footer(); ?>
+<?php if (akina_option('site_statistics')) { ?>
+    <div class="site-statistics">
+        <script type="text/javascript"><?php echo akina_option('site_statistics'); ?></script>
+    </div>
+<?php } ?>
+<div class="skin-menu no-select">
+    <?php if (akina_option('full-mode', '1')): ?>
+        </p>Style
     <?php endif; ?>
-    <?php if (akina_option('aplayer_server') != 'off'): ?>
-        <div id="aplayer-float" style="z-index: 100;"
-             class="aplayer"
-             data-id="<?php echo akina_option('aplayer_playlistid', ''); ?>"
-             data-server="<?php echo akina_option('aplayer_server'); ?>"
-             data-type="playlist"
-             data-fixed="true"
-             data-volume="<?php echo akina_option('playlist_mryl', ''); ?>"
-             data-theme="<?php echo akina_option('theme_skin'); ?>">
+    <div class="theme-controls row-container">
+        <ul class="menu-list">
+            <li id="white-bg">
+                <i class="fa fa-television" aria-hidden="true"></i>
+            </li><!--Default-->
+            <?php if (akina_option('extra-bg', '1')): ?>
+                <li id="diy1-bg">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </li><!--Diy1-->
+            <?php endif; ?>
+            <?php if (akina_option('extra-bg2', '1')): ?>
+                <li id="diy2-bg">
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                </li><!--Diy2-->
+            <?php endif; ?>
+            <?php if (akina_option('extra-bg3', '1')): ?>
+                <li id="diy3-bg">
+                    <i class="fa fa-delicious" aria-hidden="true"></i>
+                </li><!--Diy3-->
+            <?php endif; ?>
+            <?php if (akina_option('extra-bg4', '1')): ?>
+                <li id="diy4-bg">
+                    <i class="fa fa-lemon-o" aria-hidden="true"></i>
+                </li><!--Diy4-->
+            <?php endif; ?>
+            <li id="dark-bg">
+                <i class="fa fa-moon-o" aria-hidden="true"></i>
+            </li><!--Night-->
+        </ul>
+    </div>
+    <?php if (akina_option('full-mode', '1')): ?></p>
+Font
+    <div class="font-family-controls row-container">
+        <button type="button" class="control-btn-serif selected" data-mode="serif"
+                onclick="mashiro_global.font_control.change_font()"><i class="fa fa-font" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="control-btn-sans-serif" data-mode="sans-serif"
+                onclick="mashiro_global.font_control.change_font()"><i class="fa fa-bold" aria-hidden="true"></i>
+        </button>
+    </div>
+<?php endif; ?>
+</div>
+<?php if (akina_option('sakura_widget')) : ?>
+    <aside id="secondary" class="widget-area" role="complementary" style="left: -400px;">
+        <div class="heading"><?php _e('Widgets') /*小工具*/ ?></div>
+        <div class="sakura_widget">
+            <?php if (function_exists('dynamic_sidebar') && dynamic_sidebar('sakura_widget')) : endif; ?>
         </div>
-    <?php endif; ?>
+        <div class="show-hide-wrap">
+            <button class="show-hide">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+                    <path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path>
+                </svg>
+            </button>
+        </div>
+    </aside>
+<?php endif; ?>
+<?php if (akina_option('aplayer_server') != 'off'): ?>
+    <div id="aplayer-float" style="z-index: 100;"
+         class="aplayer"
+         data-id="<?php echo akina_option('aplayer_playlistid', ''); ?>"
+         data-server="<?php echo akina_option('aplayer_server'); ?>"
+         data-type="playlist"
+         data-fixed="true"
+         data-volume="<?php echo akina_option('playlist_mryl', ''); ?>"
+         data-theme="<?php echo akina_option('theme_skin'); ?>">
+    </div>
+<?php endif; ?>
 
-    <!-- 樱花飘落动效 -->
-    <?php if (akina_option('sakurajs', '1')): ?>
-        <script type="text/javascript"
-                src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/js/sakura-<?php echo akina_option('sakura-falling-quantity'); ?>.js"></script>
-    <?php endif; ?>
+<!-- 樱花飘落动效 -->
+<?php if (akina_option('sakurajs', '1')): ?>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/js/sakura-<?php echo akina_option('sakura-falling-quantity'); ?>.js"></script>
+<?php endif; ?>
 
-    <!-- 首页波浪特效 -->
-    <?php if (akina_option('bolangcss', '1')): ?>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/css/bolang.css">
-    <?php endif; ?>
+<!-- 首页波浪特效 -->
+<?php if (akina_option('bolangcss', '1')): ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/css/bolang.css">
+<?php endif; ?>
 
-    <!-- Live2D看板娘 -->
-    <?php if (akina_option('live2djs', '1')): ?>
-        <script type="text/javascript"
-                src="https://cdn.jsdelivr.net/gh/<?php echo akina_option('live2d-custom'); ?>/live2d-widget@<?php echo akina_option('live2d-custom-ver'); ?>/autoload.js"></script>
-    <?php endif; ?>
+<!-- Live2D看板娘 -->
+<?php if (akina_option('live2djs', '1')): ?>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/gh/<?php echo akina_option('live2d-custom'); ?>/live2d-widget@<?php echo akina_option('live2d-custom-ver'); ?>/autoload.js"></script>
+<?php endif; ?>
 
-    <!-- 自由添加JS -->
-    <?php if (akina_option('addmorejs', '1')): ?>
-        <script type="text/javascript" src="<?php echo akina_option('addmorejsurl'); ?>"></script>
-    <?php endif; ?>
+<!-- 自由添加JS -->
+<?php if (akina_option('addmorejs', '1')): ?>
+    <script type="text/javascript" src="<?php echo akina_option('addmorejsurl'); ?>"></script>
+<?php endif; ?>
 
-    <!-- logo字体部分 -->
-    <link rel="stylesheet" href="<?php echo akina_option('logo_zt', ''); ?>" media="all">
+<!-- logo字体部分 -->
+<link rel="stylesheet" href="<?php echo akina_option('logo_zt', ''); ?>" media="all">
 
-    <!-- 收缩、展开 -->
-    <script>jQuery(document).ready(
-            function (jQuery) {
-                jQuery('.collapseButton').click(function () {
-                    jQuery(this).parent().parent().find('.xContent').slideToggle('slow');
-                });
-            });</script>
+<!-- 收缩、展开 -->
+<script>
+    jQuery(document).ready(function (jQuery) {
+        jQuery('.collapseButton').click(function () {
+            jQuery(this).parent().parent().find('.xContent').slideToggle('slow');
+        });
+    });
+</script>
 
-
-    </body>
-    </html>
+</body>
+</html>

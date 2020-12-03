@@ -159,8 +159,6 @@
             the_headPattern();
         } ?>
         <div id="content" class="site-content">
-
-
             <!--动态星星 -->
             <?php if (akina_option('shooting-star', '1')): ?>
                 <div class="night">
