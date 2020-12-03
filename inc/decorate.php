@@ -170,8 +170,8 @@ i.iconfont.js-toggle-search.iconsearch {
   background-color: var(--fore-menu-bg);
 }
 
-.entry-title,
-.entry-census {
+body.dark .entry-title,
+body.dark .entry-census {
   text-shadow: 2px 2px 4px black;
 }
 
