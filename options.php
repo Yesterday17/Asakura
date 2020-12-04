@@ -422,18 +422,18 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Home Page Article Details Icon Switch', SAKURA_DOMAIN),
-        'desc' => __('Default on, check off', SAKURA_DOMAIN),
+        'name' => ll('Home Page Article Details Icon Switch', SAKURA_DOMAIN),
+        'desc' => ll('Default on, check off', SAKURA_DOMAIN),
         'id'   => 'hpage-art-dis',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Focus Area', SAKURA_DOMAIN),
-        'desc' => __('Default on', SAKURA_DOMAIN),
+        'name' => ll('Focus Area'),
+        'desc' => ll('Default off'),
         'id'   => 'focus-area',
-        'std'  => '1',
+        'std'  => '0',
         'type' => 'checkbox'
     );
 

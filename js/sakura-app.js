@@ -4,6 +4,7 @@
  * @url https://2heng.xin
  * @date 2019.8.3
  */
+var mashiro_option;
 if (!window.mashiro_global) {
     window.mashiro_global = {
         variables: {
@@ -65,29 +66,6 @@ if (!window.mashiro_global) {
 }
 
 mashiro_global.font_control.init();
-
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        expires = "; expires=" + new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-    }
-    document.cookie = name + mashiro_option.cookie_version_control + "=" + (value || "") + expires + "; path=/";
-}
-
-function getCookie(name) {
-    const nameEQ = name + mashiro_option.cookie_version_control + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.startsWith(nameEQ)) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-function removeCookie(name) {
-    document.cookie = name + mashiro_option.cookie_version_control + '=; Max-Age=-99999999;';
-}
 
 function imgError(ele, type) {
     switch (type) {
@@ -237,7 +215,7 @@ function attach_image() {
                     setTimeout(function () {
                         cached.html('<i class="fa fa-picture-o" aria-hidden="true"></i>');
                     }, 1000);
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         var get_the_url = res.proxy;
                         $('#upload-img-show').append('<img class="lazyload upload-image-preview" src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/theme/sakura/load/inload.svg" data-src="' + get_the_url + '" onclick="window.open(\'' + get_the_url + '\')" onerror="imgError(this)" />');
                         lazyload();
@@ -378,14 +356,18 @@ function checkDarkMode(setTimer = true) {
     } else if (dark === 'auto') {
         // auto mode
         function auto_switch_theme() {
+            // recheck dark
+            if (localStorage.getItem('dark') !== 'auto') return;
+
             const now = new Date()
             changeTheme(now.getHours() > 21 || now.getHours() < 7, false);
+
+            if (setTimer) {
+                setTimeout(auto_switch_theme, 5 * 60 * 1000); // check every 5 minutes
+            }
         }
 
         auto_switch_theme();
-        if (setTimer) {
-            setTimeout(auto_switch_theme, 5 * 60 * 1000); // check every 5 minutes
-        }
     }
 }
 
@@ -530,8 +512,8 @@ timeSeriesReload();
 
 /*视频feature*/
 function coverVideo() {
-    var video = addComment.I("coverVideo");
-    var btn = addComment.I("coverVideo-btn");
+    var video = document.getElementById("coverVideo");
+    var btn = document.getElementById("coverVideo-btn");
 
     if (video.paused) {
         video.play();
@@ -551,7 +533,7 @@ function coverVideo() {
 }
 
 function loadHls() {
-    var video = addComment.I('coverVideo');
+    var video = document.getElementById('coverVideo');
     var video_src = $('#coverVideo').attr('data-src');
     if (Hls.isSupported()) {
         var hls = new Hls();
@@ -708,19 +690,19 @@ $('.comt-smilies a').click(function () {
 
 function grin(tag, type, before, after) {
     var myField;
-    if (type == "custom") {
+    if (type === "custom") {
         tag = before + tag + after;
-    } else if (type == "Img") {
+    } else if (type === "Img") {
         tag = '[img]' + tag + '[/img]';
-    } else if (type == "Math") {
+    } else if (type === "Math") {
         tag = ' {{' + tag + '}} ';
-    } else if (type == "tieba") {
+    } else if (type === "tieba") {
         tag = ' ::' + tag + ':: ';
     } else {
         tag = ' :' + tag + ': ';
     }
-    if (addComment.I('comment') && addComment.I('comment').type == 'textarea') {
-        myField = addComment.I('comment');
+    if (document.getElementById('comment') && document.getElementById('comment').type == 'textarea') {
+        myField = document.getElementById('comment');
     } else {
         return false;
     }
@@ -879,16 +861,16 @@ if (mashiro_option.float_player_on) {
 function getqqinfo() {
     var is_get_by_qq = false,
         cached = $('input');
-    if (!getCookie('user_qq') && !getCookie('user_qq_email') && !getCookie('user_author')) {
+    if (!localStorage.getItem('user_qq') && !localStorage.getItem('user_qq_email') && !localStorage.getItem('user_author')) {
         cached.filter('#qq,#author,#email,#url').val('');
     }
-    if (getCookie('user_avatar') && getCookie('user_qq') && getCookie('user_qq_email')) {
-        $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'));
-        cached.filter('#author').val(getCookie('user_author'));
-        cached.filter('#email').val(getCookie('user_qq') + '@qq.com');
-        cached.filter('#qq').val(getCookie('user_qq'));
+    if (localStorage.getItem('user_avatar') && localStorage.getItem('user_qq') && localStorage.getItem('user_qq_email')) {
+        $('div.comment-user-avatar img').attr('src', localStorage.getItem('user_avatar'));
+        cached.filter('#author').val(localStorage.getItem('user_author'));
+        cached.filter('#email').val(localStorage.getItem('user_qq') + '@qq.com');
+        cached.filter('#qq').val(localStorage.getItem('user_qq'));
         if (mashiro_option.qzone_autocomplete) {
-            cached.filter('#url').val('https://user.qzone.qq.com/' + getCookie('user_qq'));
+            cached.filter('#url').val('https://user.qzone.qq.com/' + localStorage.getItem('user_qq'));
         }
         if (cached.filter('#qq').val()) {
             $('.qq-check').css('display', 'block');
@@ -917,40 +899,40 @@ function getqqinfo() {
                         $('.qq-check').css('display', 'block');
                         $('.gravatar-check').css('display', 'none');
                     }
-                    setCookie('user_author', data.name, 30);
-                    setCookie('user_qq', qq, 30);
-                    setCookie('is_user_qq', 'yes', 30);
-                    setCookie('user_qq_email', qq + '@qq.com', 30);
-                    setCookie('user_email', qq + '@qq.com', 30);
+                    localStorage.setItem('user_author', data.name);
+                    localStorage.setItem('user_qq', qq);
+                    localStorage.setItem('is_user_qq', 'yes');
+                    localStorage.setItem('user_qq_email', qq + '@qq.com');
+                    localStorage.setItem('user_email', qq + '@qq.com');
                     emailAddressFlag = cached.filter('#email').val();
                     /***/
                     $('div.comment-user-avatar img').attr('src', data.avatar);
-                    setCookie('user_avatar', data.avatar, 30);
+                    localStorage.setItem('user_avatar', data.avatar);
                 },
                 error: function () {
                     cached.filter('#qq').val('');
                     $('.qq-check').css('display', 'none');
                     $('.gravatar-check').css('display', 'block');
                     $('div.comment-user-avatar img').attr('src', get_gravatar(cached.filter('#email').val(), 80));
-                    setCookie('user_qq', '', 30);
-                    setCookie('user_email', cached.filter('#email').val(), 30);
-                    setCookie('user_avatar', get_gravatar(cached.filter('#email').val(), 80), 30);
+                    localStorage.setItem('user_qq', '');
+                    localStorage.setItem('user_email', cached.filter('#email').val());
+                    localStorage.setItem('user_avatar', get_gravatar(cached.filter('#email').val(), 80));
                     /***/
                     cached.filter('#qq,#email,#url').val('');
                     if (!cached.filter('#qq').val()) {
                         $('.qq-check').css('display', 'none');
                         $('.gravatar-check').css('display', 'block');
-                        setCookie('user_qq', '', 30);
+                        localStorage.setItem('user_qq', '');
                         $('div.comment-user-avatar img').attr('src', get_gravatar(cached.filter('#email').val(), 80));
-                        setCookie('user_avatar', get_gravatar(cached.filter('#email').val(), 80), 30);
+                        localStorage.setItem('user_avatar', get_gravatar(cached.filter('#email').val(), 80));
                     }
                 }
             });
         }
     });
-    if (getCookie('user_avatar') && getCookie('user_email') && getCookie('is_user_qq') == 'no' && !getCookie('user_qq_email')) {
-        $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'));
-        cached.filter('#email').val(getCookie('user_email'));
+    if (localStorage.getItem('user_avatar') && localStorage.getItem('user_email') && localStorage.getItem('is_user_qq') == 'no' && !localStorage.getItem('user_qq_email')) {
+        $('div.comment-user-avatar img').attr('src', localStorage.getItem('user_avatar'));
+        cached.filter('#email').val(localStorage.getItem('user_email'));
         cached.filter('#qq').val('');
         if (!cached.filter('#qq').val()) {
             $('.qq-check').css('display', 'none');
@@ -959,12 +941,12 @@ function getqqinfo() {
     }
     cached.filter('#email').on('blur', function () {
         var emailAddress = cached.filter('#email').val();
-        if (is_get_by_qq == false || emailAddressFlag != emailAddress) {
+        if (is_get_by_qq === false || emailAddressFlag !== emailAddress) {
             $('div.comment-user-avatar img').attr('src', get_gravatar(emailAddress, 80));
-            setCookie('user_avatar', get_gravatar(emailAddress, 80), 30);
-            setCookie('user_email', emailAddress, 30);
-            setCookie('user_qq_email', '', 30);
-            setCookie('is_user_qq', 'no', 30);
+            localStorage.setItem('user_author', get_gravatar(emailAddress, 80));
+            localStorage.setItem('user_email', emailAddress);
+            localStorage.setItem('user_qq_email', '');
+            localStorage.setItem('is_user_qq', 'no');
             cached.filter('#qq').val('');
             if (!cached.filter('#qq').val()) {
                 $('.qq-check').css('display', 'none');
@@ -972,21 +954,21 @@ function getqqinfo() {
             }
         }
     });
-    if (getCookie('user_url')) {
-        cached.filter('#url').val(getCookie('user_url'));
+    if (localStorage.getItem('user_url')) {
+        cached.filter('#url').val(localStorage.getItem('user_url'));
     }
     cached.filter('#url').on('blur', function () {
         var URL_Address = cached.filter('#url').val();
         cached.filter('#url').val(URL_Address);
-        setCookie('user_url', URL_Address, 30);
+        localStorage.setItem('user_url', URL_Address);
     });
-    if (getCookie('user_author')) {
-        cached.filter('#author').val(getCookie('user_author'));
+    if (localStorage.getItem('user_author')) {
+        cached.filter('#author').val(localStorage.getItem('user_author'));
     }
     cached.filter('#author').on('blur', function () {
         var user_name = cached.filter('#author').val();
         cached.filter('#author').val(user_name);
-        setCookie('user_author', user_name, 30);
+        localStorage.setItem('user_author', user_name);
     });
 }
 
@@ -1206,43 +1188,41 @@ var home = location.href,
                 $('.js-search').toggleClass('is-visible');
                 $('html').css('overflow-y', 'hidden');
                 if (mashiro_option.live_search) {
-                    var QueryStorage = [];
-                    search_a(mashiro_option.api + "asakura/v1/cache_search/json?_wpnonce=" + mashiro_option.nonce);
+                    let QueryStorage = [];
+                    const searchInput = document.querySelector("#search-input");
 
-                    var otxt = addComment.I("search-input"),
-                        list = addComment.I("PostlistBox"),
-                        Record = list.innerHTML,
-                        searchFlag = null;
-                    otxt.oninput = function () {
-                        if (searchFlag = null) {
+                    do_update_search(mashiro_option.api + "asakura/v1/cache_search/json?_wpnonce=" + mashiro_option.nonce);
+
+                    let searchFlag = null;
+                    searchInput.oninput = function () {
+                        if (searchFlag === null) {
                             clearTimeout(searchFlag);
                         }
                         searchFlag = setTimeout(function () {
-                            query(QueryStorage, otxt.value, Record);
+                            query(QueryStorage, searchInput.value);
                             div_href();
                         }, 250);
                     };
 
-                    function search_a(val) {
-                        if (sessionStorage.getItem('search') != null) {
-                            QueryStorage = JSON.parse(sessionStorage.getItem('search'));
-                            query(QueryStorage, $("#search-input").val(), Record);
-                            div_href();
-                        } else {
-                            var _xhr = new XMLHttpRequest();
-                            _xhr.open("GET", val, true)
-                            _xhr.send();
-                            _xhr.onreadystatechange = function () {
-                                if (_xhr.readyState == 4 && _xhr.status == 200) {
-                                    json = _xhr.responseText;
-                                    if (json != "") {
-                                        sessionStorage.setItem('search', json);
-                                        QueryStorage = JSON.parse(json);
-                                        query(QueryStorage, otxt.value, Record);
-                                        div_href();
-                                    }
-                                }
+                    function do_update_search(val) {
+                        function update_search(j) {
+                            if (typeof j === 'object') {
+                                QueryStorage = j;
+                                sessionStorage.setItem('search', JSON.stringify(j));
+                            } else {
+                                QueryStorage = JSON.parse(sessionStorage.getItem('search'));
                             }
+                            query(QueryStorage, $("#search-input").val());
+                            div_href();
+                        }
+
+                        if (sessionStorage.getItem('search') === null) {
+                            // fetch search cache
+                            fetch(val).then(r => r.json())
+                                .then(j => update_search(j))
+                                .catch((e) => console.error(`Failed to GET cache_search: ${e}`));
+                        } else {
+                            update_search();
                         }
                     }
 
@@ -1279,52 +1259,120 @@ var home = location.href,
                         });
                     }
 
-                    function search_result(keyword, link, fa, title, iconfont, comments, text) {
-                        if (keyword) {
-                            var s = keyword.trim().split(" "),
-                                a = title.indexOf(s[s.length - 1]),
-                                b = text.indexOf(s[s.length - 1]);
-                            title = a < 60 ? title.slice(0, 80) : title.slice(a - 30, a + 30);
-                            title = title.replace(s[s.length - 1], '<mark class="search-keyword"> ' + s[s.length - 1].toUpperCase() + ' </mark>');
-                            text = b < 60 ? text.slice(0, 80) : text.slice(b - 30, b + 30);
-                            text = text.replace(s[s.length - 1], '<mark class="search-keyword"> ' + s[s.length - 1].toUpperCase() + ' </mark>');
+                    function query(storage, value) {
+                        function createSection() {
+                            const sec = document.createElement('section')
+                            sec.classList.add('ins-section')
+                            return sec;
                         }
-                        return '<div class="ins-selectable ins-search-item" href="' + link + '"><header><i class="fa fa-' + fa + '" aria-hidden="true"></i>' + title + '<i class="iconfont icon-' + iconfont + '"> ' + comments + '</i>' + '</header><p class="ins-search-preview">' + text + '</p></div>';
-                    }
 
-                    function query(B, A, z) {
-                        var x, v, s, y = "",
-                            w = "",
-                            u = "",
-                            r = "",
-                            p = "",
-                            F = "",
-                            H = "",
-                            G = '<section class="ins-section"><header class="ins-section-header">',
-                            D = "</section>",
-                            E = "</header>",
-                            C = Cx(B, A.trim());
-                        for (x = 0; x < Object.keys(C).length; x++) {
-                            H = C[x];
-                            switch (v = H.type) {
+                        function createHeader(name) {
+                            const hea = document.createElement('header');
+                            hea.classList.add('ins-section-header');
+                            hea.textContent = name;
+                            return hea;
+                        }
+
+                        function createMark(text) {
+                            const m = document.createElement('mark');
+                            m.classList.add('search-keyword');
+                            m.textContent = text;
+                            return m;
+                        }
+
+                        function arrayJoin(arr, spl) {
+                            const newArray = [];
+                            arr.forEach((item, i) => {
+                                newArray.push(item);
+                                if (i !== arr.length - 1) {
+                                    newArray.push(spl);
+                                }
+                            })
+                            return newArray;
+                        }
+
+                        function createEntry(keyword, link, fa, title, iconfont, comments, text) {
+                            if (keyword) {
+                                function rr(input, kw) {
+                                    const pos = input.indexOf(kw);
+                                    const txt = pos < 60 ? input.slice(0, 80) : input.slice(pos - 30, pos + 30);
+                                    let nodes = txt.split(kw).map(n => document.createTextNode(n));
+                                    return arrayJoin(nodes, createMark(s));
+                                }
+
+                                const keywords = keyword.trim().split(' ');
+                                const s = keywords[keywords.length - 1];
+                                title = rr(title, s);
+                                text = rr(text, s);
+                            } else {
+                                title = [document.createTextNode(title)];
+                                text = [document.createTextNode(text)];
+                            }
+                            const div = document.createElement('div');
+                            div.classList.add('ins-selectable', 'ins-search-item');
+                            div.setAttribute('href', link);
+
+                            const header = document.createElement('header');
+                            const iFa = document.createElement('i');
+                            iFa.classList.add('fa', `fa$-{fa}`);
+                            iFa.setAttribute('aria-hidden', 'true');
+                            header.appendChild(iFa);
+
+                            title.forEach(t => header.appendChild(t));
+
+                            const iIcon = document.createElement('i');
+                            iFa.classList.add('fa', `fa$-{fa}`);
+                            iFa.appendChild(document.createTextNode(' ' + comments));
+                            header.appendChild(iIcon);
+                            div.appendChild(header);
+
+                            const p = document.createElement('p');
+                            p.classList.add('ins-search-preview');
+                            text.forEach(t => p.appendChild(t));
+                            div.appendChild(p)
+                            return div;
+                        }
+
+                        function createType(name, children) {
+                            const sec = createSection();
+                            sec.appendChild(createHeader(name));
+                            children.forEach(c => sec.appendChild(c));
+                            return sec;
+                        }
+
+                        const posts = [],
+                            pages = [],
+                            categories = [],
+                            tags = [],
+                            comments = [],
+                            C = Cx(storage, value.trim());
+                        for (let key = 0; key < Object.keys(C).length; key++) {
+                            const post = C[key];
+                            switch (post.type) {
                                 case "post":
-                                    w = w + search_result(A, H.link, "file", H.title, "mark", H.comments, H.text);
+                                    posts.push(createEntry(value, post.link, "file", post.title, "mark", post.comments, post.text));
                                     break;
                                 case "tag":
-                                    p = p + search_result("", H.link, "tag", H.title, "none", "", "");
+                                    tags.push(createEntry("", post.link, "tag", post.title, "none", "", ""));
                                     break;
                                 case "category":
-                                    r = r + search_result("", H.link, "folder", H.title, "none", "", "");
+                                    categories.push(createEntry("", post.link, "folder", post.title, "none", "", ""));
                                     break;
                                 case "page":
-                                    u = u + search_result(A, H.link, "file", H.title, "mark", H.comments, H.text);
+                                    pages.push(createEntry(value, post.link, "file", post.title, "mark", post.comments, post.text));
                                     break;
                                 case "comment":
-                                    F = F + search_result(A, H.link, "comment", H.title, "none", "", H.text);
+                                    comments.push(createEntry(value, post.link, "comment", post.title, "none", "", post.text));
                                     break
                             }
                         }
-                        w && (y = y + G + "文章" + E + w + D), u && (y = y + G + "页面" + E + u + D), r && (y = y + G + "分类" + E + r + D), p && (y = y + G + "标签" + E + p + D), F && (y = y + G + "评论" + E + F + D), s = addComment.I("PostlistBox"), s.innerHTML = y
+                        const container = document.querySelector('#post-list-box');
+                        container.innerHTML = '';
+                        if (posts.length > 0) container.appendChild(createType('文章', posts));
+                        if (pages.length > 0) container.appendChild(createType('页面', pages));
+                        if (categories.length > 0) container.appendChild(createType('分类', categories));
+                        if (tags.length > 0) container.appendChild(createType('标签', tags));
+                        if (comments.length > 0) container.appendChild(createType('评论', comments));
                     }
                 }
             });
@@ -1354,7 +1402,7 @@ var home = location.href,
                 $(window).scroll(function () {
                     var s = $(document).scrollTop(),
                         cached = $('.site-header');
-                    if (s == h1) {
+                    if (s === h1) {
                         cached.removeClass('yya');
                     }
                     if (s > h1) {
@@ -1369,9 +1417,9 @@ var home = location.href,
             var intersectionObserver = new IntersectionObserver(function (entries) {
                 if (entries[0].intersectionRatio <= 0) return;
                 var page_next = $('#pagination a').attr("href");
-                var load_key = addComment.I("add_post_time");
+                var load_key = document.getElementById("add_post_time");
                 if (page_next != undefined && load_key) {
-                    var load_time = addComment.I("add_post_time").title;
+                    var load_time = document.getElementById("add_post_time").title;
                     if (load_time != "233") {
                         console.log("%c 自动加载时倒计时 %c", "background:#9a9da2; color:#ffffff; border-radius:4px;", "", "", load_time);
                         load_post_timer = setTimeout(function () {
@@ -1402,7 +1450,7 @@ var home = location.href,
                         $('#add_post span').removeClass("loading").text("");
                         lazyload();
                         post_list_show_animation();
-                        if (nextHref != undefined) {
+                        if (nextHref !== undefined) {
                             $("#pagination a").attr("href", nextHref);
                             //加载完成上滑
                             var tempScrollTop = $(window).scrollTop();
@@ -1515,28 +1563,25 @@ var home = location.href,
                     }
                     return false;
                 },
-                I: function (e) {
-                    return document.getElementById(e);
+                clearButterbar: function () {
+                    document.querySelectorAll('.butterBar').forEach(b => b.remove());
                 },
-                clearButterbar: function (e) {
-                    if (jQuery(".butterBar").length > 0) {
-                        jQuery(".butterBar").remove();
-                    }
-                },
-                createButterbar: function (message, showtime) {
-                    var t = this;
-                    t.clearButterbar();
-                    jQuery("body").append('<div class="butterBar butterBar--center"><p class="butterBar-message">' + message + '</p></div>');
-                    if (showtime > 0) {
-                        setTimeout("jQuery('.butterBar').remove()", showtime);
-                    } else {
-                        setTimeout("jQuery('.butterBar').remove()", 6000);
-                    }
+                createButterbar: function (message, showtime = 6000) {
+                    this.clearButterbar();
+
+                    const bar = document.createElement('div');
+                    bar.classList.add('butterBar', 'butterBar--center');
+                    const bp = document.createElement('p');
+                    bp.classList.add('butterBar-message');
+                    bp.innerHTML = message;
+                    bar.appendChild(bp);
+                    document.body.appendChild(bar);
+                    setTimeout(() => bar.remove(), showtime);
                 }
             };
         },
         XCP: function () {
-            $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
+            $body = (window.opera) ? (document.compatMode === "CSS1Compat" ? $('html') : $('body')) : $('html,body');
             $('body').on('click', '#comments-navi a', function (e) {
                 e.preventDefault();
                 var path = $(this)[0].pathname;
@@ -1680,7 +1725,7 @@ if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventL
         if (!(/^[A-z0-9_-]+$/.test(id))) {
             return;
         }
-        element = addComment.I(id);
+        element = document.getElementById(id);
         if (element) {
             if (!(/^(?:a|select|input|button|textarea)$/i.test(element.tagName))) {
                 element.tabIndex = -1;

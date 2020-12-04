@@ -50,7 +50,7 @@ add_action('rest_api_init', function () {
  * @return WP_REST_Response
  */
 // see: https://developer.wordpress.org/rest-api/requests/
-function upload_image(WP_REST_Request $request) {
+function upload_image(WP_REST_Request $request): WP_REST_Response {
     /**
      * handle file params $file === $_FILES
      * curl \
@@ -75,19 +75,21 @@ function upload_image(WP_REST_Request $request) {
     switch (akina_option("img_upload_api")) {
         case 'imgur':
             $image = file_get_contents($_FILES["cmt_img_file"]["tmp_name"]);
-            $API_Request = $images->Imgur_API($image);
+            $api_request = $images->Imgur_API($image);
             break;
         case 'smms':
             $image = $_FILES;
-            $API_Request = $images->SMMS_API($image);
+            $api_request = $images->SMMS_API($image);
             break;
         case 'chevereto':
             $image = file_get_contents($_FILES["cmt_img_file"]["tmp_name"]);
-            $API_Request = $images->Chevereto_API($image);
+            $api_request = $images->Chevereto_API($image);
             break;
+        default:
+            $api_request = array('status' => 403, 'message' => 'Image upload api not configured.');
     }
 
-    $result = new WP_REST_Response($API_Request, $API_Request['status']);
+    $result = new WP_REST_Response($api_request, $api_request['status']);
     $result->set_headers(array('Content-Type' => 'application/json'));
     return $result;
 }
@@ -95,9 +97,9 @@ function upload_image(WP_REST_Request $request) {
 
 /*
  * 随机封面图 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/image/cover
+ * @rest api接口路径：SAKURA_REST_API/image/cover
  */
-function cover_gallery() {
+function cover_gallery(): WP_REST_Response {
     $type = $_GET['type'];
     if ($type === 'mobile' && akina_option('cover_beta')) {
         $imgurl = Images::mobile_cover_gallery();
@@ -113,22 +115,22 @@ function cover_gallery() {
 
 /*
  * 随机文章特色图 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/image/feature
+ * @rest api接口路径：SAKURA_REST_API/image/feature
  */
-function feature_gallery() {
-    $imgurl = Images::feature_gallery();
+function feature_gallery(): WP_REST_Response {
+    $img_url = Images::feature_gallery();
     $data = array('feature image');
     $response = new WP_REST_Response($data);
     $response->set_status(302);
-    $response->header('Location', $imgurl);
+    $response->header('Location', $img_url);
     return $response;
 }
 
 /*
  * update database rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/database/update
+ * @rest api接口路径：SAKURA_REST_API/database/update
  */
-function update_database() {
+function update_database(): WP_REST_Response {
     if (akina_option('cover_cdn_options') == "type_1") {
         $output = Cache::update_database();
         $result = new WP_REST_Response($output, 200);
@@ -140,10 +142,10 @@ function update_database() {
 
 /*
  * 定制实时搜索 rest api
- * @rest api接口路径：https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/cache_search/json
+ * @rest api接口路径：SAKURA_REST_API/cache_search/json
  * @可在cache_search_json()函数末尾通过设置 HTTP header 控制 json 缓存时间
  */
-function cache_search_json() {
+function cache_search_json(): WP_REST_Response {
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
         $output = array('status' => 403, 'success' => false, 'message' => 'Unauthorized client.');
         $result = new WP_REST_Response($output, 403);
@@ -164,7 +166,7 @@ function cache_search_json() {
  * @param WP_REST_Request $request
  * @return WP_REST_Response
  */
-function get_qq_info(WP_REST_Request $request) {
+function get_qq_info(WP_REST_Request $request): WP_REST_Response {
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
         $output = array('status' => 403, 'success' => false, 'message' => 'Unauthorized client.');
     } elseif ($_GET['qq']) {
@@ -183,7 +185,7 @@ function get_qq_info(WP_REST_Request $request) {
  * QQ头像链接解密
  * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/avatar
  */
-function get_qq_avatar() {
+function get_qq_avatar(): WP_REST_Response {
     $encrypted = $_GET["qq"];
     $imgurl = QQ::get_qq_avatar($encrypted);
     if (akina_option('qq_avatar_link') == 'type_2') {
@@ -199,7 +201,7 @@ function get_qq_avatar() {
     return $response;
 }
 
-function bgm_bilibili() {
+function bgm_bilibili(): WP_REST_Response {
     if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
         $output = array('status' => 403, 'success' => false, 'message' => 'Unauthorized client.');
         $response = new WP_REST_Response($output, 403);
@@ -212,7 +214,7 @@ function bgm_bilibili() {
     return $response;
 }
 
-function meting_aplayer() {
+function meting_aplayer(): WP_REST_Response {
     $type = $_GET['type'];
     $id = $_GET['id'];
     $wpnonce = $_GET['_wpnonce'];

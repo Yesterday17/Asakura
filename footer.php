@@ -90,7 +90,7 @@ comments_template('', true);
             </div>
             <div class="ins-section-wrapper">
                 <a id="Ty" href="#"></a>
-                <div class="ins-section-container" id="PostlistBox"></div>
+                <div class="ins-section-container" id="post-list-box"></div>
             </div>
         <?php } else { ?>
             <div class="micro">
