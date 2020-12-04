@@ -677,17 +677,6 @@ function siren_request($query_vars) {
     return $query_vars;
 }
 
-// Replace a user name in a link with a nickname
-add_filter('author_link', 'siren_author_link', 10, 3);
-function siren_author_link($link, $author_id, $author_nicename) {
-    $author_nickname = get_user_meta($author_id, 'nickname', true);
-    if ($author_nickname) {
-        $link = str_replace($author_nicename, $author_nickname, $link);
-    }
-    return $link;
-}
-
-
 /*
  * 私密评论
  * @bigfa
