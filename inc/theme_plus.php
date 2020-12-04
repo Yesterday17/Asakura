@@ -30,13 +30,9 @@ function bgvideo() {
 /*
  * 使用本地图片作为头像，防止外源抽风问题
  */
-function get_avatar_profile_url($id = "") {
-    if (akina_option('focus_logo')) {
-        $avatar = akina_option('focus_logo');
-    } else {
-        $avatar = get_avatar_url($id);
-    }
-    return $avatar;
+function get_avatar_profile_url($id = null) {
+    global $current_user;
+    return akina_option('focus_logo') ?: get_avatar_url($id ?: $current_user->ID, 64);
 }
 
 
@@ -325,7 +321,7 @@ function the_headPattern() {
                     $edit_this_post_link = '';
                 }
                 $t .= the_title('<h1 class="entry-title">', '</h1>', false);
-                $t .= '<span class="toppic-line"></span><p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_url(get_the_author_meta('ID'), 64)/*$ava*/ . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
+                $t .= '<span class="toppic-line"></span><p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_profile_url(get_the_author_meta('ID')) . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
             endwhile;
         endif;
     } elseif (is_page()) {
@@ -396,7 +392,7 @@ function the_video_headPattern($type) {
                 $edit_this_post_link = '';
             }
             $t .= the_title('<h1 class="entry-title">', '<button id="coverVideo-btn" class=".constant-width-to-height-ratio" onclick="coverVideo()"><i class="fa fa-pause" aria-hidden="true"></i></button></h1>', false);
-            $t .= '<p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_url(get_the_author_meta('ID'), 64)/*$ava*/ . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
+            $t .= '<p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_profile_url(get_the_author_meta('ID')) . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
         endwhile; endif;
     } elseif (is_page()) {
         $full_image_url = $full_image_url[0];
@@ -444,11 +440,9 @@ function the_video_headPattern($type) {
 function header_user_menu() {
     global $current_user;
     wp_get_current_user();
-    if (is_user_logged_in()) {
-        $ava = akina_option('focus_logo') ? akina_option('focus_logo') : get_avatar_url($current_user->user_email);
-        ?>
+    if (is_user_logged_in()) { ?>
         <div class="header-user-avatar">
-            <img class="faa-spin animated-hover" src="<?php echo get_avatar_url($current_user->ID, 64);/*$ava;*/ ?>"
+            <img class="faa-spin animated-hover" src="<?= get_avatar_profile_url(); ?>"
                  width="30" height="30">
             <div class="header-user-menu">
                 <div class="herder-user-name">当前已登录
@@ -478,8 +472,9 @@ function header_user_menu() {
                 <img class="faa-shake animated-hover" src="<?php echo $ava; ?>" width="30" height="30">
             </a>
             <div class="header-user-menu">
-                <div class="herder-user-name no-logged"><a href="<?php echo $login_url; ?>" target="_blank"
-                                                           style="color:<?php echo akina_option('theme_skin'); ?>;font-weight:bold;text-decoration:none">登录</a>
+                <div class="herder-user-name no-logged">
+                    <a href="<?php echo $login_url; ?>" target="_blank"
+                       style="color:var(--theme-color);font-weight:bold;text-decoration:none">登录</a>
                 </div>
             </div>
         </div>

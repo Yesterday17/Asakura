@@ -1,18 +1,18 @@
 <style type="text/css">
     .forgetmenot input:checked + label {
-        background: <?php echo akina_option('theme_skin'); ?>;
+        background: var(--theme-color);
     }
 
     #labelTip {
-        background-color: <?php echo akina_option('theme_skin'); ?>;
+        background-color: var(--theme-color);
     }
 
     #label {
-        color: <?php echo akina_option('theme_skin'); ?>;
+        color: var(--theme-color);
     }
 
     #login .submit .button {
-        background: <?php echo akina_option('theme_skin'); ?>;
+        background: var(--theme-color);
     }
 
     #login {
