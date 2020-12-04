@@ -1198,10 +1198,7 @@ var home = location.href,
                         if (searchFlag === null) {
                             clearTimeout(searchFlag);
                         }
-                        searchFlag = setTimeout(function () {
-                            query(QueryStorage, searchInput.value);
-                            div_href();
-                        }, 250);
+                        searchFlag = setTimeout(() => query(QueryStorage, searchInput.value), 250);
                     };
 
                     function do_update_search(val) {
@@ -1213,7 +1210,6 @@ var home = location.href,
                                 QueryStorage = JSON.parse(sessionStorage.getItem('search'));
                             }
                             query(QueryStorage, $("#search-input").val());
-                            div_href();
                         }
 
                         if (sessionStorage.getItem('search') === null) {
@@ -1247,16 +1243,6 @@ var home = location.href,
                             )
                         );
                         return i;
-                    }
-
-                    function div_href() {
-                        $(".ins-selectable").each(function () {
-                            $(this).click(function () {
-                                $("#Ty").attr('href', $(this).attr('href'));
-                                $("#Ty").click();
-                                $(".search_close").click();
-                            });
-                        });
                     }
 
                     function query(storage, value) {
@@ -1310,19 +1296,27 @@ var home = location.href,
                             }
                             const div = document.createElement('div');
                             div.classList.add('ins-selectable', 'ins-search-item');
-                            div.setAttribute('href', link);
+
+                            const fakeLink = document.createElement('a');
+                            fakeLink.href = link;
+                            div.appendChild(fakeLink);
+
+                            div.onclick = function () {
+                                fakeLink.click();
+                                $(".search_close").click();
+                            }
 
                             const header = document.createElement('header');
                             const iFa = document.createElement('i');
-                            iFa.classList.add('fa', `fa$-{fa}`);
+                            iFa.classList.add('fa', `fa-${fa}`);
                             iFa.setAttribute('aria-hidden', 'true');
                             header.appendChild(iFa);
 
                             title.forEach(t => header.appendChild(t));
 
                             const iIcon = document.createElement('i');
-                            iFa.classList.add('fa', `fa$-{fa}`);
-                            iFa.appendChild(document.createTextNode(' ' + comments));
+                            iIcon.classList.add('iconfont', `icon-${iconfont}`);
+                            iIcon.appendChild(document.createTextNode(' ' + comments));
                             header.appendChild(iIcon);
                             div.appendChild(header);
 
