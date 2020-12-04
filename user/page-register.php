@@ -11,53 +11,53 @@ if (!empty($_POST['register_reg'])) {
 
     // Check the username
     if ($sanitized_user_login == '') {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Please enter username.", SAKURA_DOMAIN) ./*请输入用户名。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Please enter username.") ./*请输入用户名。*/
             '<br />';
     } elseif (!validate_username($sanitized_user_login)) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Invalid characters, please enter a valid username.", SAKURA_DOMAIN) ./*此用户名包含无效字符，请输入有效的用户名。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Invalid characters, please enter a valid username.") ./*此用户名包含无效字符，请输入有效的用户名。*/
             '<br />';
         $sanitized_user_login = '';
     } elseif (username_exists($sanitized_user_login)) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("This username has been registered.", SAKURA_DOMAIN) ./*该用户名已被注册。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("This username has been registered.") ./*该用户名已被注册。*/
             '<br />';
     }
 
     // Check the e-mail address
     if ($user_email == '') {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Please enter email address.", SAKURA_DOMAIN) ./*请填写电子邮件地址。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Please enter email address.") ./*请填写电子邮件地址。*/
             '<br />';
     } elseif (!is_email($user_email)) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Invalid email address.", SAKURA_DOMAIN) ./*电子邮件地址不正确。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Invalid email address.") ./*电子邮件地址不正确。*/
             '<br />';
         $user_email = '';
     } elseif (email_exists($user_email)) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("This email address has been registered.", SAKURA_DOMAIN) ./*该电子邮件地址已经被注册。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("This email address has been registered.") ./*该电子邮件地址已经被注册。*/
             '<br />';
     }
 
     // Check the password
     if (strlen($_POST['user_pass']) < 6) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Password length is at least 6 digits.", SAKURA_DOMAIN) ./*密码长度至少6位。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Password length is at least 6 digits.") ./*密码长度至少6位。*/
             '<br />';
     } elseif ($_POST['user_pass'] != $_POST['user_pass2']) {
-        $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-            '</strong>：' . __("Inconsistent password entered twice.", SAKURA_DOMAIN) ./*两次输入的密码不一致。*/
+        $error .= '<strong>' . ll("Error") ./*错误*/
+            '</strong>：' . ll("Inconsistent password entered twice.") ./*两次输入的密码不一致。*/
             '<br />';
     }
 
     if ($error == '') {
         $user_id = wp_create_user($sanitized_user_login, $_POST['user_pass'], $user_email);
         if (!$user_id) {
-            $error .= '<strong>' . __("Error", SAKURA_DOMAIN) ./*错误*/
-                '</strong>：' . __("Unable to complete registration request...Please contact", SAKURA_DOMAIN) ./*无法完成注册请求... 请联系*/
-                '<a href=\"mailto:' . get_option('admin_email') . '\">' . __("administrator", SAKURA_DOMAIN) ./*管理员*/
+            $error .= '<strong>' . ll("Error") ./*错误*/
+                '</strong>：' . ll("Unable to complete registration request...Please contact") ./*无法完成注册请求... 请联系*/
+                '<a href=\"mailto:' . get_option('admin_email') . '\">' . ll("administrator") ./*管理员*/
                 '</a>！<br />';
         } else if (!is_user_logged_in()) {
             $user = get_userdatabylogin($sanitized_user_login);
@@ -102,12 +102,12 @@ if (!empty($_POST['register_reg'])) {
         $loadurl = akina_option('exlogin_url') ? akina_option('exlogin_url') : get_bloginfo('url');
         ?>
             <div class="ex-register-title">
-                <h3><?php _e("Success! Redirecting......", SAKURA_DOMAIN)/*注册成功！正在跳转...*/ ?></h3>
+                <h3><?php ee("Success! Redirecting......")/*注册成功！正在跳转...*/ ?></h3>
             </div>
             <script>window.location.href = '<?php echo $loadurl; ?>';</script>
         <?php } ?>
         <?php else : ?>
-            <div class="register-close"><p><?php _e("Registration is not open yet.", SAKURA_DOMAIN)/*暂未开放注册。*/ ?></p>
+            <div class="register-close"><p><?php ee("Registration is not open yet.")/*暂未开放注册。*/ ?></p>
             </div>
         <?php endif; ?>
     </main><!-- #main -->

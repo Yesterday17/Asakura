@@ -19,28 +19,55 @@ use Sakura\API\Cache;
  * Router
  */
 add_action('rest_api_init', function () {
-    register_rest_route(SAKURA_REST_API, '/image/upload', array('methods' => 'POST', 'callback' => 'upload_image'));
+    register_rest_route(SAKURA_REST_API, '/image/upload', array(
+        'methods'             => 'POST',
+        'callback'            => 'upload_image',
+        'permission_callback' => '__return_true',
+    ));
     register_rest_route(SAKURA_REST_API, '/cache_search/json', array(
-        'methods'  => 'GET',
-        'callback' => 'cache_search_json',
+        'methods'             => 'GET',
+        'callback'            => 'cache_search_json',
+        'permission_callback' => '__return_true',
     ));
-    register_rest_route(SAKURA_REST_API, '/image/cover', array('methods' => 'GET', 'callback' => 'cover_gallery'));
-    register_rest_route(SAKURA_REST_API, '/image/feature', array('methods' => 'GET', 'callback' => 'feature_gallery'));
+    register_rest_route(SAKURA_REST_API, '/image/cover', array(
+        'methods'             => 'GET',
+        'callback'            => 'cover_gallery',
+        'permission_callback' => '__return_true',
+    ));
+    register_rest_route(SAKURA_REST_API, '/image/feature', array(
+        'methods'             => 'GET',
+        'callback'            => 'feature_gallery',
+        'permission_callback' => '__return_true',
+    ));
     register_rest_route(SAKURA_REST_API, '/database/update', array(
-        'methods'  => 'GET',
-        'callback' => 'update_database'
+        'methods'             => 'GET',
+        'callback'            => 'update_database',
+        'permission_callback' => '__return_true',
     ));
-    register_rest_route(SAKURA_REST_API, '/qqinfo/json', array('methods' => 'GET', 'callback' => 'get_qq_info'));
-    register_rest_route(SAKURA_REST_API, '/qqinfo/avatar', array('methods' => 'GET', 'callback' => 'get_qq_avatar'));
+    register_rest_route(SAKURA_REST_API, '/qqinfo/json', array(
+        'methods'             => 'GET',
+        'callback'            => 'get_qq_info',
+        'permission_callback' => '__return_true',
+    ));
+    register_rest_route(SAKURA_REST_API, '/qqinfo/avatar', array(
+        'methods'             => 'GET',
+        'callback'            => 'get_qq_avatar',
+        'permission_callback' => '__return_true',
+    ));
     register_rest_route(SAKURA_REST_API, '/bangumi/bilibili', array(
-        'methods'  => 'POST',
-        'callback' => 'bgm_bilibili',
+        'methods'             => 'POST',
+        'callback'            => 'bgm_bilibili',
+        'permission_callback' => '__return_true',
     ));
-    register_rest_route(SAKURA_REST_API, '/meting/aplayer', array('methods' => 'GET', 'callback' => 'meting_aplayer'));
-
+    register_rest_route(SAKURA_REST_API, '/meting/aplayer', array(
+        'methods'             => 'GET',
+        'callback'            => 'meting_aplayer',
+        'permission_callback' => '__return_true',
+    ));
     register_rest_route(SAKURA_REST_API, '/style/custom', array(
-        'methods'  => 'GET',
-        'callback' => 'get_customizer_css'
+        'methods'             => 'GET',
+        'callback'            => 'get_customizer_css',
+        'permission_callback' => '__return_true',
     ));
 });
 
