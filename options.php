@@ -174,7 +174,7 @@ function optionsframework_options() {
         'name'    => ll('Automatically Load The Next Page'),
         'desc'    => ll('(seconds) Set to automatically load the next page time, the default is not automatically loaded'),
         'id'      => 'auto_load_post',
-        'std'     => '233',
+        'std'     => '1',
         'type'    => 'select',
         'options' => array(
             '0'   => ll('0'),

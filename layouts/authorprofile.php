@@ -20,7 +20,7 @@ if (akina_option('author_profile') == 'yes') {
         </div>
         <hr>
         <p>
-            <i class="iconfont icon-write"></i><?php echo get_the_author_meta('description') ? get_the_author_meta('description') : akina_option('admin_destwo', 'Carpe Diem and Do what I like'); ?>
+            <i class="iconfont icon-write"></i><?php echo get_the_author_meta('description') ?: akina_option('admin_destwo'); ?>
         </p>
     </section>
 

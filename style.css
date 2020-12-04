@@ -1567,6 +1567,7 @@ i.iconfont.hotpost {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     height: 67.5px;
+    font-size: 15px;
     overflow: hidden
 }
 
@@ -4946,7 +4947,7 @@ i.iconfont.down {
     width: 100%;
     padding: 20px 0;
     text-align: center;
-    margin: 40px 0 80px;
+    margin: 40px 0 40px;
     display: inline-block
 }
 

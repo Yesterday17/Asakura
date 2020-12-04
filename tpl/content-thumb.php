@@ -43,19 +43,15 @@ while (have_posts()) : the_post();
                 </div>
                 <a href="<?php the_permalink(); ?>" class="post-title"><h3><?php the_title(); ?></h3></a>
                 <div class="post-meta">
-                    <span><i class="iconfont icon-attention"></i><?php echo get_post_views(get_the_ID()) . ' ' . _n('Hit', 'Hits', get_post_views(get_the_ID()), SAKURA_DOMAIN)/*热度*/ ?></span>
+                    <span><i class="iconfont icon-attention"></i><?php echo get_post_views(get_the_ID()) ?></span>
                     <span class="comments-number"><i
-                                class="iconfont icon-mark"></i><?php comments_popup_link('NOTHING', '1 ' . __("Comment", SAKURA_DOMAIN)/*条评论*/, '% ' . __("Comments", SAKURA_DOMAIN)/*条评论*/); ?></span>
+                                class="iconfont icon-mark"></i><?php comments_popup_link('0', '1', '%'); ?></span>
                     <span><i class="iconfont icon-file"></i><a
                                 href="<?php echo esc_url(get_category_link($the_cat[0]->cat_ID)); ?>"><?php echo $the_cat[0]->cat_name; ?></a>
 					</span>
                 </div>
                 <div class="float-content">
-                    <?php substr(the_excerpt(), 0, 3); ?>
-                    <div class="post-bottom">
-                        <a href="<?php the_permalink(); ?>" class="button-normal"><i
-                                    class="iconfont icon-caidan"></i></a>
-                    </div>
+                    <?php the_excerpt() ?>
                 </div>
             </div>
         </div>
