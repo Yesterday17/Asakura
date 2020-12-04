@@ -1424,7 +1424,7 @@ var home = location.href,
                 }
             });
             intersectionObserver.observe(
-                document.querySelector('#pagination')
+                document.querySelector('#pagination') || document.querySelector('.footer-device')
             );
             $('body').on('click', '#pagination a', function () {
                 clearTimeout(load_post_timer);
