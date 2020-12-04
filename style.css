@@ -7147,6 +7147,7 @@ input[type=radio]:checked:before {
     font-size: 12px;
     color: #fb7299;
     border-radius: 3px;
+    padding: 2px;
     font-weight: 400
 }
 

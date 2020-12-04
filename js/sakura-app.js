@@ -316,7 +316,6 @@ function changeTheme(dark, save) {
     const sc = document.querySelector('.site-content');
     const pl = document.querySelector('#preload');
     if (dark) {
-        console.log("Toggling to dark mode.")
         document.body.style.background = '#31363b';
         sc && (sc.style.backgroundColor = '#fff');
         pl && (pl.style.backgroundColor = '#31363b');
@@ -325,7 +324,6 @@ function changeTheme(dark, save) {
             localStorage.setItem('dark', '1');
         }
     } else {
-        console.log("Toggling to light mode.")
         document.body.style.background = 'unset';
         sc && (sc.style.backgroundColor = 'rgba(255, 255, 255, .8)');
         pl && (pl.style.backgroundColor = '#fff');
@@ -448,7 +446,7 @@ $(document).ready(function () {
     });
 });
 
-function scrollTop(top) {
+function aScrollTop(top) {
     window.scrollTo({top, behavior: "smooth"});
 }
 
@@ -575,14 +573,11 @@ function copy_code_block() {
 }
 
 function tableOfContentScroll(flag) {
-    if (document.body.clientWidth <= 1200) {
-        return;
-    }
     if (document.querySelector('.have-toc')) {
         if (flag) {
             let id = 1,
                 heading_fix;
-            if (mashiro_option.entry_content_theme === "asakura") {
+            if (mashiro_option.entry_content_theme === "sakura") {
                 if ($("article").hasClass("type-post")) {
                     if ($("div").hasClass("pattern-attachment-img")) {
                         heading_fix = -75;
@@ -599,6 +594,7 @@ function tableOfContentScroll(flag) {
             document.querySelectorAll('.entry-content, .links').forEach((el) => {
                 el.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((e) => e.id = `toc-head-${id++}`)
             })
+
             tocbot.init({
                 tocSelector: '.toc',
                 contentSelector: ['.entry-content', '.links'],
@@ -612,6 +608,7 @@ function tableOfContentScroll(flag) {
 }
 
 tableOfContentScroll(flag = true);
+
 var pjaxInit = function () {
     add_upload_tips();
     no_right_click();
@@ -1406,7 +1403,7 @@ var home = location.href,
             }
         },
         XLS: function () {
-            $body = $('html,body');
+            $body = $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
             var load_post_timer;
             var intersectionObserver = new IntersectionObserver(function (entries) {
                 if (entries[0].intersectionRatio <= 0) return;
@@ -1452,7 +1449,6 @@ var home = location.href,
                             $(window).scrollTop(tempScrollTop);
                             $body.animate({
                                 scrollTop: tempScrollTop + 300
-
                             }, 666)
                         } else {
                             $("#pagination").html("<span>很高兴你翻到这里，但是真的没有了...</span>");
@@ -1620,7 +1616,7 @@ var home = location.href,
                     mb_to_top.style.transform = "scale(0)";
                 }
             });
-            mb_to_top.onclick = () => scrollTop(0);
+            mb_to_top.onclick = () => aScrollTop(0);
         }
     }
 $(function () {
@@ -1733,7 +1729,7 @@ if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventL
 /* 首页下拉箭头 */
 function headertop_down() {
     const coverOffset = $('#content').offset().top;
-    scrollTop(coverOffset);
+    aScrollTop(coverOffset);
 }
 
 window.onload = function () {

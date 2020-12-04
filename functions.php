@@ -289,7 +289,7 @@ if (!function_exists('akina_comment_format')) {
                                 <h4 class="author"><a href="<?php comment_author_url(); ?>" target="_blank"
                                                       rel="nofollow"><?php echo get_avatar($comment->comment_author_email, '24', '', get_comment_author()); ?>
                                         <span class="bb-comment isauthor"
-                                              title="<?php _e('Author', SAKURA_DOMAIN); ?>"><?php _e('Blogger', SAKURA_DOMAIN); /*博主*/ ?></span> <?php comment_author(); ?> <?php get_author_class($comment->comment_author_email, $comment->user_id); ?>
+                                              title="<?php ee('Author'); ?>"><?php ee('Author'); ?></span> <?php comment_author(); ?> <?php get_author_class($comment->comment_author_email, $comment->user_id); ?>
                                     </a></h4>
                             </div>
                             <?php comment_reply_link(array_merge($args, array(

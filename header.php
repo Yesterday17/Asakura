@@ -11,16 +11,6 @@
 ?>
 <?php header('X-Frame-Options: SAMEORIGIN'); ?>
 <!DOCTYPE html>
-<!-- 
-            ◢＼　 ☆　　 ／◣
-    　  　∕　　﹨　╰╮∕　　﹨
-    　  　▏　　～～′′～～ 　｜
-    　　  ﹨／　　　　　　 　＼∕
-    　 　 ∕ 　　●　　　 ●　＼
-      ＝＝　○　∴·╰╯　∴　○　＝＝
-    　    ╭──╮　　　　　╭──╮
-  ╔═ ∪∪∪═Mashiro&Hitomi═∪∪∪═╗
--->
 <html <?php language_attributes(); ?>>
 <head>
     <link rel="stylesheet"
@@ -37,7 +27,7 @@
         if ($site_description && (is_home() || is_front_page()))
             echo " - $site_description";
         if ($paged >= 2 || $page >= 2)
-            echo ' - ' . sprintf(__('page %s ', SAKURA_DOMAIN), max($paged, $page));/*第 %s 页*/ ?>
+            echo ' - ' . sprintf(ll('page %s '), max($paged, $page));/*第 %s 页*/ ?>
     </title>
     <?php
     if (akina_option('akina_meta') == true) {
@@ -69,11 +59,6 @@
     <link rel="shortcut icon" href="<?php echo akina_option('favicon_link', ''); ?>"/>
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <?php wp_head(); ?>
-    <script type="text/javascript">
-        if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
-            alert('朋友，IE浏览器未适配哦~\n如果是 360、QQ 等双核浏览器，请关闭 IE 模式！');
-        }
-    </script>
     <?php if (akina_option('google_analytics_id', '')): ?>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async
@@ -145,7 +130,10 @@
                             <div class="line line2"></div>
                             <div class="line line3"></div>
                         </div><?php } ?>
-                    <nav><?php wp_nav_menu(array('depth'     => 2, 'theme_location' => 'primary', 'container' => false
+                    <nav><?php wp_nav_menu(array(
+                            'depth'          => 2,
+                            'theme_location' => 'primary',
+                            'container'      => false
                         )); ?></nav>
                     <!-- #site-navigation -->
                 </div>
@@ -159,8 +147,8 @@
             the_headPattern();
         } ?>
         <div id="content" class="site-content">
-            <!--动态星星 -->
             <?php if (akina_option('shooting-star', '1')): ?>
+                <!--动态星星 -->
                 <div class="night">
                     <div class="shooting_star"></div>
                     <div class="shooting_star"></div>
