@@ -21,6 +21,8 @@ function customizer_css() {
             akina_option('fore-switch-bcb'),
             akina_option('fore-switch-bca')
         )) . ');
+  --hpage-art-tpac: ' . akina_option('hpage-art-tpac') . ';
+  --webweb-img: \'' . akina_option('webweb_img') . '\';
 }
 ';
 
@@ -256,7 +258,7 @@ textarea {
 }
 
 .post-date {
-  color: ' . akina_option('hpage-art-tpac') . '
+  color: var(--hpage-art-tpac);
 }
 
 .linkdes {
@@ -288,7 +290,7 @@ h1.cat-title {
 }
 
 #pagination .loading {
-  background: url(' . akina_option('webweb_img') . '/load/ball.svg);
+  background: url(var(--webweb-img) \'/load/ball.svg\');
   background-position: center;
   background-repeat: no-repeat;
   color: #555;
@@ -297,7 +299,7 @@ h1.cat-title {
 }
 
 #pagination .loading, #bangumi-pagination .loading {
-  background: url(' . akina_option('webweb_img') . '/load/ball.svg);
+  background: url(var(--webweb-img) \'/load/ball.svg\');
   background-position: center;
   background-repeat: no-repeat;
   color: #555;

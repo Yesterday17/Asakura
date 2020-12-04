@@ -28,15 +28,14 @@ comments_template('', true);
         <div class="footer-device">
             <p style="font-family: 'Ubuntu', sans-serif;">
 					<span style="color: #b9b9b9;">
-						<?php /* 能保留下面两个链接吗？算是我一个小小的心愿吧~ */ ?>
                         <?php if (akina_option('oneword', '1')): ?>
-                        <script type="text/javascript"
-                                src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
-						<div id="yan"><script>text()</script></div>
-                <?php endif; ?></p>
-            <?php if (akina_option('loadoq', '1')): // TODO: i18n             ?>
-            <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
-            <?php endif; ?></p>
+                            <script type="text/javascript"
+                                    src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
+                            <div id="yan"><script>text()</script></div>
+                        <?php endif; ?>
+                        <?php if (akina_option('loadoq', '1')): // TODO: i18n                ?>
+                            <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
+                        <?php endif; ?>
             Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Asakura (o・∇・o)</a>
             by <a href="https://mmf.moe/" target="_blank" id="site-info">Yesterday17</a>
             </span>
@@ -69,7 +68,7 @@ comments_template('', true);
     <div class="m-search">
         <form class="m-search-form" method="get" action="<?php echo home_url(); ?>" role="search">
             <input class="m-search-input" type="search" name="s"
-                   placeholder="<?php _e('Search...', SAKURA_DOMAIN) /*搜索...*/ ?>" required>
+                   placeholder="<?php ee('Search...') /*搜索...*/ ?>" required>
         </form>
     </div>
     <?php wp_nav_menu(array('depth' => 2, 'theme_location' => 'primary', 'container' => false)); ?>
@@ -85,7 +84,7 @@ comments_template('', true);
             <div class="micro">
                 <i class="iconfont icon-search"></i>
                 <input id="search-input" class="text-input" type="search" name="s"
-                       placeholder="<?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?>" required>
+                       placeholder="<?php ee('Want to find something?') /*想要找点什么呢*/ ?>" required>
             </div>
             <div class="ins-section-wrapper">
                 <a id="Ty" href="#"></a>
@@ -93,9 +92,9 @@ comments_template('', true);
             </div>
         <?php } else { ?>
             <div class="micro">
-                <p class="micro mb-"><?php _e('Want to find something?', SAKURA_DOMAIN) /*想要找点什么呢*/ ?></p>
+                <p class="micro mb-"><?php ee('Want to find something?') /*想要找点什么呢*/ ?></p>
                 <i class="iconfont icon-search"></i>
-                <input class="text-input" type="search" name="s" placeholder="<?php _e('Search', SAKURA_DOMAIN) ?>"
+                <input class="text-input" type="search" name="s" placeholder="<?php ee('Search') ?>"
                        required>
             </div>
         <?php } ?>
@@ -110,7 +109,7 @@ comments_template('', true);
     </div>
 <?php } ?>
 <div class="skin-menu no-select">
-    <p>Style
+    Style
     <div class="theme-controls row-container">
         <ul class="menu-list">
             <li id="white-bg">
@@ -121,7 +120,6 @@ comments_template('', true);
             </li><!--Night-->
         </ul>
     </div>
-    </p>
     Font
     <div class="font-family-controls row-container">
         <button type="button" class="control-btn-serif selected" data-mode="serif"
@@ -159,25 +157,25 @@ comments_template('', true);
     </div>
 <?php endif; ?>
 
-<!-- 樱花飘落动效 -->
 <?php if (akina_option('sakurajs', '1')): ?>
+    <!-- 樱花飘落动效 -->
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/js/sakura-<?php echo akina_option('sakura-falling-quantity'); ?>.js"></script>
 <?php endif; ?>
 
-<!-- 首页波浪特效 -->
 <?php if (akina_option('bolangcss', '1')): ?>
+    <!-- 首页波浪特效 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/static/css/bolang.css">
 <?php endif; ?>
 
-<!-- Live2D看板娘 -->
 <?php if (akina_option('live2djs', '1')): ?>
+    <!-- Live2D看板娘 -->
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/gh/<?php echo akina_option('live2d-custom'); ?>/live2d-widget@<?php echo akina_option('live2d-custom-ver'); ?>/autoload.js"></script>
 <?php endif; ?>
 
-<!-- 自由添加JS -->
 <?php if (akina_option('addmorejs', '1')): ?>
+    <!-- 自由添加JS -->
     <script type="text/javascript" src="<?php echo akina_option('addmorejsurl'); ?>"></script>
 <?php endif; ?>
 

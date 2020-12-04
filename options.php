@@ -1982,18 +1982,18 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Home Page Article Time Prompt Accent (Theme colors are recommended)', SAKURA_DOMAIN),
+        'name' => ll('Home Page Article Time Prompt Accent (Theme colors are recommended)'),
         'id'   => 'hpage-art-tpac',
         'std'  => "#FB98C0",
-        'desc' => __('Custom colors', SAKURA_DOMAIN),
+        'desc' => ll('Custom colors'),
         'type' => "color",
     );
 
     $options[] = array(
-        'name' => __('Home Page Article Prompt Icon Color (Theme colors are recommended)', SAKURA_DOMAIN),
+        'name' => ll('Home Page Article Prompt Icon Color (Theme colors are recommended)'),
         'id'   => 'hpage-art-pic',
         'std'  => "#FB98C0",
-        'desc' => __('Custom colors', SAKURA_DOMAIN),
+        'desc' => ll('Custom colors'),
         'type' => "color",
     );
 

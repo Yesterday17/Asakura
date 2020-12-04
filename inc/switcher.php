@@ -1,6 +1,6 @@
 <?php
 
-function get_asakura_option() {
+function get_asakura_option(): array {
     return array(
         // mashiro_option
         'nprogress_on'            => (bool)akina_option('nprogress_on'),

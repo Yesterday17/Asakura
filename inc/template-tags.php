@@ -64,7 +64,7 @@ endif;
  *
  * @return bool
  */
-function akina_categorized_blog() {
+function akina_categorized_blog(): bool {
     if (false === ($all_the_cool_cats = get_transient('akina_categories'))) {
         // Create an array of all the categories that are attached to posts.
         $all_the_cool_cats = get_categories(array(
