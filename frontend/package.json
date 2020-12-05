@@ -16,6 +16,7 @@
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.10.0",
+    "webpack-bundle-analyzer": "^4.2.0",
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
@@ -24,12 +25,12 @@
     "font-awesome": "^4.7.0",
     "font-awesome-animation": "^0.2.1",
     "highlight.js": "^10.4.1",
-    "highlightjs-line-numbers.js": "^2.8.0",
     "instantclick": "^3.1.0-2",
     "jquery": "^3.5.1",
     "jquery-pjax": "^2.0.1",
     "lazyload": "^2.0.0-rc.2",
     "lightgallery.js": "^1.4.0",
+    "md5": "^2.3.0",
     "nprogress": "^0.2.0",
     "tocbot": "^4.12.0"
   }

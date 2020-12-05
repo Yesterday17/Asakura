@@ -1,4 +1,5 @@
 const path = require("path");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
@@ -7,7 +8,10 @@ module.exports = {
   entry: {
     app: "./src/index.js",
   },
-  // plugins: [new MiniCssExtractPlugin({ filename: "asakura-[name].css" })],
+  plugins: [
+    ...(process.env.REPORT ? [new BundleAnalyzerPlugin()] : []),
+    // new MiniCssExtractPlugin({ filename: "asakura-[name].css" }),
+  ],
   module: {
     rules: [
       {
@@ -15,13 +19,6 @@ module.exports = {
         loader: "expose-loader",
         options: {
           exposes: ["$", "jQuery"],
-        },
-      },
-      {
-        test: require.resolve("highlight.js"),
-        loader: "expose-loader",
-        options: {
-          exposes: ["hljs"],
         },
       },
       {

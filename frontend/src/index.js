@@ -19,12 +19,14 @@ import "./styles/nprogress.css";
 import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
 import { loadCSS } from "./utils/loadcss";
+import { get_gravatar } from "./utils/gravatar";
 
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
-import hljs from "highlight.js";
-import "highlightjs-line-numbers.js";
+import hljs from "highlight.js/lib/highlight";
+import hljs_linenumber from "./utils/highlightjs-line-numbers.js";
+hljs_linenumber(window, document, hljs);
 
 global.asakura = {
   changeTheme,
@@ -1009,13 +1011,13 @@ function getqqinfo() {
           $(".gravatar-check").css("display", "block");
           $("div.comment-user-avatar img").attr(
             "src",
-            get_gravatar(cached.filter("#email").val(), 80)
+            get_gravatar(cached.filter("#email").val())
           );
           localStorage.setItem("user_qq", "");
           localStorage.setItem("user_email", cached.filter("#email").val());
           localStorage.setItem(
             "user_avatar",
-            get_gravatar(cached.filter("#email").val(), 80)
+            get_gravatar(cached.filter("#email").val())
           );
           /***/
           cached.filter("#qq,#email,#url").val("");
@@ -1025,11 +1027,11 @@ function getqqinfo() {
             localStorage.setItem("user_qq", "");
             $("div.comment-user-avatar img").attr(
               "src",
-              get_gravatar(cached.filter("#email").val(), 80)
+              get_gravatar(cached.filter("#email").val())
             );
             localStorage.setItem(
               "user_avatar",
-              get_gravatar(cached.filter("#email").val(), 80)
+              get_gravatar(cached.filter("#email").val())
             );
           }
         },
@@ -1056,11 +1058,8 @@ function getqqinfo() {
   cached.filter("#email").on("blur", function () {
     var emailAddress = cached.filter("#email").val();
     if (is_get_by_qq === false || emailAddressFlag !== emailAddress) {
-      $("div.comment-user-avatar img").attr(
-        "src",
-        get_gravatar(emailAddress, 80)
-      );
-      localStorage.setItem("user_author", get_gravatar(emailAddress, 80));
+      $("div.comment-user-avatar img").attr("src", get_gravatar(emailAddress));
+      localStorage.setItem("user_author", get_gravatar(emailAddress));
       localStorage.setItem("user_email", emailAddress);
       localStorage.setItem("user_qq_email", "");
       localStorage.setItem("is_user_qq", "no");
