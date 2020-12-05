@@ -1916,10 +1916,6 @@ msgstr "開啟機器人驗證"
 msgid "Enhanced"
 msgstr "｜增強"
 
-#: options.php:1377
-msgid "Open SmoothScroll"
-msgstr "啓用平滑捲動"
-
 #: options.php:1378
 msgid "Check open。"
 msgstr "勾選啟用"

@@ -71,6 +71,21 @@ add_action('rest_api_init', function () {
     ));
 });
 
+function check_nonce() {
+    if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
+        $output = array(
+            'status'  => 403,
+            'success' => false,
+            'message' => 'Unauthorized client.',
+            'link'    => "https://view.moezx.cc/images/2019/11/14/step04.md.png",
+            'proxy'   => akina_option('cmt_image_proxy') . "https://view.moezx.cc/images/2019/11/14/step04.md.png",
+        );
+        $result = new WP_REST_Response($output, 403);
+        $result->set_headers(array('Content-Type' => 'application/json'));
+        return $result;
+    }
+}
+
 /**
  * Image uploader response
  * @param WP_REST_Request $request

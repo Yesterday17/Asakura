@@ -1374,14 +1374,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Enhanced', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name' => __('Open SmoothScroll', SAKURA_DOMAIN),
-        'desc' => __('Check open。', SAKURA_DOMAIN),
-        'id'   => 'SmoothScroll',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name' => __('Preload Animation', SAKURA_DOMAIN),
         'desc' => __('Check open', SAKURA_DOMAIN),
         'id'   => 'preload_animation',

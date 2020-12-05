@@ -1825,10 +1825,6 @@ msgstr ""
 msgid "Enhanced"
 msgstr ""
 
-#: options.php:1377
-msgid "Open SmoothScroll"
-msgstr ""
-
 #: options.php:1378
 msgid "Check open。"
 msgstr ""

@@ -188,11 +188,6 @@ function sakura_scripts() {
     wp_enqueue_script('instantclick', get_template_directory_uri() . '/cdn/js/src/00.instantclick.min.js', array(), "3.1.0", true);
     if (akina_option('jsdelivr_cdn_test')) {
         wp_enqueue_script('js_lib', get_template_directory_uri() . '/cdn/js/lib.js', array(), SAKURA_VERSION . akina_option('cookie_version', ''), true);
-        if (akina_option('SmoothScroll')) {
-            wp_enqueue_script('SmoothScroll', get_template_directory_uri() . '/cdn/js/src/20.SmoothScroll.js', array(), SAKURA_VERSION . akina_option('cookie_version', ''), true);
-        }
-    } elseif (akina_option('SmoothScroll')) {
-        wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/combine/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/lib.min.js,gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/src/20.SmoothScroll.js', array(), SAKURA_VERSION, true);
     } else {
         wp_enqueue_script('js_lib', 'https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/js/lib.min.js', array(), SAKURA_VERSION, true);
     }
