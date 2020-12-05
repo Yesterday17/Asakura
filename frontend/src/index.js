@@ -24,7 +24,8 @@ import { get_gravatar } from "./utils/gravatar";
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
-import hljs from "highlight.js/lib/highlight";
+import hljs from "highlight.js/lib/core";
+// import hljs from "highlight.js";
 import hljs_linenumber from "./utils/highlightjs-line-numbers.js";
 hljs_linenumber(window, document, hljs);
 
@@ -159,51 +160,51 @@ function social_share_limit() {
 // social_share_limit();
 
 function code_highlight_style() {
-  function gen_top_bar(i) {
-    var attributes = {
-      autocomplete: "off",
-      autocorrect: "off",
-      autocapitalize: "off",
-      spellcheck: "false",
-      contenteditable: "false",
-      design: "by Mashiro",
-    };
-    var ele_name = $("pre:eq(" + i + ")")[0].children[0].className;
-    var lang = ele_name
-      .substr(0, ele_name.indexOf(" "))
-      .replace("language-", "");
-    if (lang.toLowerCase() == "hljs")
-      var lang = $("pre:eq(" + i + ") code")
-        .attr("class")
-        .replace("hljs", "")
-        ? $("pre:eq(" + i + ") code")
-            .attr("class")
-            .replace("hljs", "")
-        : "text";
-    $("pre:eq(" + i + ")").addClass("highlight-wrap");
-    for (var t in attributes) {
-      $("pre:eq(" + i + ")").attr(t, attributes[t]);
+  var attributes = {
+    autocomplete: "off",
+    autocorrect: "off",
+    autocapitalize: "off",
+    spellcheck: "false",
+    contenteditable: "false",
+    design: "by Mashiro",
+  };
+
+  function gen_top_bar(p) {
+    for (const key in attributes) {
+      if (attributes.hasOwnProperty(key)) {
+        p.setAttribute(key, attributes[key]);
+      }
     }
-    $("pre:eq(" + i + ") code").attr("data-rel", lang.toUpperCase());
+    p.classList.add("highlight-wrap");
+    // p.querySelector("code")?.attr("data-rel", lang.toUpperCase());
   }
 
   $("pre code").each(function (i, block) {
     hljs.highlightBlock(block);
   });
-  for (var i = 0; i < $("pre").length; i++) {
-    gen_top_bar(i);
-  }
-  hljs.initLineNumbersOnLoad();
+
+  document
+    .querySelectorAll("pre.wp-block-syntaxhighlighter-code")
+    .forEach((block) => {
+      block.classList.remove("wp-block-syntaxhighlighter-code");
+      const code = document.createElement("code");
+      code.textContent = block.textContent;
+      block.textContent = "";
+      block.appendChild(code);
+      hljs.highlightBlock(code);
+    });
+
+  document
+    .querySelectorAll("pre code")
+    .forEach((c) => gen_top_bar(c.parentElement));
+
+  hljs.initLineNumbersOnLoad({ singleLine: true });
   $("pre").on("click", function (e) {
     if (e.target !== this) return;
     $(this).toggleClass("code-block-fullscreen");
     $("html").toggleClass("code-block-fullscreen-html-scroll");
   });
 }
-
-try {
-  code_highlight_style();
-} catch (e) {}
 
 $body.on("click", ".comment-reply-link", function () {
   addComment.moveForm(
@@ -1112,8 +1113,7 @@ mashiro_global.ini.normalize();
 loadCSS(mashiro_option.entry_content_theme_src);
 loadCSS("https://at.alicdn.com/t/font_679578_qyt5qzzavdo39pb9.css");
 
-var home = location.href,
-  s = $("#bgvideo")[0],
+var s = $("#bgvideo")[0],
   Siren = {
     MN: function () {
       $(".iconflat").on("click", function () {
@@ -1967,6 +1967,7 @@ if (
 window.onload = function () {
   function load() {
     $("html").css("overflow-y", "unset");
+    code_highlight_style();
     checkDarkMode(false);
     $("#preload").fadeOut();
   }
@@ -1979,8 +1980,13 @@ window.onload = function () {
       _.init();
       _.on("change", () => {
         load();
+        delete window.$;
+        delete window.jQuery;
         if (window.SyntaxHighlighter) {
           SyntaxHighlighter.highlight();
+        }
+        if (window.EnlighterJSINIT) {
+          EnlighterJSINIT();
         }
       });
     });

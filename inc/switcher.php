@@ -41,5 +41,7 @@ function get_asakura_option(): array {
         'nonce'                   => wp_create_nonce('wp_rest'),
         'google_analytics_id'     => akina_option('google_analytics_id', ''),
         'gravatar_url'            => akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar',
+        // Asakura
+        'instantclick'            => True,
     );
 }
