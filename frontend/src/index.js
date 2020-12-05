@@ -23,6 +23,9 @@ import { loadCSS } from "./utils/loadcss";
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
+import hljs from "highlight.js";
+import "highlightjs-line-numbers.js";
+
 global.asakura = {
   changeTheme,
   scrollTo: aScrollTo,
@@ -1134,7 +1137,6 @@ function load_bangumi() {
 }
 
 mashiro_global.ini.normalize();
-loadCSS(mashiro_option.jsdelivr_css_src);
 loadCSS(mashiro_option.entry_content_theme_src);
 loadCSS("https://at.alicdn.com/t/font_679578_qyt5qzzavdo39pb9.css");
 
