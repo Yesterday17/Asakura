@@ -15,6 +15,7 @@ import { loadCSS } from "./utils/loadcss";
 
 global.asakura = {
   changeTheme,
+  scrollTo: aScrollTo,
 };
 
 var $body = $("body");
@@ -1966,12 +1967,6 @@ if (
     },
     false
   );
-}
-
-/* 首页下拉箭头 */
-function headertop_down() {
-  const coverOffset = $("#content").offset().top;
-  aScrollTo(coverOffset);
 }
 
 window.onload = function () {

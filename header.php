@@ -85,10 +85,8 @@
 <?php endif; ?>
 <div class="scrollbar" id="bar"></div>
 <section id="main-container">
-    <?php
-    if (!akina_option('main-switch')) {
-        $filter = akina_option('focus_img_filter');
-        ?>
+    <?php if (!akina_option('main-switch')) {
+        $filter = akina_option('focus_img_filter'); ?>
         <div class="headertop <?php echo $filter; ?>">
             <?php get_template_part('layouts/imgbox'); ?>
         </div>
