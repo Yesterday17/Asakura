@@ -27,7 +27,7 @@
                 </div>
                 <div class="works-meta">
                     <div class="works-comnum">
-                        <span><i class="iconfont icon-mark"></i> <?php comments_popup_link(__('NOTHING', SAKURA_DOMAIN), '1 ', '% '); /*暂无*/ ?></span>
+                        <span><i class="iconfont icon-mark"></i> <?php comments_popup_link(ll('NOTHING'), '1 ', '% '); /*暂无*/ ?></span>
                     </div>
                     <div class="works-views">
                         <span><i class="iconfont icon-attention"></i> <?php echo get_post_views(get_the_ID()); ?> </span>

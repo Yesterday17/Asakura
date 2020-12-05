@@ -34,7 +34,7 @@
             </div>
             <div class="info-meta">
                 <div class="comnum">
-                    <span><i class="iconfont icon-mark"></i><?php comments_popup_link('NOTHING', '1 ' . ll("Comment")/*条评论*/, '% ' . ll("Comments")/*条评论*/); ?></span>
+                    <span><i class="iconfont icon-mark"></i><?php comments_popup_link('0', '1', '%'); ?></span>
                 </div>
                 <div class="views">
                     <span><i class="iconfont icon-attention"></i><?php echo get_post_views(get_the_ID()) . ' ' . _n('Hit', 'Hits', get_post_views(get_the_ID()), SAKURA_DOMAIN)/*热度*/ ?></span>

@@ -19,14 +19,14 @@ if (post_password_required()) {
 
         <div class="commentwrap comments-hidden">
             <div class="notification"><i
-                        class="iconfont icon-mark"></i><?php _e('view comments', SAKURA_DOMAIN); /*查看评论*/ ?> -
-                <span class="noticom"><?php comments_number('NOTHING', '1' . __(" comment", SAKURA_DOMAIN), '%' . __(" comments", SAKURA_DOMAIN)); ?> </span>
+                        class="iconfont icon-mark"></i><?php EE('view comments'); /*查看评论*/ ?> -
+                <span class="noticom"><?php comments_number('0', '1', '%'); ?> </span>
             </div>
         </div>
 
         <div class="comments-main">
             <h3 id="comments-list-title">Comments | <span
-                        class="noticom"><?php comments_number('NOTHING', '1' . __(" comment", SAKURA_DOMAIN), '%' . __(" comments", SAKURA_DOMAIN)); ?> </span>
+                        class="noticom"><?php comments_number('0', '1', '%'); ?> </span>
             </h3>
             <div id="loading-comments"><span></span></div>
             <?php if (have_comments()): ?>
