@@ -112,10 +112,10 @@ comments_template('', true);
     Style
     <div class="theme-controls row-container">
         <ul class="menu-list">
-            <li id="white-bg">
+            <li id="white-bg" onclick="asakura.changeTheme(false,true)">
                 <i class="fa fa-television" aria-hidden="true"></i>
             </li><!--Default-->
-            <li id="dark-bg">
+            <li id="dark-bg" onclick="asakura.changeTheme(true,true)">
                 <i class="fa fa-moon-o" aria-hidden="true"></i>
             </li><!--Night-->
         </ul>
@@ -181,15 +181,6 @@ comments_template('', true);
 
 <!-- logo字体部分 -->
 <link rel="stylesheet" href="<?php echo akina_option('logo_zt', ''); ?>" media="all">
-
-<!-- 收缩、展开 -->
-<script>
-    jQuery(document).ready(function (jQuery) {
-        jQuery('.collapseButton').click(function () {
-            jQuery(this).parent().parent().find('.xContent').slideToggle('slow');
-        });
-    });
-</script>
 
 </body>
 </html>
