@@ -185,7 +185,6 @@ add_action('after_setup_theme', 'akina_content_width', 0);
  * Enqueue scripts and styles.
  */
 function sakura_scripts() {
-    wp_enqueue_style('lightgallery', get_template_directory_uri() . '/cdn/css/src/lightgallery.min.css', array(), "1.4.0");
     if (akina_option('app_no_jsdelivr_cdn')) {
         wp_enqueue_style('sakura_css', get_stylesheet_uri(), array(), SAKURA_VERSION);
         wp_enqueue_script('app', get_template_directory_uri() . '/frontend/dist/asakura-app.js', array(), SAKURA_VERSION, true);

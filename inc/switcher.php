@@ -21,7 +21,6 @@ function get_asakura_option(): array {
         'clipboard_copyright'     => akina_option('clipboard_copyright') == 0,
         'entry_content_theme'     => akina_option('entry_content_theme'),
         'entry_content_theme_src' => get_template_directory_uri() . '/cdn/theme/' . akina_option('entry_content_theme') . '.css?' . SAKURA_VERSION . akina_option('cookie_version', ''),
-        'jsdelivr_css_src'        => akina_option('jsdelivr_cdn_test') ? get_template_directory_uri() . '/cdn/css/lib.css?' . SAKURA_VERSION . akina_option('cookie_version', '') : 'https://cdn.jsdelivr.net/gh/Yesterday17/Asakura@' . SAKURA_VERSION . '/cdn/css/lib.min.css',
         'float_player_on'         => True,
         'meting_api_url'          => asakura_rest_url('meting/aplayer'),
         'cover_api'               => asakura_rest_url('image/cover'),

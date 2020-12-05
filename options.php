@@ -1036,14 +1036,6 @@ function optionsframework_options() {
     $options[] = array('name' => __('Advanced', SAKURA_DOMAIN), 'type' => 'heading');
 
     $options[] = array(
-        'name' => __('Use The Front-end Library Locally (lib.js、lib.css)', SAKURA_DOMAIN),
-        'desc' => __('The front-end library don\'t load from jsDelivr, not recommand', SAKURA_DOMAIN),
-        'id'   => 'jsdelivr_cdn_test',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name' => __('Use JS and CSS File of The Theme (sakura-app.js、style.css) locally', SAKURA_DOMAIN),
         'desc' => __('The js and css files of the theme do not load from jsDelivr, please open when DIY', SAKURA_DOMAIN),
         'id'   => 'app_no_jsdelivr_cdn',

@@ -1,0 +1,12 @@
+.lg-backdrop.in {
+  opacity: 0.8;
+  z-index: 9999998;
+}
+
+.lg-outer.lg-visible {
+  z-index: 9999999;
+}
+
+.lg-actions button {
+  box-shadow: none;
+}

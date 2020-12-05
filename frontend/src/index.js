@@ -2,16 +2,26 @@ import $ from "jquery";
 import "jquery-pjax";
 
 import "lightgallery.js";
+import "lightgallery.js/dist/css/lightgallery.css";
+import "./styles/lightgallery-fix.css";
 
 import APlayer from "aplayer";
+import "aplayer/dist/APlayer.min.css";
+import "./styles/aplayer-fix.css";
+
 import lazyload from "lazyload";
 import ClipboardJS from "clipboard";
 import tocbot from "tocbot";
+
 import { NProgress } from "nprogress";
+import "./styles/nprogress.css";
 
 import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
 import { loadCSS } from "./utils/loadcss";
+
+import "font-awesome/css/font-awesome.css";
+import "font-awesome-animation/dist/font-awesome-animation.css";
 
 global.asakura = {
   changeTheme,
@@ -24,6 +34,7 @@ if (!window.mashiro_global) {
   window.mashiro_global = {
     variables: {
       has_hls: false,
+      bgn: 1,
     },
     ini: {
       normalize: () => {
@@ -74,7 +85,6 @@ if (!window.mashiro_global) {
         }
       },
     },
-    bgn: 1,
   };
 }
 
@@ -406,24 +416,28 @@ function bg_update() {
       "url(" +
         mashiro_option.cover_api +
         "?type=mobile&" +
-        mashiro_global.bgn +
+        mashiro_global.variables.bgn +
         ")"
     );
   } else {
     $(".centerbg").css(
       "background-image",
-      "url(" + mashiro_option.cover_api + "?" + mashiro_global.bgn + ")"
+      "url(" +
+        mashiro_option.cover_api +
+        "?" +
+        mashiro_global.variables.bgn +
+        ")"
     );
   }
 }
 
 function nextBG() {
   bg_update();
-  mashiro_global.bgn++;
+  mashiro_global.variables.bgn++;
 }
 
 function preBG() {
-  mashiro_global.bgn--;
+  mashiro_global.variables.bgn--;
   bg_update();
 }
 
@@ -1123,7 +1137,6 @@ mashiro_global.ini.normalize();
 loadCSS(mashiro_option.jsdelivr_css_src);
 loadCSS(mashiro_option.entry_content_theme_src);
 loadCSS("https://at.alicdn.com/t/font_679578_qyt5qzzavdo39pb9.css");
-loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css");
 
 var home = location.href,
   s = $("#bgvideo")[0],
