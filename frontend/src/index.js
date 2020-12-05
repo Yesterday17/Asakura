@@ -13,7 +13,7 @@ import lazyload from "lazyload";
 import ClipboardJS from "clipboard";
 import tocbot from "tocbot";
 
-import { NProgress } from "nprogress";
+import NProgress from "nprogress";
 import "./styles/nprogress.css";
 
 import { changeTheme, checkDarkMode } from "./darkmode";
