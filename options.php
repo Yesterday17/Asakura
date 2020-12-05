@@ -1124,15 +1124,6 @@ function optionsframework_options() {
         'type'  => 'text'
     );
 
-    /*
-    $options[] = array(
-         'name' => __('BaguetteBox Funtion', SAKURA_DOMAIN),
-         'desc' => __('Default off，<a href="https://github.com/mashirozx/Sakura/wiki/Fancybox">please read wiki</a>', SAKURA_DOMAIN),
-         'id' => 'image_viewer',
-         'std' => '0',
-         'type' => 'checkbox');
-    */
-
     //功能
     $options[] = array('name' => __('Function', SAKURA_DOMAIN), 'type' => 'heading');
 

@@ -1172,14 +1172,7 @@ var home = location.href,
                 $(this).next().slideToggle('fast');
                 return false;
             });
-            /*if (mashiro_option.baguette_box_on) {
-                baguetteBox.run('.entry-content', {
-                    captions: function (element) {
-                        return element.getElementsByTagName('img')[0].alt;
-                    },
-                    ignoreClass: 'fancybox',
-                });
-            }*/
+            lightGallery(document.querySelector('.entry-content'), {selector: 'img'});
             $('.js-toggle-search').on('click', function () {
                 $('.js-toggle-search').toggleClass('is-active');
                 $('.js-search').toggleClass('is-visible');

@@ -2731,13 +2731,6 @@ msgstr "暂未开放注册"
 #~ msgid "BaguetteBox Funtion"
 #~ msgstr "BaguetteBox 功能"
 
-#~ msgid ""
-#~ "Default off，<a href=\"https://github.com/mashirozx/Sakura/wiki/Fancybox"
-#~ "\">please read wiki</a>"
-#~ msgstr ""
-#~ "默认禁用，<a href=\"https://github.com/mashirozx/Sakura/wiki/Fancybox\">请"
-#~ "阅读说明</a>"
-
 #~ msgid "Color"
 #~ msgstr "｜色彩"
 

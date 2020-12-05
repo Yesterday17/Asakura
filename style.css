@@ -8943,3 +8943,31 @@ input#wp-comment-cookies-consent {
     margin-left: -20px;
     margin-top: -20px;
 }
+
+.lg-backdrop.in {
+    opacity: 0.8;
+    z-index: 9999998;
+}
+
+.lg-outer.lg-visible {
+    z-index: 9999999;
+}
+
+.lg-outer .lg-item {
+    /* FIXME: do not use jsdelivr cdn here */
+    background: url("https://cdn.jsdelivr.net/npm/lightgallery.js@1.4.0/dist/img/loading.gif") no-repeat scroll center center transparent;
+    display: none !important;
+}
+
+.lg-actions button {
+    box-shadow: none;
+}
+
+@font-face {
+    font-family: 'lg';
+    /* FIXME: do not use jsdelivr cdn here */
+    src: url("https://cdn.jsdelivr.net/npm/lightgallery.js@1.4.0/dist/fonts/lg.ttf?22t19m") format("truetype"), url("https://cdn.jsdelivr.net/npm/lightgallery.js@1.4.0/dist/fonts/lg.woff?22t19m") format("woff"), url("https://cdn.jsdelivr.net/npm/lightgallery.js@1.4.0/dist/fonts/lg.svg?22t19m#lg") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}

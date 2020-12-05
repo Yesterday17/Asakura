@@ -186,6 +186,8 @@ add_action('after_setup_theme', 'akina_content_width', 0);
  */
 function sakura_scripts() {
     wp_enqueue_script('instantclick', get_template_directory_uri() . '/cdn/js/src/00.instantclick.min.js', array(), "3.1.0", true);
+    wp_enqueue_script('lightgallery', get_template_directory_uri() . '/cdn/js/src/lightgallery.min.js', array(), "1.4.0", true);
+    wp_enqueue_style('lightgallery', get_template_directory_uri() . '/cdn/css/src/lightgallery.min.css', array(), "1.4.0");
     if (akina_option('jsdelivr_cdn_test')) {
         wp_enqueue_script('js_lib', get_template_directory_uri() . '/cdn/js/lib.js', array(), SAKURA_VERSION . akina_option('cookie_version', ''), true);
     } else {
@@ -1181,49 +1183,11 @@ function html_tag_parser($content) {
         if (akina_option('lazyload') && akina_option('lazyload_spinner')) {
             $content = preg_replace('/<img(.+)src=[\'"]([^\'"]+)[\'"](.*)>/i', "<img $1 class=\"lazyload\" data-src=\"$2\" src=\"" . akina_option('lazyload_spinner') . "\" onerror=\"imgError(this)\" $3 >\n<noscript>$0</noscript>", $content);
         }
-
-        //Fancybox
-        /* Markdown Regex Pattern for Matching URLs:
-         * https://daringfireball.net/2010/07/improved_regex_for_matching_urls
-         */
-        $url_regex = '((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))';
-
-        //With Thumbnail: !{alt}(url)[th_url]
-        if (preg_match_all('/!{.*?\)\[.*?]/i', $content, $matches)) {
-            for ($i = 0; $i < sizeof($matches); $i++) {
-                $content = str_replace($matches[$i], preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)\[' . $url_regex . '\]/i', '<a data-fancybox="gallery"
-                        data-caption="$1"
-                        class="fancybox"
-                        href="$2"
-                        alt="$1"
-                        title="$1"><img src="$7" target="_blank" rel="nofollow" class="fancybox"></a>', $matches[$i]), $content);
-            }
-        }
-
-        //Without Thumbnail :!{alt}(url)
-        $content = preg_replace('/!{([^{}]+)*}\(' . $url_regex . '\)/i', '<a data-fancybox="gallery"
-                data-caption="$1"
-                class="fancybox"
-                href="$2"
-                alt="$1"
-                title="$1"><img src="$2" target="_blank" rel="nofollow" class="fancybox"></a>', $content);
-    }
-    //html tag parser for rss
-    if (is_feed()) {
-        //Fancybox
-        $url_regex = '((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))';
-        if (preg_match_all('/!{.*?\)\[.*?]/i', $content, $matches)) {
-            for ($i = 0; $i < sizeof($matches); $i++) {
-                $content = str_replace($matches[$i], preg_replace('/!\{([^\{\}]+)*\}\(' . $url_regex . '\)\[' . $url_regex . '\]/i', '<a href="$2"><img src="$7" alt="$1" title="$1"></a>', $matches[$i]), $content);
-            }
-        }
-        $content = preg_replace('/!{([^{}]+)*}\(' . $url_regex . '\)/i', '<a href="$2"><img src="$2" alt="$1" title="$1"></a>', $content);
     }
     return $content;
 }
 
 add_filter('the_content', 'html_tag_parser'); //替换文章关键词
-//add_filter( 'comment_text', 'html_tag_parser' );//替换评论关键词
 
 /*
  * QQ 评论
