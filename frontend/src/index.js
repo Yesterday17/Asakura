@@ -24,8 +24,20 @@ import { get_gravatar } from "./utils/gravatar";
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
-import hljs from "highlight.js/lib/core";
 // import hljs from "highlight.js";
+import hljs from "highlight.js/lib/core";
+import hl_javascript from "highlight.js/lib/languages/javascript";
+import hl_typescript from "highlight.js/lib/languages/typescript";
+import hl_lua from "highlight.js/lib/languages/lua";
+import hl_go from "highlight.js/lib/languages/go";
+import hl_rust from "highlight.js/lib/languages/rust";
+import hl_c from "highlight.js/lib/languages/c";
+hljs.registerLanguage("javascript", hl_javascript);
+hljs.registerLanguage("typescript", hl_typescript);
+hljs.registerLanguage("lua", hl_lua);
+hljs.registerLanguage("go", hl_go);
+hljs.registerLanguage("rust", hl_rust);
+hljs.registerLanguage("c", hl_c);
 import hljs_linenumber from "./utils/highlightjs-line-numbers.js";
 hljs_linenumber(window, document, hljs);
 
@@ -178,6 +190,7 @@ function code_highlight_style() {
     p.classList.add("highlight-wrap");
     // p.querySelector("code")?.attr("data-rel", lang.toUpperCase());
   }
+  hljs.initLineNumbersOnLoad({ singleLine: true });
 
   $("pre code").each(function (i, block) {
     hljs.highlightBlock(block);
@@ -188,7 +201,7 @@ function code_highlight_style() {
     .forEach((block) => {
       block.classList.remove("wp-block-syntaxhighlighter-code");
       const code = document.createElement("code");
-      code.textContent = block.textContent;
+      code.innerHTML = block.innerHTML.replace(/\n/g, "\r\n");
       block.textContent = "";
       block.appendChild(code);
       hljs.highlightBlock(code);
@@ -198,7 +211,6 @@ function code_highlight_style() {
     .querySelectorAll("pre code")
     .forEach((c) => gen_top_bar(c.parentElement));
 
-  hljs.initLineNumbersOnLoad({ singleLine: true });
   $("pre").on("click", function (e) {
     if (e.target !== this) return;
     $(this).toggleClass("code-block-fullscreen");
