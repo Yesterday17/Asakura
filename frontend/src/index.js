@@ -201,7 +201,7 @@ function code_highlight_style() {
     .forEach((block) => {
       block.classList.remove("wp-block-syntaxhighlighter-code");
       const code = document.createElement("code");
-      code.innerHTML = block.innerHTML.replace(/\n/g, "\r\n");
+      code.textContent = block.textContent;
       block.textContent = "";
       block.appendChild(code);
       hljs.highlightBlock(code);
