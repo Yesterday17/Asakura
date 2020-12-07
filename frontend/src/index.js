@@ -16,6 +16,8 @@ import { web_audio } from "./webAudio";
 import { loadCSS, getGravatar } from "./utils/utils";
 import { highlightCode } from "./utils/highlight";
 import { initHls, loadHls } from "./utils/hls";
+import { initSerach } from "./utils/search";
+import { createButterbar } from "./utils/butterBar";
 
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
@@ -107,9 +109,7 @@ function attach_image() {
   var cached = $(".insert-image-tips");
   $("#upload-img-file").change(function () {
     if (this.files.length > 10) {
-      addComment.createButterbar(
-        "每次上传上限为10张.<br>10 files max per request."
-      );
+      createButterbar("每次上传上限为10张.<br>10 files max per request.");
       return 0;
     }
     for (i = 0; i < this.files.length; i++) {
@@ -138,7 +138,7 @@ function attach_image() {
           cached.html(
             '<i class="fa fa-spinner rotating" aria-hidden="true"></i>'
           );
-          addComment.createButterbar("上传中...<br>Uploading...");
+          createButterbar("上传中...<br>Uploading...");
         },
         success: function (res) {
           cached.html('<i class="fa fa-check" aria-hidden="true"></i>');
@@ -155,12 +155,10 @@ function attach_image() {
                 '\')" onerror="imgError(this)" />'
             );
             new lazyload();
-            addComment.createButterbar(
-              "图片上传成功~<br>Uploaded successfully~"
-            );
+            createButterbar("图片上传成功~<br>Uploaded successfully~");
             grin(get_the_url, "Img");
           } else {
-            addComment.createButterbar(
+            createButterbar(
               "上传失败！<br>Uploaded failed!<br> 文件名/Filename: " +
                 f.name +
                 "<br>code: " +
@@ -955,306 +953,6 @@ var s = $("#bgvideo")[0],
         }
       }
     },
-    CE: function () {
-      $(".comments-hidden").show();
-      $(".comments-main").hide();
-      $(".comments-hidden").click(function () {
-        $(".comments-main").slideDown(500);
-        $(".comments-hidden").hide();
-      });
-      $(".archives").hide();
-      $(".archives:first").show();
-      $("#archives-temp h3").click(function () {
-        $(this).next().slideToggle("fast");
-        return false;
-      });
-      lightGallery(document.querySelector(".entry-content"), {
-        selector: "img",
-      });
-      $(".js-toggle-search").on("click", function () {
-        $(".js-toggle-search").toggleClass("is-active");
-        $(".js-search").toggleClass("is-visible");
-        $("html").css("overflow-y", "hidden");
-        if (mashiro_option.live_search) {
-          let QueryStorage = [];
-          const searchInput = document.querySelector("#search-input");
-
-          do_update_search(
-            mashiro_option.api +
-              "asakura/v1/cache_search/json?_wpnonce=" +
-              mashiro_option.nonce
-          );
-
-          let searchFlag = null;
-          searchInput.oninput = function () {
-            if (searchFlag === null) {
-              clearTimeout(searchFlag);
-            }
-            searchFlag = setTimeout(
-              () => query(QueryStorage, searchInput.value),
-              250
-            );
-          };
-
-          function do_update_search(val) {
-            function update_search(j) {
-              if (typeof j === "object") {
-                QueryStorage = j;
-                sessionStorage.setItem("search", JSON.stringify(j));
-              } else {
-                QueryStorage = JSON.parse(sessionStorage.getItem("search"));
-              }
-              query(QueryStorage, $("#search-input").val());
-            }
-
-            if (sessionStorage.getItem("search") === null) {
-              // fetch search cache
-              fetch(val)
-                .then((r) => r.json())
-                .then((j) => update_search(j))
-                .catch((e) =>
-                  console.error(`Failed to GET cache_search: ${e}`)
-                );
-            } else {
-              update_search();
-            }
-          }
-
-          if (!Object.values)
-            Object.values = function (obj) {
-              if (obj !== Object(obj))
-                throw new TypeError("Object.values called on a non-object");
-              var val = [],
-                key;
-              for (key in obj) {
-                if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                  val.push(obj[key]);
-                }
-              }
-              return val;
-            };
-
-          function Cx(arr, q) {
-            q = q.replace(q, "^(?=.*?" + q + ").+$").replace(/\s/g, ")(?=.*?");
-            var i = arr.filter((v) =>
-              Object.values(v).some((v) => new RegExp(q + "").test(v))
-            );
-            return i;
-          }
-
-          function query(storage, value) {
-            function createSection() {
-              const sec = document.createElement("section");
-              sec.classList.add("ins-section");
-              return sec;
-            }
-
-            function createHeader(name) {
-              const hea = document.createElement("header");
-              hea.classList.add("ins-section-header");
-              hea.textContent = name;
-              return hea;
-            }
-
-            function createMark(text) {
-              const m = document.createElement("mark");
-              m.classList.add("search-keyword");
-              m.textContent = text;
-              return m;
-            }
-
-            function arrayJoin(arr, spl) {
-              const newArray = [];
-              arr.forEach((item, i) => {
-                newArray.push(item);
-                if (i !== arr.length - 1) {
-                  newArray.push(spl);
-                }
-              });
-              return newArray;
-            }
-
-            function createEntry(
-              keyword,
-              link,
-              fa,
-              title,
-              iconfont,
-              comments,
-              text
-            ) {
-              if (keyword) {
-                function rr(input, kw) {
-                  const pos = input.indexOf(kw);
-                  const txt =
-                    pos < 60
-                      ? input.slice(0, 80)
-                      : input.slice(pos - 30, pos + 30);
-                  let nodes = txt
-                    .split(kw)
-                    .map((n) => document.createTextNode(n));
-                  return arrayJoin(nodes, createMark(s));
-                }
-
-                const keywords = keyword.trim().split(" ");
-                const s = keywords[keywords.length - 1];
-                title = rr(title, s);
-                text = rr(text, s);
-              } else {
-                title = [document.createTextNode(title)];
-                text = [document.createTextNode(text)];
-              }
-              const div = document.createElement("div");
-              div.classList.add("ins-selectable", "ins-search-item");
-
-              const fakeLink = document.createElement("a");
-              fakeLink.href = link;
-              div.appendChild(fakeLink);
-
-              div.onclick = function () {
-                fakeLink.click();
-                $(".search_close").click();
-              };
-
-              const header = document.createElement("header");
-              const iFa = document.createElement("i");
-              iFa.classList.add("fa", `fa-${fa}`);
-              iFa.setAttribute("aria-hidden", "true");
-              header.appendChild(iFa);
-
-              title.forEach((t) => header.appendChild(t));
-
-              const iIcon = document.createElement("i");
-              iIcon.classList.add("iconfont", `icon-${iconfont}`);
-              iIcon.appendChild(document.createTextNode(" " + comments));
-              header.appendChild(iIcon);
-              div.appendChild(header);
-
-              const p = document.createElement("p");
-              p.classList.add("ins-search-preview");
-              text.forEach((t) => p.appendChild(t));
-              div.appendChild(p);
-              return div;
-            }
-
-            function createType(name, children) {
-              const sec = createSection();
-              sec.appendChild(createHeader(name));
-              children.forEach((c) => sec.appendChild(c));
-              return sec;
-            }
-
-            const posts = [],
-              pages = [],
-              categories = [],
-              tags = [],
-              comments = [],
-              C = Cx(storage, value.trim());
-            for (let key = 0; key < Object.keys(C).length; key++) {
-              const post = C[key];
-              switch (post.type) {
-                case "post":
-                  posts.push(
-                    createEntry(
-                      value,
-                      post.link,
-                      "file",
-                      post.title,
-                      "mark",
-                      post.comments,
-                      post.text
-                    )
-                  );
-                  break;
-                case "tag":
-                  tags.push(
-                    createEntry(
-                      "",
-                      post.link,
-                      "tag",
-                      post.title,
-                      "none",
-                      "",
-                      ""
-                    )
-                  );
-                  break;
-                case "category":
-                  categories.push(
-                    createEntry(
-                      "",
-                      post.link,
-                      "folder",
-                      post.title,
-                      "none",
-                      "",
-                      ""
-                    )
-                  );
-                  break;
-                case "page":
-                  pages.push(
-                    createEntry(
-                      value,
-                      post.link,
-                      "file",
-                      post.title,
-                      "mark",
-                      post.comments,
-                      post.text
-                    )
-                  );
-                  break;
-                case "comment":
-                  comments.push(
-                    createEntry(
-                      value,
-                      post.link,
-                      "comment",
-                      post.title,
-                      "none",
-                      "",
-                      post.text
-                    )
-                  );
-                  break;
-              }
-            }
-            const container = document.querySelector("#post-list-box");
-            container.innerHTML = "";
-            if (posts.length > 0)
-              container.appendChild(createType("文章", posts));
-            if (pages.length > 0)
-              container.appendChild(createType("页面", pages));
-            if (categories.length > 0)
-              container.appendChild(createType("分类", categories));
-            if (tags.length > 0)
-              container.appendChild(createType("标签", tags));
-            if (comments.length > 0)
-              container.appendChild(createType("评论", comments));
-          }
-        }
-      });
-      $(".search_close").on("click", function () {
-        if ($(".js-search").hasClass("is-visible")) {
-          $(".js-toggle-search").toggleClass("is-active");
-          $(".js-search").toggleClass("is-visible");
-          $("html").css("overflow-y", "unset");
-        }
-      });
-      $("#show-nav").on("click", function () {
-        if ($("#show-nav").hasClass("showNav")) {
-          $("#show-nav").removeClass("showNav").addClass("hideNav");
-          $(".site-top .lower nav").addClass("navbar");
-        } else {
-          $("#show-nav").removeClass("hideNav").addClass("showNav");
-          $(".site-top .lower nav").removeClass("navbar");
-        }
-      });
-      $("#loading").click(function () {
-        $("#loading").fadeOut(500);
-      });
-    },
     NH: function () {
       if (document.body.clientWidth > 860) {
         var h1 = 0;
@@ -1346,21 +1044,19 @@ var s = $("#bgvideo")[0],
           url: mashiro_option.ajax_url,
           data: $(this).serialize() + "&action=ajax_comment",
           type: $(this).attr("method"),
-          beforeSend: addComment.createButterbar("提交中(Commiting)...."),
+          beforeSend: createButterbar("提交中(Commiting)...."),
           error: function (request) {
-            var t = addComment;
-            t.createButterbar(request.responseText);
+            createButterbar(request.responseText);
           },
           success: function (data) {
             $("textarea").each(function () {
               this.value = "";
             });
-            var t = addComment,
-              cancel = t.I("cancel-comment-reply-link"),
-              temp = t.I("wp-temp-form-div"),
-              respond = t.I(t.respondId),
-              post = t.I("comment_post_ID").value,
-              parent = t.I("comment_parent").value;
+            var cancel = document.getElementById("cancel-comment-reply-link"),
+              temp = document.getElementById("wp-temp-form-div"),
+              respond = document.getElementById(addComment.respondId),
+              post = document.getElementById("comment_post_ID").value,
+              parent = document.getElementById("comment_parent").value;
             if (parent !== "0") {
               $("#respond").before('<ol class="children">' + data + "</ol>");
             } else if (!$("." + __list).length) {
@@ -1380,14 +1076,14 @@ var s = $("#bgvideo")[0],
                 $("." + __list).prepend(data);
               }
             }
-            t.createButterbar("提交成功(Succeed)");
+            createButterbar("提交成功(Succeed)");
             new lazyload();
             highlightCode();
             click_to_view_image();
             clean_upload_images();
             cancel.style.display = "none";
             cancel.onclick = null;
-            t.I("comment_parent").value = "0";
+            document.getElementById("comment_parent").value = "0";
             if (temp && respond) {
               temp.parentNode.insertBefore(respond, temp);
               temp.parentNode.removeChild(temp);
@@ -1398,16 +1094,15 @@ var s = $("#bgvideo")[0],
       });
       window.addComment = {
         moveForm: function (commId, parentId, respondId) {
-          var t = this,
-            div,
-            comm = t.I(commId),
-            respond = t.I(respondId),
-            cancel = t.I("cancel-comment-reply-link"),
-            parent = t.I("comment_parent"),
-            post = t.I("comment_post_ID");
+          var div,
+            comm = document.getElementById(commId),
+            respond = document.getElementById(respondId),
+            cancel = document.getElementById("cancel-comment-reply-link"),
+            parent = document.getElementById("comment_parent"),
+            post = document.getElementById("comment_post_ID");
           __cancel.text(__cancel_text);
-          t.respondId = respondId;
-          if (!t.I("wp-temp-form-div")) {
+          addComment.respondId = respondId;
+          if (!document.getElementById("wp-temp-form-div")) {
             div = document.createElement("div");
             div.id = "wp-temp-form-div";
             div.style.display = "none";
@@ -1415,8 +1110,8 @@ var s = $("#bgvideo")[0],
           }
           var temp;
           !comm
-            ? ((temp = t.I("wp-temp-form-div")),
-              (t.I("comment_parent").value = "0"),
+            ? ((temp = document.getElementById("wp-temp-form-div")),
+              (document.getElementById("comment_parent").value = "0"),
               temp.parentNode.insertBefore(respond, temp),
               temp.parentNode.removeChild(temp))
             : comm.parentNode.insertBefore(respond, comm.nextSibling);
@@ -1429,10 +1124,9 @@ var s = $("#bgvideo")[0],
           parent.value = parentId;
           cancel.style.display = "";
           cancel.onclick = function () {
-            var t = addComment,
-              temp = t.I("wp-temp-form-div"),
-              respond = t.I(t.respondId);
-            t.I("comment_parent").value = "0";
+            var temp = document.getElementById("wp-temp-form-div"),
+              respond = document.getElementById(addComment.respondId);
+            document.getElementById("comment_parent").value = "0";
             if (temp && respond) {
               temp.parentNode.insertBefore(respond, temp);
               temp.parentNode.removeChild(temp);
@@ -1442,24 +1136,9 @@ var s = $("#bgvideo")[0],
             return false;
           };
           try {
-            t.I("comment").focus();
+            document.getElementById("comment").focus();
           } catch (e) {}
           return false;
-        },
-        clearButterbar: function () {
-          document.querySelectorAll(".butterBar").forEach((b) => b.remove());
-        },
-        createButterbar: function (message, showtime = 6000) {
-          this.clearButterbar();
-
-          const bar = document.createElement("div");
-          bar.classList.add("butterBar", "butterBar--center");
-          const bp = document.createElement("p");
-          bp.classList.add("butterBar-message");
-          bp.innerHTML = message;
-          bar.appendChild(bp);
-          document.body.appendChild(bar);
-          setTimeout(() => bar.remove(), showtime);
         },
       };
     },
@@ -1521,7 +1200,7 @@ $(function () {
   Siren.XLS();
   Siren.XCS();
   Siren.XCP();
-  Siren.CE();
+  initSerach();
   Siren.MN();
   Siren.LV();
   if (mashiro_option.pjax) {
@@ -1546,7 +1225,7 @@ $(function () {
       .on("pjax:complete", function () {
         Siren.AH();
         Siren.PE();
-        Siren.CE();
+        initSerach();
         if (mashiro_option.nprogress_on) NProgress.done();
         mashiro_global.ini.pjax();
         $("#loading").fadeOut(500);
@@ -1578,7 +1257,7 @@ $(function () {
       function (e) {
         Siren.AH();
         Siren.PE();
-        Siren.CE();
+        initSerach();
         timeSeriesReload(true);
         post_list_show_animation();
       },

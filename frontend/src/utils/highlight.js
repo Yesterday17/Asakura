@@ -13,6 +13,7 @@ hljs.registerLanguage("go", hl_go);
 hljs.registerLanguage("rust", hl_rust);
 hljs.registerLanguage("c", hl_c);
 import hljs_linenumber from "./highlightjs-line-numbers.js";
+import { createButterbar } from "./butterBar.js";
 hljs_linenumber(window, document, hljs);
 
 function copyToClipboard(str) {
@@ -37,10 +38,7 @@ function getCopyButton(code) {
   a.appendChild(i);
   a.addEventListener("click", function () {
     copyToClipboard(this.getAttribute("data-src"));
-    addComment.createButterbar(
-      "复制成功！<br>Copied to clipboard successfully!",
-      1000
-    );
+    createButterbar("复制成功！<br>Copied to clipboard successfully!", 1000);
   });
   return a;
 }
