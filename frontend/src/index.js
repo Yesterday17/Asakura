@@ -28,6 +28,8 @@ import "font-awesome-animation/dist/font-awesome-animation.css";
 global.asakura = {
   changeTheme,
   scrollTo: aScrollTo,
+  showPopup,
+  cmt_showPopup,
 };
 
 var $body = $("body");

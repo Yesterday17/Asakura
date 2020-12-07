@@ -81,14 +81,14 @@ if (post_password_required()) {
             <i class="fa fa-google" aria-hidden="true"></i>
         </div>
     </div>',
-                        'author' => '<div class="popup cmt-popup cmt-author" onclick="cmt_showPopup(this)">
+                        'author' => '<div class="popup cmt-popup cmt-author" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -115px;width: 230px;">' . __("Auto pull nickname and avatar with a QQ num. entered", SAKURA_DOMAIN)/*输入QQ号将自动拉取昵称和头像*/ . '</span>
 <input type="text" placeholder="' . ll("Nickname or QQ number") /*昵称或QQ号*/ . ' (' . ll("Name* ") . ')" name="author" id="author" value="' . esc_attr(get_comment_author()) . '" size="22" autocomplete="off" tabindex="1" aria-required="true" />
 </div>',
-                        'email'  => '<div class="popup cmt-popup" onclick="cmt_showPopup(this)">
+                        'email'  => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -65px;width: 130px;">' . __("You will receive notification by email", SAKURA_DOMAIN)/*你将收到回复通知*/ . '</span>
 <input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr(get_comment_author_email()) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
-                        'url'    => '<div class="popup cmt-popup" onclick="cmt_showPopup(this)">
+                        'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . __("Advertisement is forbidden 😀", SAKURA_DOMAIN)/*禁止小广告😀*/ . '</span>
 <input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr(get_comment_author_url()) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $robot_comments . $private_ms . $mail_notify,
                         'qq'     => '<input type="text" placeholder="QQ" name="new_field_qq" id="qq" value="' . esc_attr(get_comment_author_url()) . '" style="display:none" autocomplete="off"/><!--此栏不可见-->'
