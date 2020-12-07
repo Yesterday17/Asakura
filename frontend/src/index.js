@@ -59,38 +59,8 @@ if (!window.mashiro_global) {
         load_bangumi();
       },
     },
-    font_control: {
-      change_font: () => {
-        if ($body.hasClass("serif")) {
-          $body.removeClass("serif");
-          $(".control-btn-serif").removeClass("selected");
-          $(".control-btn-sans-serif").addClass("selected");
-          localStorage.setItem("font_family", "sans-serif");
-        } else {
-          $body.addClass("serif");
-          $(".control-btn-serif").addClass("selected");
-          $(".control-btn-sans-serif").removeClass("selected");
-          localStorage.setItem("font_family", "serif");
-        }
-      },
-      init: () => {
-        const f = localStorage.getItem("font_family");
-        if (document.body.clientWidth > 860) {
-          if (!f || f === "serif") {
-            $body.addClass("serif");
-          }
-        }
-        if (f === "sans-serif") {
-          $body.removeClass("sans-serif");
-          $(".control-btn-serif").removeClass("selected");
-          $(".control-btn-sans-serif").addClass("selected");
-        }
-      },
-    },
   };
 }
-
-mashiro_global.font_control.init();
 
 function post_list_show_animation() {
   if ($("article").hasClass("post-list-thumb")) {
@@ -510,7 +480,6 @@ var pjaxInit = function () {
   add_upload_tips();
   no_right_click();
   click_to_view_image();
-  mashiro_global.font_control.init();
   $("p").remove(".head-copyright");
   highlightCode();
   try {
@@ -1787,34 +1756,6 @@ $(function () {
     "https://github.com/mashirozx"
   );
 });
-
-var isWebkit = navigator.userAgent.toLowerCase().indexOf("webkit") > -1,
-  isOpera = navigator.userAgent.toLowerCase().indexOf("opera") > -1,
-  isIe = navigator.userAgent.toLowerCase().indexOf("msie") > -1;
-if (
-  (isWebkit || isOpera || isIe) &&
-  document.getElementById &&
-  window.addEventListener
-) {
-  window.addEventListener(
-    "hashchange",
-    function () {
-      var id = location.hash.substring(1),
-        element;
-      if (!/^[A-z0-9_-]+$/.test(id)) {
-        return;
-      }
-      element = document.getElementById(id);
-      if (element) {
-        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-          element.tabIndex = -1;
-        }
-        element.focus();
-      }
-    },
-    false
-  );
-}
 
 window.onload = function () {
   function load() {

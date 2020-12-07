@@ -120,15 +120,6 @@ comments_template('', true);
             </li><!--Night-->
         </ul>
     </div>
-    Font
-    <div class="font-family-controls row-container">
-        <button type="button" class="control-btn-serif selected" data-mode="serif"
-                onclick="mashiro_global.font_control.change_font()"><i class="fa fa-font" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="control-btn-sans-serif" data-mode="sans-serif"
-                onclick="mashiro_global.font_control.change_font()"><i class="fa fa-bold" aria-hidden="true"></i>
-        </button>
-    </div>
 </div>
 <?php if (akina_option('sakura_widget')) : ?>
     <aside id="secondary" class="widget-area" role="complementary" style="left: -400px;">
