@@ -1009,22 +1009,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Specify Registered Address', SAKURA_DOMAIN),
-        'desc' => __('This link is used on the login page as a registration entry', SAKURA_DOMAIN),
-        'id'   => 'exregister_url',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Allow Users to Register', SAKURA_DOMAIN),
-        'desc' => __('Check to allow users to register at the frontend', SAKURA_DOMAIN),
-        'id'   => 'ex_register_open',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name' => __('Automatically Redirect After Login', SAKURA_DOMAIN),
         'desc' => __('After checken, the administrator redirects to the background and the user redirects to the home page.', SAKURA_DOMAIN),
         'id'   => 'login_urlskip',
