@@ -12,10 +12,6 @@ define('BUILD_VERSION', '1');
 define('SAKURA_DOMAIN', 'asakura');
 define('SAKURA_REST_API', SAKURA_DOMAIN . '/v1');
 
-//ini_set('display_errors', true);
-//error_reporting(E_ALL);
-error_reporting(E_ALL ^ E_NOTICE);
-
 if (!function_exists("ll")):
     function ll($key) {
         return __($key, SAKURA_DOMAIN);

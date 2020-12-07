@@ -6,8 +6,6 @@
 
 get_header();
 
-#error_reporting(E_ALL);
-#ini_set('display_errors', '1');
 ?>
     <div id="main">
         <header class="page-header"><h1 class="cat-title">时光轴</h1> <span class="cat-des"><p>TimeLine</p> </span>
