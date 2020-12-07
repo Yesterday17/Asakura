@@ -20,28 +20,11 @@ import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
 import { loadCSS } from "./utils/loadcss";
 import { get_gravatar } from "./utils/gravatar";
+import { highlightCode } from "./utils/highlight";
+import { initHls, loadHls } from "./utils/hls";
 
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
-
-// import hljs from "highlight.js";
-import hljs from "highlight.js/lib/core";
-import hl_javascript from "highlight.js/lib/languages/javascript";
-import hl_typescript from "highlight.js/lib/languages/typescript";
-import hl_lua from "highlight.js/lib/languages/lua";
-import hl_go from "highlight.js/lib/languages/go";
-import hl_rust from "highlight.js/lib/languages/rust";
-import hl_c from "highlight.js/lib/languages/c";
-hljs.registerLanguage("javascript", hl_javascript);
-hljs.registerLanguage("typescript", hl_typescript);
-hljs.registerLanguage("lua", hl_lua);
-hljs.registerLanguage("go", hl_go);
-hljs.registerLanguage("rust", hl_rust);
-hljs.registerLanguage("c", hl_c);
-import hljs_linenumber from "./utils/highlightjs-line-numbers.js";
-hljs_linenumber(window, document, hljs);
-
-import { initHls, loadHls } from "./utils/hls";
 
 global.asakura = {
   changeTheme,
@@ -145,66 +128,6 @@ function post_list_show_animation() {
       io.observe(article);
     });
   }
-}
-
-function social_share_limit() {
-  if ($(".top-social").length > 0 || $(".top-social_v2").length > 0) {
-    var a;
-    $(".top-social").length > 0
-      ? (a = $(".top-social li"))
-      : (a = $(".top-social_v2 li"));
-    for (var i = a.length - 2; i >= 11; i--) {
-      a[i].remove();
-    }
-    if (document.body.clientWidth <= 860) {
-      for (var i = a.length - 2; i >= 10; i--) {
-        a[i].remove();
-      }
-    }
-    if (document.body.clientWidth <= 425) {
-      for (var i = a.length - 2; i >= 5; i--) {
-        a[i].remove();
-      }
-    }
-  }
-}
-
-// social_share_limit();
-
-function code_highlight_style() {
-  var attributes = {
-    autocomplete: "off",
-    autocorrect: "off",
-    autocapitalize: "off",
-    spellcheck: "false",
-    contenteditable: "false",
-    design: "by Mashiro",
-  };
-
-  function gen_top_bar(p) {
-    for (const key in attributes) {
-      if (attributes.hasOwnProperty(key)) {
-        p.setAttribute(key, attributes[key]);
-      }
-    }
-    p.classList.add("highlight-wrap");
-    // p.querySelector("code")?.attr("data-rel", lang.toUpperCase());
-  }
-  hljs.initLineNumbersOnLoad({ singleLine: true });
-
-  $("pre code").each(function (i, block) {
-    hljs.highlightBlock(block);
-  });
-
-  document
-    .querySelectorAll("pre code")
-    .forEach((c) => gen_top_bar(c.parentElement));
-
-  $("pre").on("click", function (e) {
-    if (e.target !== this) return;
-    $(this).toggleClass("code-block-fullscreen");
-    $("html").toggleClass("code-block-fullscreen-html-scroll");
-  });
 }
 
 $body.on("click", ".comment-reply-link", function () {
@@ -604,9 +527,7 @@ var pjaxInit = function () {
   click_to_view_image();
   mashiro_global.font_control.init();
   $("p").remove(".head-copyright");
-  try {
-    code_highlight_style();
-  } catch (e) {}
+  highlightCode();
   try {
     getqqinfo();
   } catch (e) {}
@@ -1698,7 +1619,7 @@ var s = $("#bgvideo")[0],
             }
             t.createButterbar("提交成功(Succeed)");
             new lazyload();
-            code_highlight_style();
+            highlightCode();
             click_to_view_image();
             clean_upload_images();
             cancel.style.display = "none";
@@ -1810,7 +1731,7 @@ var s = $("#bgvideo")[0],
                 page_path: path,
               });
             }
-            code_highlight_style();
+            highlightCode();
             click_to_view_image();
           },
         });
@@ -1968,7 +1889,7 @@ if (
 window.onload = function () {
   function load() {
     $("html").css("overflow-y", "unset");
-    code_highlight_style();
+    highlightCode();
     checkDarkMode(false);
     $("#preload").fadeOut();
   }
