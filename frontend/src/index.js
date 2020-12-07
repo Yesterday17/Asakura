@@ -197,17 +197,6 @@ function code_highlight_style() {
   });
 
   document
-    .querySelectorAll("pre.wp-block-syntaxhighlighter-code")
-    .forEach((block) => {
-      block.classList.remove("wp-block-syntaxhighlighter-code");
-      const code = document.createElement("code");
-      code.textContent = block.textContent;
-      block.textContent = "";
-      block.appendChild(code);
-      hljs.highlightBlock(code);
-    });
-
-  document
     .querySelectorAll("pre code")
     .forEach((c) => gen_top_bar(c.parentElement));
 
