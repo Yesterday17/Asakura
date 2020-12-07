@@ -1306,14 +1306,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Clipboard Copyright ID', SAKURA_DOMAIN),
-        'desc' => __('Check on by default. When copying more than 30 bytes, the copyright mark will be added to the clipboard automatically.', SAKURA_DOMAIN),
-        'id'   => 'clipboard_copyright',
-        'std'  => '1',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name' => __('Mail Template Header', SAKURA_DOMAIN),
         'desc' => __('Set the background picture above your message', SAKURA_DOMAIN),
         'id'   => 'mail_img',

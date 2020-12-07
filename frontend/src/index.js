@@ -10,7 +10,6 @@ import "aplayer/dist/APlayer.min.css";
 import "./styles/aplayer-fix.css";
 
 import lazyload from "lazyload";
-import ClipboardJS from "clipboard";
 import tocbot from "tocbot";
 
 import NProgress from "nprogress";
@@ -44,7 +43,6 @@ if (!window.mashiro_global) {
         // initial functions when page first load (首次加载页面时的初始化函数)
         new lazyload();
         post_list_show_animation();
-        copy_code_block();
         web_audio();
         coverVideoIni();
         scrollBar();
@@ -54,7 +52,6 @@ if (!window.mashiro_global) {
         // pjax reload functions (pjax 重载函数)
         pjaxInit();
         post_list_show_animation();
-        copy_code_block();
         web_audio();
         coverVideoIni();
         load_bangumi();
@@ -470,20 +467,6 @@ function coverVideoIni() {
   }
 }
 
-function copy_code_block() {
-  $("pre code").each(function (i, block) {
-    $(block).attr({
-      id: "hljs-" + i,
-    });
-    $(this).after(
-      '<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
-        i +
-        '" title="拷贝代码"><i class="fa fa-clipboard" aria-hidden="true"></i></a>'
-    );
-  });
-  var clipboard = new ClipboardJS(".copy-code");
-}
-
 function tableOfContentScroll() {
   if (document.querySelector(".have-toc")) {
     let id = 1,
@@ -552,7 +535,6 @@ var pjaxInit = function () {
     preBG();
   });
   timeSeriesReload();
-  add_copyright();
   tableOfContentScroll();
 };
 $(document).on("click", ".sm", function () {
@@ -635,60 +617,6 @@ function grin(tag, type, before, after) {
   }
 }
 
-function add_copyright() {
-  document.body.addEventListener("copy", function (e) {
-    if (
-      window.getSelection().toString().length > 30 &&
-      mashiro_option.clipboard_copyright
-    ) {
-      setClipboardText(e);
-    }
-    addComment.createButterbar(
-      "复制成功！<br>Copied to clipboard successfully!",
-      1000
-    );
-  });
-
-  function setClipboardText(event) {
-    event.preventDefault();
-    var htmlData =
-      "# 商业转载请联系作者获得授权，非商业转载请注明出处。<br>" +
-      "# For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source.<br>" +
-      "# 协议(License)：署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)<br>" +
-      "# 作者(Author)：" +
-      mashiro_option.author_name +
-      "<br>" +
-      "# 链接(URL)：" +
-      window.location.href +
-      "<br>" +
-      "# 来源(Source)：" +
-      mashiro_option.site_name +
-      "<br><br>" +
-      window.getSelection().toString().replace(/\r\n/g, "<br>");
-    var textData =
-      "# 商业转载请联系作者获得授权，非商业转载请注明出处。\n" +
-      "# For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source.\n" +
-      "# 协议(License)：署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)\n" +
-      "# 作者(Author)：" +
-      mashiro_option.author_name +
-      "\n" +
-      "# 链接(URL)：" +
-      window.location.href +
-      "\n" +
-      "# 来源(Source)：" +
-      mashiro_option.site_name +
-      "\n\n" +
-      window.getSelection().toString().replace(/\r\n/g, "\n");
-    if (event.clipboardData) {
-      event.clipboardData.setData("text/html", htmlData);
-      event.clipboardData.setData("text/plain", textData);
-    } else if (window.clipboardData) {
-      return window.clipboardData.setData("text", textData);
-    }
-  }
-}
-
-add_copyright();
 $(function () {
   getqqinfo();
 });
