@@ -1,10 +1,12 @@
+let has_hls = false;
+
 export function initHls(cb) {
-  if (!mashiro_global.variables.has_hls) {
+  if (!has_hls) {
     import(
       /* webpackChunkName: "hls" */
       "hls.js"
     ).then(({ default: _ }) => {
-      mashiro_global.variables.has_hls = true;
+      has_hls = true;
       window.asakura.Hls = _;
       cb();
     });

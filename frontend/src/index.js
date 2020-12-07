@@ -13,8 +13,7 @@ import "./styles/nprogress.css";
 
 import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
-import { loadCSS } from "./utils/loadcss";
-import { get_gravatar } from "./utils/gravatar";
+import { loadCSS, getGravatar } from "./utils/utils";
 import { highlightCode } from "./utils/highlight";
 import { initHls, loadHls } from "./utils/hls";
 
@@ -33,7 +32,6 @@ var $body = $("body");
 if (!window.mashiro_global) {
   window.mashiro_global = {
     variables: {
-      has_hls: false,
       bgn: 1,
     },
     ini: {
@@ -672,13 +670,13 @@ function getqqinfo() {
           $(".gravatar-check").css("display", "block");
           $("div.comment-user-avatar img").attr(
             "src",
-            get_gravatar(cached.filter("#email").val())
+            getGravatar(cached.filter("#email").val())
           );
           localStorage.setItem("user_qq", "");
           localStorage.setItem("user_email", cached.filter("#email").val());
           localStorage.setItem(
             "user_avatar",
-            get_gravatar(cached.filter("#email").val())
+            getGravatar(cached.filter("#email").val())
           );
           /***/
           cached.filter("#qq,#email,#url").val("");
@@ -688,11 +686,11 @@ function getqqinfo() {
             localStorage.setItem("user_qq", "");
             $("div.comment-user-avatar img").attr(
               "src",
-              get_gravatar(cached.filter("#email").val())
+              getGravatar(cached.filter("#email").val())
             );
             localStorage.setItem(
               "user_avatar",
-              get_gravatar(cached.filter("#email").val())
+              getGravatar(cached.filter("#email").val())
             );
           }
         },
@@ -719,8 +717,8 @@ function getqqinfo() {
   cached.filter("#email").on("blur", function () {
     var emailAddress = cached.filter("#email").val();
     if (is_get_by_qq === false || emailAddressFlag !== emailAddress) {
-      $("div.comment-user-avatar img").attr("src", get_gravatar(emailAddress));
-      localStorage.setItem("user_author", get_gravatar(emailAddress));
+      $("div.comment-user-avatar img").attr("src", getGravatar(emailAddress));
+      localStorage.setItem("user_author", getGravatar(emailAddress));
       localStorage.setItem("user_email", emailAddress);
       localStorage.setItem("user_qq_email", "");
       localStorage.setItem("is_user_qq", "no");
