@@ -41,6 +41,6 @@ function get_asakura_option(): array {
         'google_analytics_id'     => akina_option('google_analytics_id', ''),
         'gravatar_url'            => akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar',
         // Asakura
-        'instantclick'            => True,
+        'instantclick'            => False,
     );
 }

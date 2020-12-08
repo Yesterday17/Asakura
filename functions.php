@@ -1165,7 +1165,7 @@ function codecheese_register_post($sanitized_user_login, $user_email, $errors) {
 function html_tag_parser($content) {
     if (!is_feed()) {
         if (akina_option('lazyload') && akina_option('lazyload_spinner')) {
-            $content = preg_replace('/<img(.+)src=[\'"]([^\'"]+)[\'"](.*)>/i', "<img $1 class=\"lazyload\" data-src=\"$2\" src=\"" . akina_option('lazyload_spinner') . "\" onerror=\"imgError(this)\" $3 >\n<noscript>$0</noscript>", $content);
+            $content = preg_replace('/<img(.+)src=[\'"]([^\'"]+)[\'"](.*?)\/?>/i', "<img $1 class=\"lazyload\" data-src=\"$2\" src=\"" . akina_option('lazyload_spinner') . "\" onerror=\"imgError(this)\" $3 >\n<noscript>$0</noscript>", $content);
         }
     }
     return $content;

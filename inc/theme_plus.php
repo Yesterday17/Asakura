@@ -500,7 +500,7 @@ function get_prev_thumbnail_url(): string {
 
 // 下一篇
 function get_next_thumbnail_url(): string {
-    $next_post = get_previous_post();
+    $next_post = get_next_post();
     if (!$next_post) {
         return get_random_bg_url(); // 首页图
     } else {
