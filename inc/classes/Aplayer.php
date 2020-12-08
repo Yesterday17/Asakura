@@ -20,7 +20,7 @@ class Aplayer {
         $server = $this->server;
         $cookies = $this->cookies;
         $playlist_id = $this->playlist_id;
-        $api = new \Sakura\API\Meting($server);
+        $api = new Meting($server);
         if (!empty($cookies) && $server === "netease")
             $api->cookie($cookies);
         switch ($type) {

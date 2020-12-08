@@ -15,9 +15,8 @@ show_admin_bar(false);
  * 视频
  */
 function bgvideo() {
-    if (!akina_option('focus_amv') || akina_option('focus_height'))
-        $dis = 'display:none;';
-    $html = '<div id="video-container" style="' . $dis . '">';
+    $dis = (!akina_option('focus_amv') || akina_option('focus_height')) ? ' style="display:none"' : '';
+    $html = '<div id="video-container"' . $dis . '>';
     $html .= '<video id="bgvideo" class="video" src="" width="auto" preload="auto"></video>';
     $html .= '<div id="video-btn" class="loadvideo videolive"></div>';
     $html .= '<div id="video-add"></div>';
@@ -309,7 +308,9 @@ function the_headPattern() {
     $t = ''; // 标题
     $full_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full');
     if (is_single()) {
-        $full_image_url = $full_image_url[0];
+        if ($full_image_url) {
+            $full_image_url = $full_image_url[0];
+        }
         if (have_posts()) :
             while (have_posts()) : the_post();
                 $center = 'single-center';
@@ -488,7 +489,7 @@ function header_user_menu() {
  * 特色图 -> 文章图 -> 首页图
  */
 // 上一篇
-function get_prev_thumbnail_url() {
+function get_prev_thumbnail_url(): string {
     $prev_post = get_previous_post();
     if (!$prev_post) {
         return get_random_bg_url(); // 首页图
@@ -498,11 +499,16 @@ function get_prev_thumbnail_url() {
 }
 
 // 下一篇
-function get_next_thumbnail_url() {
-    return get_thumbnail_url(get_next_post());
+function get_next_thumbnail_url(): string {
+    $next_post = get_previous_post();
+    if (!$next_post) {
+        return get_random_bg_url(); // 首页图
+    } else {
+        return get_thumbnail_url($next_post);
+    }
 }
 
-function get_thumbnail_url($post) {
+function get_thumbnail_url(WP_Post $post): string {
     if (has_post_thumbnail($post->ID)) {
         $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
         return $img_src[0];
@@ -521,11 +527,11 @@ function get_thumbnail_url($post) {
 /**
  * 文章摘要
  */
-function changes_post_excerpt_more($more) {
+function changes_post_excerpt_more($more): string {
     return ' ...';
 }
 
-function changes_post_excerpt_length($length) {
+function changes_post_excerpt_length($length): int {
     return 65;
 }
 
@@ -603,12 +609,8 @@ function no_category_base_refresh_rules() {
 // Remove category base
 add_action('init', 'no_category_base_permastruct');
 function no_category_base_permastruct() {
-    global $wp_rewrite, $wp_version;
-    if (version_compare($wp_version, '3.4', '<')) {
-
-    } else {
-        $wp_rewrite->extra_permastructs['category']['struct'] = '%category%';
-    }
+    global $wp_rewrite;
+    $wp_rewrite->extra_permastructs['category']['struct'] = '%category%';
 }
 
 // Add our custom category rewrite rules

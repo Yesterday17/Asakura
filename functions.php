@@ -525,10 +525,6 @@ function akina_body_classes($classes) {
     }
     // 定制中文字体class
     $classes[] = 'chinese-font';
-    /*if(!wp_is_mobile()) {
-    $classes[] = 'serif';
-    }*/
-    $classes[] = $_COOKIE['dark' . akina_option('cookie_version', '')] == '1' ? 'dark' : ' ';
     return $classes;
 }
 
