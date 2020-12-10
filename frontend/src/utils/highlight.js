@@ -1,17 +1,31 @@
 // import hljs from "highlight.js";
 import hljs from "highlight.js/lib/core";
+
+/**
+ * Languages
+ */
 import hl_javascript from "highlight.js/lib/languages/javascript";
 import hl_typescript from "highlight.js/lib/languages/typescript";
 import hl_lua from "highlight.js/lib/languages/lua";
 import hl_go from "highlight.js/lib/languages/go";
 import hl_rust from "highlight.js/lib/languages/rust";
 import hl_c from "highlight.js/lib/languages/c";
+import hl_bash from "highlight.js/lib/languages/bash";
+import hl_yaml from "highlight.js/lib/languages/yaml";
+import hl_python from "highlight.js/lib/languages/python";
 hljs.registerLanguage("javascript", hl_javascript);
 hljs.registerLanguage("typescript", hl_typescript);
 hljs.registerLanguage("lua", hl_lua);
 hljs.registerLanguage("go", hl_go);
 hljs.registerLanguage("rust", hl_rust);
 hljs.registerLanguage("c", hl_c);
+hljs.registerLanguage("bash", hl_bash);
+hljs.registerLanguage("yaml", hl_yaml);
+hljs.registerLanguage("python", hl_python);
+
+/**
+ * Line number
+ */
 import hljs_linenumber from "./highlightjs-line-numbers.js";
 import { createButterbar } from "./butterBar.js";
 hljs_linenumber(window, document, hljs);

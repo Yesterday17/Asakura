@@ -14,12 +14,10 @@ if (post_password_required()) {
 ?>
 
 <?php if (comments_open()): ?>
-
     <section id="comments" class="comments">
-
         <div class="commentwrap comments-hidden">
-            <div class="notification"><i
-                        class="iconfont icon-mark"></i><?php EE('view comments'); /*查看评论*/ ?> -
+            <div class="notification">
+                <i class="iconfont icon-mark"></i><?php ee('view comments'); /*查看评论*/ ?> -
                 <span class="noticom"><?php comments_number('0', '1', '%'); ?> </span>
             </div>
         </div>
@@ -30,7 +28,6 @@ if (post_password_required()) {
             </h3>
             <div id="loading-comments"><span></span></div>
             <?php if (have_comments()): ?>
-
                 <ul class="commentwrap">
                     <?php wp_list_comments('type=comment&callback=akina_comment_format'); ?>
                 </ul>
@@ -38,22 +35,15 @@ if (post_password_required()) {
                 <nav id="comments-navi">
                     <?php paginate_comments_links('prev_text=« Older&next_text=Newer »'); ?>
                 </nav>
-
-            <?php else : ?>
-
-                <?php if (comments_open()): ?>
-                    <div class="commentwrap">
-                        <div class="notification-hidden"><i
-                                    class="iconfont icon-mark"></i> <?php _e('no comment', SAKURA_DOMAIN); /*暂无评论*/ ?>
-                        </div>
-
+            <?php elseif (comments_open()): ?>
+                <div class="commentwrap">
+                    <div class="notification-hidden"><i
+                                class="iconfont icon-mark"></i> <?php _e('no comment', SAKURA_DOMAIN); /*暂无评论*/ ?>
                     </div>
-                <?php endif; ?>
-
+                </div>
             <?php endif; ?>
 
             <?php
-
             if (comments_open()) {
                 if (akina_option('norobot'))
                     $robot_comments = '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="no-robot"><span class="siren-no-robot-checkbox siren-checkbox-radioInput"></span>' . __('I\'m not a robot', SAKURA_DOMAIN) . '</label>';
@@ -64,8 +54,8 @@ if (post_password_required()) {
                     'id_submit'            => 'submit',
                     'title_reply'          => '',
                     'title_reply_to'       => '<div class="graybar"><i class="fa fa-comments-o"></i>' . ll('Leave a Reply to') . ' %s' . '</div>',
-                    'cancel_reply_link'    => __('Cancel Reply', SAKURA_DOMAIN),
-                    'label_submit'         => __('BiuBiuBiu~', SAKURA_DOMAIN),
+                    'cancel_reply_link'    => ll('Cancel Reply'),
+                    'label_submit'         => ll('BiuBiuBiu~'),
                     'comment_field'        => '<p style="font-style:italic"><a href="https://segmentfault.com/markdown" target="_blank"><i class="iconfont icon-markdown" style="color:#000"></i></a> Markdown Supported while <i class="fa fa-code" aria-hidden="true"></i> Forbidden</p><div class="comment-textarea"><textarea placeholder="' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ..." name="comment" class="commentbody" id="comment" rows="5" tabindex="4"></textarea><label class="input-label">' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ...</label></div>
                         <div id="upload-img-show"></div>',
                     'comment_notes_after'  => '',
@@ -82,14 +72,14 @@ if (post_password_required()) {
         </div>
     </div>',
                         'author' => '<div class="popup cmt-popup cmt-author" onclick="asakura.cmt_showPopup(this)">
-<span class="popuptext" id="thePopup" style="margin-left: -115px;width: 230px;">' . __("Auto pull nickname and avatar with a QQ num. entered", SAKURA_DOMAIN)/*输入QQ号将自动拉取昵称和头像*/ . '</span>
+<span class="popuptext" id="thePopup" style="margin-left: -115px;width: 230px;">' . ll("Auto pull nickname and avatar with a QQ num. entered")/*输入QQ号将自动拉取昵称和头像*/ . '</span>
 <input type="text" placeholder="' . ll("Nickname or QQ number") /*昵称或QQ号*/ . ' (' . ll("Name* ") . ')" name="author" id="author" value="' . esc_attr(get_comment_author()) . '" size="22" autocomplete="off" tabindex="1" aria-required="true" />
 </div>',
                         'email'  => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
-<span class="popuptext" id="thePopup" style="margin-left: -65px;width: 130px;">' . __("You will receive notification by email", SAKURA_DOMAIN)/*你将收到回复通知*/ . '</span>
+<span class="popuptext" id="thePopup" style="margin-left: -65px;width: 130px;">' . ll("You will receive notification by email")/*你将收到回复通知*/ . '</span>
 <input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr(get_comment_author_email()) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
                         'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
-<span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . __("Advertisement is forbidden 😀", SAKURA_DOMAIN)/*禁止小广告😀*/ . '</span>
+<span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . ll("Advertisement is forbidden 😀")/*禁止小广告😀*/ . '</span>
 <input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr(get_comment_author_url()) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $robot_comments . $private_ms . $mail_notify,
                         'qq'     => '<input type="text" placeholder="QQ" name="new_field_qq" id="qq" value="' . esc_attr(get_comment_author_url()) . '" style="display:none" autocomplete="off"/><!--此栏不可见-->'
                     ))

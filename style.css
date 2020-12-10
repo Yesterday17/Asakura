@@ -3183,15 +3183,6 @@ a.page-numbers {
     line-height: 20px;
     padding: 0 6px;
     border-radius: 3px;
-    opacity: 0
-}
-
-.comment .contents:hover .comment-reply-link {
-    opacity: .9
-}
-
-.comment .contents .comment-reply-link:hover {
-    opacity: 1
 }
 
 @media (max-width: 880px) {
@@ -5183,10 +5174,6 @@ i.iconfont.down {
     #mo-nav.open {
         transform: translateX(250px) translateY(0);
         -webkit-transform: translateX(250px);
-    }
-
-    .wrapper section {
-        max-width: 600px
     }
 
     .wrapper section h1 {

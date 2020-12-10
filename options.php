@@ -577,22 +577,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Post Like', SAKURA_DOMAIN),
-        'id'      => 'post_like',
-        'std'     => "yes",
-        'type'    => "radio",
-        'options' => array('yes' => __('Open', SAKURA_DOMAIN), 'no' => __('Close', SAKURA_DOMAIN),)
-    );
-
-    $options[] = array(
-        'name'    => __('Post Share', SAKURA_DOMAIN),
-        'id'      => 'post_share',
-        'std'     => "yes",
-        'type'    => "radio",
-        'options' => array('yes' => __('Open', SAKURA_DOMAIN), 'no' => __('Close', SAKURA_DOMAIN),)
-    );
-
-    $options[] = array(
         'name'    => __('Previous and Next', SAKURA_DOMAIN),
         'id'      => 'post_nepre',
         'std'     => "yes",

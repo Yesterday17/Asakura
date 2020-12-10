@@ -43,6 +43,5 @@
                 the_tags('', ' ', ' ');
             } ?>
         </div>
-        <?php get_template_part('layouts/sharelike'); ?>
     </footer><!-- .entry-footer -->
 </article><!-- #post-## -->

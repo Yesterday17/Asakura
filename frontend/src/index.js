@@ -1,5 +1,4 @@
 import $ from "jquery";
-import "jquery-pjax";
 
 import "lightgallery.js";
 import "lightgallery.js/dist/css/lightgallery.css";
@@ -7,9 +6,6 @@ import "./styles/lightgallery-fix.css";
 
 import lazyload from "lazyload";
 import tocbot from "tocbot";
-
-import NProgress from "nprogress";
-import "./styles/nprogress.css";
 
 import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
@@ -22,12 +18,18 @@ import { createButterbar } from "./utils/butterBar";
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
+import "smoothscroll-for-websites";
+import { scrollBar } from "./utils/dom";
+
 global.asakura = {
   changeTheme,
   scrollTo: aScrollTo,
   showPopup,
   cmt_showPopup,
 };
+
+window.timeSeriesReload = timeSeriesReload;
+window.post_list_show_animation = post_list_show_animation;
 
 var $body = $("body");
 
@@ -37,18 +39,13 @@ if (!window.mashiro_global) {
       bgn: 1,
     },
     ini: {
-      normalize: () => {
-        // initial functions when page first load (首次加载页面时的初始化函数)
-        new lazyload();
-        post_list_show_animation();
-        web_audio();
-        coverVideoIni();
-        scrollBar();
-        load_bangumi();
-      },
-      pjax: () => {
-        // pjax reload functions (pjax 重载函数)
-        pjaxInit();
+      normalize: (normal = true) => {
+        if (normal) {
+          // initial functions when page first load (首次加载页面时的初始化函数)
+          new lazyload();
+          scrollBar();
+        }
+
         post_list_show_animation();
         web_audio();
         coverVideoIni();
@@ -97,7 +94,7 @@ function post_list_show_animation() {
 
 $body.on("click", ".comment-reply-link", function () {
   addComment.moveForm(
-    "comment-" + $(this).attr("data-commentid"),
+    `comment-${$(this).attr("data-commentid")}`,
     $(this).attr("data-commentid"),
     "respond",
     $(this).attr("data-postid")
@@ -210,15 +207,6 @@ function add_upload_tips() {
   );
 }
 
-function click_to_view_image() {
-  $(".comment_inline_img").click(function () {
-    var temp_url = this.src;
-    window.open(temp_url);
-  });
-}
-
-click_to_view_image();
-
 function showPopup(ele) {
   var popup = ele.querySelector("#thePopup");
   popup.classList.toggle("show");
@@ -232,31 +220,6 @@ function cmt_showPopup(ele) {
     .blur(function () {
       popup.removeClass("show");
     });
-}
-
-function scrollBar() {
-  if (document.body.clientWidth > 860) {
-    $(window).scroll(function () {
-      var s = $(window).scrollTop(),
-        a = $(document).height(),
-        b = $(window).height(),
-        result = parseInt((s / (a - b)) * 100),
-        cached = $("#bar");
-      cached.css("width", result + "%");
-      if (false) {
-        if (result >= 0 && result <= 19) cached.css("background", "#cccccc");
-        if (result >= 20 && result <= 39) cached.css("background", "#50bcb6");
-        if (result >= 40 && result <= 59) cached.css("background", "#85c440");
-        if (result >= 60 && result <= 79) cached.css("background", "#f2b63c");
-        if (result >= 80 && result <= 99) cached.css("background", "#FF0000");
-        if (result == 100) cached.css("background", "#5aaadb");
-      } else {
-        cached.css("background", "orange");
-      }
-      $(".toc-container").css("height", $(".site-content").outerHeight());
-      $(".skin-menu").removeClass("show");
-    });
-  }
 }
 
 checkDarkMode();
@@ -303,25 +266,14 @@ $(document).ready(function () {
 });
 
 function bg_update() {
-  if (document.body.clientWidth < 860 && mashiro_option.cover_beta) {
-    $(".centerbg").css(
-      "background-image",
-      "url(" +
-        mashiro_option.cover_api +
-        "?type=mobile&" +
-        mashiro_global.variables.bgn +
-        ")"
-    );
-  } else {
-    $(".centerbg").css(
-      "background-image",
-      "url(" +
-        mashiro_option.cover_api +
-        "?" +
-        mashiro_global.variables.bgn +
-        ")"
-    );
-  }
+  $(".centerbg").css(
+    "background-image",
+    `url(${mashiro_option.cover_api}?${
+      document.body.clientWidth < 860 && mashiro_option.cover_beta
+        ? "type=mobile&"
+        : ""
+    }${mashiro_global.variables.bgn})`
+  );
 }
 
 function nextBG() {
@@ -468,38 +420,6 @@ function tableOfContentScroll() {
 
 tableOfContentScroll();
 
-var pjaxInit = function () {
-  add_upload_tips();
-  no_right_click();
-  click_to_view_image();
-  $("p").remove(".head-copyright");
-  highlightCode();
-  try {
-    getqqinfo();
-  } catch (e) {}
-  new lazyload();
-  $("#to-load-aplayer").click(function () {
-    try {
-      reloadHermit();
-    } catch (e) {}
-    $("div").remove(".load-aplayer");
-  });
-  if ($("div").hasClass("aplayer")) {
-    try {
-      reloadHermit();
-    } catch (e) {}
-  }
-  $(".iconflat").css("width", "50px").css("height", "50px");
-  $(".openNav").css("height", "50px");
-  $("#bg-next").click(function () {
-    nextBG();
-  });
-  $("#bg-pre").click(function () {
-    preBG();
-  });
-  timeSeriesReload();
-  tableOfContentScroll();
-};
 $(document).on("click", ".sm", function () {
   var msg = "您真的要设为私密吗？";
   if (confirm(msg) == true) {
@@ -585,7 +505,10 @@ $(function () {
 });
 
 if (mashiro_option.float_player_on && document.body.clientWidth > 860) {
-  import("./utils/aplayer").then(({ loadAPlayer }) => loadAPlayer());
+  import(
+    /* webpackChunkName: "aplayer" */
+    "./utils/aplayer"
+  ).then(({ loadAPlayer }) => loadAPlayer());
 }
 
 function getqqinfo() {
@@ -796,402 +719,394 @@ mashiro_global.ini.normalize();
 loadCSS(mashiro_option.entry_content_theme_src);
 loadCSS("https://at.alicdn.com/t/font_679578_qyt5qzzavdo39pb9.css");
 
-var s = $("#bgvideo")[0],
-  Siren = {
-    MN: function () {
-      $(".iconflat").on("click", function () {
-        $body.toggleClass("navOpen");
-        $("#main-container,#mo-nav,.openNav").toggleClass("open");
-      });
-    },
-    MNH: function () {
-      if ($body.hasClass("navOpen")) {
-        $body.toggleClass("navOpen");
-        $("#main-container,#mo-nav,.openNav").toggleClass("open");
+var s = $("#bgvideo")[0];
+window.Siren = {
+  MN: function () {
+    $(".iconflat").on("click", function () {
+      $body.toggleClass("navOpen");
+      $("#main-container,#mo-nav,.openNav").toggleClass("open");
+    });
+  },
+  splay: function () {
+    $("#video-btn").addClass("video-pause").removeClass("video-play").show();
+    $(".video-stu").css({
+      bottom: "-100px",
+    });
+    $(".focusinfo").css({
+      top: "-999px",
+    });
+    try {
+      for (var i = 0; i < ap.length; i++) {
+        try {
+          ap[i].destroy();
+        } catch (e) {}
       }
-    },
-    splay: function () {
-      $("#video-btn").addClass("video-pause").removeClass("video-play").show();
-      $(".video-stu").css({
-        bottom: "-100px",
-      });
-      $(".focusinfo").css({
-        top: "-999px",
-      });
-      try {
-        for (var i = 0; i < ap.length; i++) {
-          try {
-            ap[i].destroy();
-          } catch (e) {}
-        }
-      } catch (e) {}
-      try {
-        hermitInit();
-      } catch (e) {}
-      s.play();
-    },
-    spause: function () {
-      $("#video-btn").addClass("video-play").removeClass("video-pause");
-      $(".focusinfo").css({
-        top: "49.3%",
-      });
-      s.pause();
-    },
-    liveplay: function () {
-      if (s.oncanplay != undefined && $(".haslive").length > 0) {
-        if ($(".videolive").length > 0) {
-          Siren.splay();
-        }
+    } catch (e) {}
+    try {
+      hermitInit();
+    } catch (e) {}
+    s.play();
+  },
+  spause: function () {
+    $("#video-btn").addClass("video-play").removeClass("video-pause");
+    $(".focusinfo").css({
+      top: "49.3%",
+    });
+    s.pause();
+  },
+  liveplay: function () {
+    if (s.oncanplay != undefined && $(".haslive").length > 0) {
+      if ($(".videolive").length > 0) {
+        Siren.splay();
       }
-    },
-    livepause: function () {
-      if (s.oncanplay != undefined && $(".haslive").length > 0) {
-        Siren.spause();
-        $(".video-stu")
-          .css({
-            bottom: "0px",
-          })
-          .html("已暂停 ...");
-      }
-    },
-    addsource: function () {
-      $(".video-stu").html("正在载入视频 ...").css({
-        bottom: "0px",
-      });
-      var t = mashiro_option.movies.name.split(","),
-        _t = t[Math.floor(Math.random() * t.length)],
-        l = mashiro_option.movies.url + "/" + _t,
-        v = $("#bgvideo");
-      v.attr("video-name", _t);
-      if (_t.endsWith(".m3u8")) {
-        // hls
-        v.attr("data-src", l);
-        initHls(() => loadHls("bgvideo"));
-      } else {
-        v.attr("src", l);
-      }
-    },
-    LV: function () {
-      var _btn = $("#video-btn");
-      _btn.on("click", function () {
-        if ($(this).hasClass("loadvideo")) {
-          $(this).addClass("video-pause").removeClass("loadvideo").hide();
-          Siren.addsource();
-          s.oncanplay = function () {
-            Siren.splay();
-            $("#video-add").show();
-            _btn.addClass("videolive").addClass("haslive");
-          };
-        } else {
-          if ($(this).hasClass("video-pause")) {
-            Siren.spause();
-            _btn.removeClass("videolive");
-            $(".video-stu")
-              .css({
-                bottom: "0px",
-              })
-              .html("已暂停 ...");
-          } else {
-            Siren.splay();
-            _btn.addClass("videolive");
-          }
-        }
-        s.onended = function () {
-          $("#bgvideo").attr("src", "");
-          $("#video-add").hide();
-          _btn
-            .addClass("loadvideo")
-            .removeClass("video-pause")
-            .removeClass("videolive")
-            .removeClass("haslive");
-          $(".focusinfo").css({
-            top: "49.3%",
-          });
-        };
-      });
-      $("#video-add").on("click", function () {
+    }
+  },
+  livepause: function () {
+    if (s.oncanplay != undefined && $(".haslive").length > 0) {
+      Siren.spause();
+      $(".video-stu")
+        .css({
+          bottom: "0px",
+        })
+        .html("已暂停 ...");
+    }
+  },
+  addsource: function () {
+    $(".video-stu").html("正在载入视频 ...").css({
+      bottom: "0px",
+    });
+    var t = mashiro_option.movies.name.split(","),
+      _t = t[Math.floor(Math.random() * t.length)],
+      l = mashiro_option.movies.url + "/" + _t,
+      v = $("#bgvideo");
+    v.attr("video-name", _t);
+    if (_t.endsWith(".m3u8")) {
+      // hls
+      v.attr("data-src", l);
+      initHls(() => loadHls("bgvideo"));
+    } else {
+      v.attr("src", l);
+    }
+  },
+  LV: function () {
+    var _btn = $("#video-btn");
+    _btn.on("click", function () {
+      if ($(this).hasClass("loadvideo")) {
+        $(this).addClass("video-pause").removeClass("loadvideo").hide();
         Siren.addsource();
-      });
-    },
-    AH: function () {
-      if (mashiro_option.window_height == "auto") {
-        if ($("h1.main-title").length > 0) {
-          var _height = $(window).height() + "px";
-          $("#centerbg").css({
-            height: "100vh",
-          });
-          $("#bgvideo").css({
-            "min-height": "100vh",
-          });
-        }
+        s.oncanplay = function () {
+          Siren.splay();
+          $("#video-add").show();
+          _btn.addClass("videolive").addClass("haslive");
+        };
       } else {
-        $(".headertop").addClass("headertop-bar");
-      }
-    },
-    PE: function () {
-      if ($(".headertop").length > 0) {
-        if ($("h1.main-title").length > 0) {
-          $(".blank").css({
-            "padding-top": "0px",
-          });
-          $(".headertop")
+        if ($(this).hasClass("video-pause")) {
+          Siren.spause();
+          _btn.removeClass("videolive");
+          $(".video-stu")
             .css({
-              height: "auto",
+              bottom: "0px",
             })
-            .show();
-          if (mashiro_option.movies.live == "open") Siren.liveplay();
+            .html("已暂停 ...");
         } else {
-          $(".blank").css({
-            "padding-top": "75px",
-          });
-          $(".headertop")
-            .css({
-              height: "0px",
-            })
-            .hide();
-          Siren.livepause();
+          Siren.splay();
+          _btn.addClass("videolive");
         }
       }
-    },
-    NH: function () {
-      if (document.body.clientWidth > 860) {
-        var h1 = 0;
-        $(window).scroll(function () {
-          var s = $(document).scrollTop(),
-            cached = $(".site-header");
-          if (s === h1) {
-            cached.removeClass("yya");
-          }
-          if (s > h1) {
-            cached.addClass("yya");
-          }
+      s.onended = function () {
+        $("#bgvideo").attr("src", "");
+        $("#video-add").hide();
+        _btn
+          .addClass("loadvideo")
+          .removeClass("video-pause")
+          .removeClass("videolive")
+          .removeClass("haslive");
+        $(".focusinfo").css({
+          top: "49.3%",
         });
-      }
-    },
-    XLS: function () {
-      var load_post_timer;
-      var intersectionObserver = new IntersectionObserver(function (entries) {
-        if (entries[0].intersectionRatio <= 0) return;
-        var page_next = $("#pagination a").attr("href");
-        var load_key = document.getElementById("add_post_time");
-        if (page_next !== undefined && load_key) {
-          var load_time = document.getElementById("add_post_time").title;
-          if (load_time !== "233") {
-            if (load_time !== "0")
-              console.log(
-                "%c 自动加载时倒计时 %c",
-                "background:#9a9da2; color:#ffffff; border-radius:4px;",
-                "",
-                "",
-                load_time
-              );
-            load_post_timer = setTimeout(function () {
-              load_post();
-            }, load_time * 1000);
-          }
-        }
-      });
-      intersectionObserver.observe(
-        document.querySelector("#pagination") ||
-          document.querySelector(".footer-device")
-      );
-      $body.on("click", "#pagination a", function () {
-        clearTimeout(load_post_timer);
-        load_post();
-        return false;
-      });
-
-      function load_post() {
-        $("#pagination a").addClass("loading").text("");
-        $.ajax({
-          type: "POST",
-          url: $("#pagination a").attr("href") + "#main",
-          success: function (data) {
-            var result = $(data).find("#main .post");
-            var nextHref = $(data).find("#pagination a").attr("href");
-            $("#main").append(result.fadeIn(500));
-            $("#pagination a").removeClass("loading").text("Previous");
-            $("#add_post span").removeClass("loading").text("");
-            new lazyload();
-            post_list_show_animation();
-            if (nextHref !== undefined) {
-              $("#pagination a").attr("href", nextHref);
-              //加载完成上滑
-              var tempScrollTop = $(window).scrollTop();
-              $(window).scrollTop(tempScrollTop);
-              $body.animate(
-                {
-                  scrollTop: tempScrollTop + 300,
-                },
-                666
-              );
-            } else {
-              $("#pagination").html(
-                "<span>很高兴你翻到这里，但是真的没有了...</span>"
-              );
-            }
-          },
-        });
-        return false;
-      }
-    },
-    XCS: function () {
-      var __cancel = $("#cancel-comment-reply-link"),
-        __cancel_text = __cancel.text(),
-        __list = "commentwrap";
-      $(document).on("submit", "#commentform", function () {
-        $.ajax({
-          url: mashiro_option.ajax_url,
-          data: $(this).serialize() + "&action=ajax_comment",
-          type: $(this).attr("method"),
-          beforeSend: createButterbar("提交中(Commiting)...."),
-          error: function (request) {
-            createButterbar(request.responseText);
-          },
-          success: function (data) {
-            $("textarea").each(function () {
-              this.value = "";
-            });
-            var cancel = document.getElementById("cancel-comment-reply-link"),
-              temp = document.getElementById("wp-temp-form-div"),
-              respond = document.getElementById(addComment.respondId),
-              post = document.getElementById("comment_post_ID").value,
-              parent = document.getElementById("comment_parent").value;
-            if (parent !== "0") {
-              $("#respond").before('<ol class="children">' + data + "</ol>");
-            } else if (!$("." + __list).length) {
-              if (mashiro_option.form_position === "bottom") {
-                $("#respond").before(
-                  '<ol class="' + __list + '">' + data + "</ol>"
-                );
-              } else {
-                $("#respond").after(
-                  '<ol class="' + __list + '">' + data + "</ol>"
-                );
-              }
-            } else {
-              if (mashiro_option.comment_order === "asc") {
-                $("." + __list).append(data);
-              } else {
-                $("." + __list).prepend(data);
-              }
-            }
-            createButterbar("提交成功(Succeed)");
-            new lazyload();
-            highlightCode();
-            click_to_view_image();
-            clean_upload_images();
-            cancel.style.display = "none";
-            cancel.onclick = null;
-            document.getElementById("comment_parent").value = "0";
-            if (temp && respond) {
-              temp.parentNode.insertBefore(respond, temp);
-              temp.parentNode.removeChild(temp);
-            }
-          },
-        });
-        return false;
-      });
-      window.addComment = {
-        moveForm: function (commId, parentId, respondId) {
-          var div,
-            comm = document.getElementById(commId),
-            respond = document.getElementById(respondId),
-            cancel = document.getElementById("cancel-comment-reply-link"),
-            parent = document.getElementById("comment_parent"),
-            post = document.getElementById("comment_post_ID");
-          __cancel.text(__cancel_text);
-          addComment.respondId = respondId;
-          if (!document.getElementById("wp-temp-form-div")) {
-            div = document.createElement("div");
-            div.id = "wp-temp-form-div";
-            div.style.display = "none";
-            respond.parentNode.insertBefore(div, respond);
-          }
-          var temp;
-          !comm
-            ? ((temp = document.getElementById("wp-temp-form-div")),
-              (document.getElementById("comment_parent").value = "0"),
-              temp.parentNode.insertBefore(respond, temp),
-              temp.parentNode.removeChild(temp))
-            : comm.parentNode.insertBefore(respond, comm.nextSibling);
-          $("body").animate(
-            {
-              scrollTop: $("#respond").offset().top - 180,
-            },
-            400
-          );
-          parent.value = parentId;
-          cancel.style.display = "";
-          cancel.onclick = function () {
-            var temp = document.getElementById("wp-temp-form-div"),
-              respond = document.getElementById(addComment.respondId);
-            document.getElementById("comment_parent").value = "0";
-            if (temp && respond) {
-              temp.parentNode.insertBefore(respond, temp);
-              temp.parentNode.removeChild(temp);
-            }
-            this.style.display = "none";
-            this.onclick = null;
-            return false;
-          };
-          try {
-            document.getElementById("comment").focus();
-          } catch (e) {}
-          return false;
-        },
       };
-    },
-    XCP: function () {
-      $body.on("click", "#comments-navi a", function (e) {
-        e.preventDefault();
-        var path = $(this)[0].pathname;
-        $.ajax({
-          type: "GET",
-          url: $(this).attr("href"),
-          beforeSend: function () {
-            $("#comments-navi").remove();
-            $("ul.commentwrap").remove();
-            $("#loading-comments").slideDown();
+    });
+    $("#video-add").on("click", function () {
+      Siren.addsource();
+    });
+  },
+  AH: function () {
+    if (mashiro_option.window_height === "auto") {
+      if ($("h1.main-title").length > 0) {
+        var _height = $(window).height() + "px";
+        $("#centerbg").css({
+          height: "100vh",
+        });
+        $("#bgvideo").css({
+          "min-height": "100vh",
+        });
+      }
+    } else {
+      $(".headertop").addClass("headertop-bar");
+    }
+  },
+  PE: function () {
+    if ($(".headertop").length > 0) {
+      if ($("h1.main-title").length > 0) {
+        $(".blank").css({
+          "padding-top": "0px",
+        });
+        $(".headertop")
+          .css({
+            height: "auto",
+          })
+          .show();
+        if (mashiro_option.movies.live == "open") Siren.liveplay();
+      } else {
+        $(".blank").css({
+          "padding-top": "75px",
+        });
+        $(".headertop")
+          .css({
+            height: "0px",
+          })
+          .hide();
+        Siren.livepause();
+      }
+    }
+  },
+  NH: function () {
+    if (document.body.clientWidth > 860) {
+      var h1 = 0;
+      $(window).scroll(function () {
+        var s = $(document).scrollTop(),
+          cached = $(".site-header");
+        if (s === h1) {
+          cached.removeClass("yya");
+        }
+        if (s > h1) {
+          cached.addClass("yya");
+        }
+      });
+    }
+  },
+  XLS: function () {
+    var load_post_timer;
+    var intersectionObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].intersectionRatio <= 0) return;
+      var page_next = $("#pagination a").attr("href");
+      var load_key = document.getElementById("add_post_time");
+      if (page_next !== undefined && load_key) {
+        var load_time = document.getElementById("add_post_time").title;
+        if (load_time !== "233") {
+          if (load_time !== "0")
+            console.log(
+              "%c 自动加载时倒计时 %c",
+              "background:#9a9da2; color:#ffffff; border-radius:4px;",
+              "",
+              "",
+              load_time
+            );
+          load_post_timer = setTimeout(function () {
+            load_post();
+          }, load_time * 1000);
+        }
+      }
+    });
+    intersectionObserver.observe(
+      document.querySelector("#pagination") ||
+        document.querySelector(".footer-device")
+    );
+    $body.on("click", "#pagination a", function () {
+      clearTimeout(load_post_timer);
+      load_post();
+      return false;
+    });
+
+    function load_post() {
+      $("#pagination a").addClass("loading").text("");
+      $.ajax({
+        type: "POST",
+        url: $("#pagination a").attr("href") + "#main",
+        success: function (data) {
+          var result = $(data).find("#main .post");
+          var nextHref = $(data).find("#pagination a").attr("href");
+          $("#main").append(result.fadeIn(500));
+          $("#pagination a").removeClass("loading").text("Previous");
+          $("#add_post span").removeClass("loading").text("");
+          new lazyload();
+          post_list_show_animation();
+          if (nextHref !== undefined) {
+            $("#pagination a").attr("href", nextHref);
+            //加载完成上滑
+            var tempScrollTop = $(window).scrollTop();
+            $(window).scrollTop(tempScrollTop);
             $body.animate(
               {
-                scrollTop: $("#comments-list-title").offset().top - 65,
+                scrollTop: tempScrollTop + 300,
               },
-              800
+              666
             );
-          },
-          dataType: "html",
-          success: function (out) {
-            var result = $(out).find("ul.commentwrap");
-            var nextlink = $(out).find("#comments-navi");
-            $("#loading-comments").slideUp("fast");
-            $("#loading-comments").after(result.fadeIn(500));
-            $("ul.commentwrap").after(nextlink);
-            new lazyload();
-            if (window.gtag) {
-              gtag("config", mashiro_option.google_analytics_id, {
-                page_path: path,
-              });
+          } else {
+            $("#pagination").html(
+              "<span>很高兴你翻到这里，但是真的没有了...</span>"
+            );
+          }
+        },
+      });
+      return false;
+    }
+  },
+  XCS: function () {
+    var __cancel = $("#cancel-comment-reply-link"),
+      __cancel_text = __cancel.text(),
+      __list = "commentwrap";
+    $(document).on("submit", "#commentform", function () {
+      $.ajax({
+        url: mashiro_option.ajax_url,
+        data: $(this).serialize() + "&action=ajax_comment",
+        type: $(this).attr("method"),
+        beforeSend: createButterbar("提交中(Commiting)...."),
+        error: function (request) {
+          createButterbar(request.responseText);
+        },
+        success: function (data) {
+          $("textarea").each(function () {
+            this.value = "";
+          });
+          var cancel = document.getElementById("cancel-comment-reply-link"),
+            temp = document.getElementById("wp-temp-form-div"),
+            respond = document.getElementById(addComment.respondId),
+            post = document.getElementById("comment_post_ID").value,
+            parent = document.getElementById("comment_parent").value;
+          if (parent !== "0") {
+            $("#respond").before('<ol class="children">' + data + "</ol>");
+          } else if (!$("." + __list).length) {
+            if (mashiro_option.form_position === "bottom") {
+              $("#respond").before(
+                '<ol class="' + __list + '">' + data + "</ol>"
+              );
+            } else {
+              $("#respond").after(
+                '<ol class="' + __list + '">' + data + "</ol>"
+              );
             }
-            highlightCode();
-            click_to_view_image();
-          },
-        });
+          } else {
+            if (mashiro_option.comment_order === "asc") {
+              $("." + __list).append(data);
+            } else {
+              $("." + __list).prepend(data);
+            }
+          }
+          createButterbar("提交成功(Succeed)");
+          new lazyload();
+          highlightCode();
+          clean_upload_images();
+          cancel.style.display = "none";
+          cancel.onclick = null;
+          document.getElementById("comment_parent").value = "0";
+          if (temp && respond) {
+            temp.parentNode.insertBefore(respond, temp);
+            temp.parentNode.removeChild(temp);
+          }
+        },
       });
-    },
-    GT: function () {
-      const mb_to_top = document.querySelector("#mobileGoTop");
-
-      $(window).scroll(function () {
-        if ($(this).scrollTop() > 20) {
-          mb_to_top.style.transform = "scale(1)";
-        } else {
-          mb_to_top.style.transform = "scale(0)";
+      return false;
+    });
+    window.addComment = {
+      moveForm: function (commId, parentId, respondId) {
+        var div,
+          comm = document.getElementById(commId),
+          respond = document.getElementById(respondId),
+          cancel = document.getElementById("cancel-comment-reply-link"),
+          parent = document.getElementById("comment_parent"),
+          post = document.getElementById("comment_post_ID");
+        __cancel.text(__cancel_text);
+        addComment.respondId = respondId;
+        if (!document.getElementById("wp-temp-form-div")) {
+          div = document.createElement("div");
+          div.id = "wp-temp-form-div";
+          div.style.display = "none";
+          respond.parentNode.insertBefore(div, respond);
         }
+        var temp;
+        !comm
+          ? ((temp = document.getElementById("wp-temp-form-div")),
+            (document.getElementById("comment_parent").value = "0"),
+            temp.parentNode.insertBefore(respond, temp),
+            temp.parentNode.removeChild(temp))
+          : comm.parentNode.insertBefore(respond, comm.nextSibling);
+        $("body").animate(
+          {
+            scrollTop: $("#respond").offset().top - 180,
+          },
+          400
+        );
+        parent.value = parentId;
+        cancel.style.display = "";
+        cancel.onclick = function () {
+          var temp = document.getElementById("wp-temp-form-div"),
+            respond = document.getElementById(addComment.respondId);
+          document.getElementById("comment_parent").value = "0";
+          if (temp && respond) {
+            temp.parentNode.insertBefore(respond, temp);
+            temp.parentNode.removeChild(temp);
+          }
+          this.style.display = "none";
+          this.onclick = null;
+          return false;
+        };
+        try {
+          document.getElementById("comment").focus();
+        } catch (e) {}
+        return false;
+      },
+    };
+  },
+  XCP: function () {
+    $body.on("click", "#comments-navi a", function (e) {
+      e.preventDefault();
+      var path = $(this)[0].pathname;
+      $.ajax({
+        type: "GET",
+        url: $(this).attr("href"),
+        beforeSend: function () {
+          $("#comments-navi").remove();
+          $("ul.commentwrap").remove();
+          $("#loading-comments").slideDown();
+          $body.animate(
+            {
+              scrollTop: $("#comments-list-title").offset().top - 65,
+            },
+            800
+          );
+        },
+        dataType: "html",
+        success: function (out) {
+          var result = $(out).find("ul.commentwrap");
+          var nextlink = $(out).find("#comments-navi");
+          $("#loading-comments").slideUp("fast");
+          $("#loading-comments").after(result.fadeIn(500));
+          $("ul.commentwrap").after(nextlink);
+          new lazyload();
+          if (window.gtag) {
+            gtag("config", mashiro_option.google_analytics_id, {
+              page_path: path,
+            });
+          }
+          highlightCode();
+        },
       });
-      mb_to_top.onclick = () => aScrollTo(0);
-    },
-  };
+    });
+  },
+  GT: function () {
+    const mb_to_top = document.querySelector("#mobileGoTop");
+
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 20) {
+        mb_to_top.style.transform = "scale(1)";
+      } else {
+        mb_to_top.style.transform = "scale(0)";
+      }
+    });
+    mb_to_top.onclick = () => aScrollTo(0);
+  },
+};
 $(function () {
   Siren.AH();
   Siren.PE();
@@ -1204,87 +1119,19 @@ $(function () {
   Siren.MN();
   Siren.LV();
   if (mashiro_option.pjax) {
-    $(document)
-      .pjax("a[target!=_top]", "#page", {
-        fragment: "#page",
-        timeout: 8000,
-      })
-      .on("pjax:beforeSend", () => {
-        //离开页面停止播放
-        $(".normal-cover-video").each(function () {
-          this.pause();
-          this.src = "";
-          this.load = "";
-        });
-      })
-      .on("pjax:send", function () {
-        $("#bar").css("width", "0%");
-        if (mashiro_option.nprogress_on) NProgress.start();
-        Siren.MNH();
-      })
-      .on("pjax:complete", function () {
-        Siren.AH();
-        Siren.PE();
-        initSerach();
-        if (mashiro_option.nprogress_on) NProgress.done();
-        mashiro_global.ini.pjax();
-        $("#loading").fadeOut(500);
-        if (mashiro_option.code_lamp === "open") {
-          self.Prism.highlightAll(event);
-        }
-      })
-      .on("pjax:end", function () {
-        if (window.gtag) {
-          gtag("config", mashiro_option.google_analytics_id, {
-            page_path: window.location.pathname,
-          });
-        }
-      })
-      .on("submit", ".search-form,.s-search", function (event) {
-        event.preventDefault();
-        $.pjax.submit(event, "#page", {
-          fragment: "#page",
-          timeout: 8000,
-        });
-        if ($(".js-search.is-visible").length > 0) {
-          $(".js-toggle-search").toggleClass("is-active");
-          $(".js-search").toggleClass("is-visible");
-          $("html").css("overflow-y", "unset");
-        }
-      });
-    window.addEventListener(
-      "popstate",
-      function (e) {
-        Siren.AH();
-        Siren.PE();
-        initSerach();
-        timeSeriesReload(true);
-        post_list_show_animation();
-      },
-      false
-    );
+    import(
+      /* webpackChunkName: "pjax" */
+      "./utils/pjax"
+    ).then(({ InitPJAX }) => InitPJAX());
   }
-  $.fn.postLike = function () {
-    if ($(this).hasClass("done")) {
-      return false;
-    } else {
-      $(this).addClass("done");
-      var id = $(this).data("id"),
-        action = $(this).data("action"),
-        rateHolder = $(this).children(".count");
-      var ajax_data = {
-        action: "specs_zan",
-        um_id: id,
-        um_action: action,
-      };
-      $.post(mashiro_option.ajax_url, ajax_data, function (data) {
-        $(rateHolder).html(data);
-      });
-      return false;
-    }
-  };
-  $(document).on("click", ".specsZan", function () {
-    $(this).postLike();
+
+  $("html").css("overflow-y", "unset");
+  highlightCode();
+  checkDarkMode(false);
+  $("#preload").fadeOut();
+
+  $(".collapseButton").click(function () {
+    $(this).parent().parent().find(".xContent").slideToggle("slow");
   });
   console.log(
     "%c Mashiro %c",
@@ -1298,41 +1145,4 @@ $(function () {
     "",
     "https://github.com/mashirozx"
   );
-});
-
-window.onload = function () {
-  function load() {
-    $("html").css("overflow-y", "unset");
-    highlightCode();
-    checkDarkMode(false);
-    $("#preload").fadeOut();
-  }
-
-  if (mashiro_option.instantclick) {
-    import(
-      /* webpackChunkName: "instantclick" */
-      "instantclick"
-    ).then(({ default: _ }) => {
-      _.init();
-      _.on("change", () => {
-        load();
-        delete window.$;
-        delete window.jQuery;
-        if (window.SyntaxHighlighter) {
-          SyntaxHighlighter.highlight();
-        }
-        if (window.EnlighterJSINIT) {
-          EnlighterJSINIT();
-        }
-      });
-    });
-  }
-
-  load();
-};
-
-$(document).ready(function () {
-  $(".collapseButton").click(function () {
-    $(this).parent().parent().find(".xContent").slideToggle("slow");
-  });
 });

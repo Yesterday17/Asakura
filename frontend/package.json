@@ -27,11 +27,12 @@
     "hls.js": "^0.14.16",
     "instantclick": "^3.1.0-2",
     "jquery": "^3.5.1",
-    "jquery-pjax": "^2.0.1",
     "lazyload": "^2.0.0-rc.2",
     "lightgallery.js": "^1.4.0",
     "md5": "^2.3.0",
     "nprogress": "^0.2.0",
+    "pjax": "^0.2.8",
+    "smoothscroll-for-websites": "^1.4.10",
     "tocbot": "^4.12.0"
   }
 }
