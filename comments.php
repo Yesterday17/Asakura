@@ -64,10 +64,10 @@ if (post_password_required()) {
                         'avatar' => '<div class="cmt-info-container">
     <div class="comment-user-avatar">
         <img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpeg">
-        <div class="socila-check qq-check">
+        <div class="social-check qq-check">
             <i class="fa fa-qq" aria-hidden="true"></i>
         </div>
-        <div class="socila-check gravatar-check">
+        <div class="social-check gravatar-check">
             <i class="fa fa-google" aria-hidden="true"></i>
         </div>
     </div>',
@@ -86,7 +86,6 @@ if (post_password_required()) {
                 );
                 comment_form($args);
             }
-
             ?>
         </div>
     </section>

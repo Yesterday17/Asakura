@@ -92,15 +92,17 @@ function post_list_show_animation() {
   }
 }
 
-$body.on("click", ".comment-reply-link", function () {
-  addComment.moveForm(
-    `comment-${$(this).attr("data-commentid")}`,
-    $(this).attr("data-commentid"),
-    "respond",
-    $(this).attr("data-postid")
-  );
-  return false;
-});
+document.querySelectorAll(".comment-reply-link").forEach((r) =>
+  r.addEventListener("click", function () {
+    addComment.moveForm(
+      `comment-${$(this).attr("data-commentid")}`,
+      $(this).attr("data-commentid"),
+      "respond",
+      $(this).attr("data-postid")
+    );
+    return false;
+  })
+);
 
 function attach_image() {
   var cached = $(".insert-image-tips");

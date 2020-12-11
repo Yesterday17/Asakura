@@ -7470,7 +7470,7 @@ a.toc-link {
     border-radius: 50%
 }
 
-.comment-user-avatar .socila-check {
+.comment-user-avatar .social-check {
     display: none;
     width: 1.5em;
     height: 1.5em;
@@ -7502,7 +7502,7 @@ a.toc-link {
         right: 11%
     }
 
-    .comment-user-avatar .socila-check {
+    .comment-user-avatar .social-check {
         width: 1.5em;
         height: 1.5em;
         font-size: .5em;
