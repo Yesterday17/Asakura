@@ -1072,14 +1072,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Comment Location Infomation', SAKURA_DOMAIN),
-        'desc' => __('Check to enable, display the user\'s location info', SAKURA_DOMAIN),
-        'id'   => 'open_location',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
         'name'    => __('Comment Image Upload API', SAKURA_DOMAIN),
         'id'      => 'img_upload_api',
         'std'     => "imgur",

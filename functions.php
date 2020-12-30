@@ -31,7 +31,7 @@ if (!function_exists("asakura_rest_url")):
     }
 endif;
 
-if (!function_exists('akina_setup')):
+if (!function_exists('akina_setup')) {
     /**
      * Sets up theme defaults and registers support for various WordPress features.
      *
@@ -155,14 +155,8 @@ if (!function_exists('akina_setup')):
             )) : '';
         }
     }
-endif;
-add_action('after_setup_theme', 'akina_setup');
-
-function admin_lettering() {
-    echo '<style type="text/css">body{font-family: Microsoft YaHei;}</style>';
 }
-
-add_action('admin_head', 'admin_lettering');
+add_action('after_setup_theme', 'akina_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -225,27 +219,6 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/theme_plus.php';
 require get_template_directory() . '/inc/categories-images.php';
 
-//Comment Location Start
-function geoip_get($ip) {
-    if (empty($ip))
-        $ip = get_comment_author_IP();
-    $ch = curl_init();
-    $timeout = 5;
-    curl_setopt($ch, CURLOPT_URL, 'http://ip.taobao.com/outGetIpInfo?accessKey=alibaba-inc&ip=' . $ip);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    $file_contents = curl_exec($ch);
-    curl_close($ch);
-    $result = json_decode($file_contents, true);
-    if ($result['data']['country'] != '中国') {
-        return $result['data']['country'];
-    } else {
-        return $result['data']['country'] . '&nbsp;·&nbsp;' . $result['data']['region'] . '&nbsp;·&nbsp;' . $result['data']['city'] . '&nbsp;·&nbsp;' . $result['data']['isp'];
-    }
-}
-
-//Comment Location End
-
 /**
  * COMMENT FORMATTING
  *
@@ -285,9 +258,6 @@ if (!function_exists('akina_comment_format')) {
                                 <div class="info">
                                     <time datetime="<?php comment_date('Y-m-d'); ?>"><?php echo poi_time_since(strtotime($comment->comment_date_gmt), true); //comment_date(get_option('date_format'));
                                         ?></time><?php echo siren_get_useragent($comment->comment_agent); ?><?php echo mobile_get_useragent_icon($comment->comment_agent); ?>
-                                    &nbsp;<?php if (akina_option('open_location')) {
-                                        _e('Location', SAKURA_DOMAIN); /*来自*/ ?>: <?php echo geoip_get(get_comment_author_ip());
-                                    } ?>
                                     <?php if (current_user_can('manage_options') and (wp_is_mobile() == false)) {
                                         $comment_ID = $comment->comment_ID;
                                         $i_private = get_comment_meta($comment_ID, '_private', true);
@@ -695,7 +665,7 @@ add_filter('retrieve_password_message', 'resetpassword_message_fix');
 
 //Fix register email bug </>
 function new_user_message_fix($message) {
-    $show_register_ip = "注册IP | Registration IP: " . get_the_user_ip() . " (" . geoip_get(get_the_user_ip()) . ")\r\n\r\n如非本人操作请忽略此邮件 | Please ignore this email if this was not your operation.\r\n\r\n";
+    $show_register_ip = "注册IP | Registration IP: " . get_the_user_ip() . " \r\n\r\n如非本人操作请忽略此邮件 | Please ignore this email if this was not your operation.\r\n\r\n";
     $message = str_replace("To set your password, visit the following address:", $show_register_ip . "在此设置密码 | To set your password, visit the following address:", $message);
     $message = str_replace("<", "", $message);
     $message = str_replace(">", "\r\n\r\n设置密码后在此登录 | Login here after setting password: ", $message);
@@ -1050,7 +1020,7 @@ function html_tag_parser($content) {
 add_filter('the_content', 'html_tag_parser'); //替换文章关键词
 
 // default feature image
-function DEFAULT_FEATURE_IMAGE() {
+function default_feature_image(): string {
     return asakura_rest_url('image/feature') . '?' . rand(1, 1000);
 }
 
@@ -1068,63 +1038,7 @@ if (akina_option('sakura_widget')) {
     }
 }
 
-// 评论Markdown解析
-function markdown_parser($incoming_comment) {
-    global $wpdb, $comment_markdown_content;
-    $re = '/```([\s\S]*?)```[\s]*|`{1,2}[^`](.*?)`{1,2}|\[.*?\]\([\s\S]*?\)/m';
-    if (preg_replace($re, 'temp', $incoming_comment['comment_content']) != strip_tags(preg_replace($re, 'temp', $incoming_comment['comment_content']))) {
-        siren_ajax_comment_err('评论只支持Markdown啦，见谅╮(￣▽￣)╭<br>Markdown Supported while <i class="fa fa-code" aria-hidden="true"></i> Forbidden');
-        return ($incoming_comment);
-    }
-    $myCustomer = $wpdb->get_row("SELECT * FROM wp_comments");
-    //Add column if not present.
-    if (!isset($myCustomer->comment_markdown)) {
-        $wpdb->query("ALTER TABLE wp_comments ADD comment_markdown text");
-    }
-    $comment_markdown_content = $incoming_comment['comment_content'];
-    include 'inc/classes/Parsedown.php';
-    $Parsedown = new Parsedown();
-    $incoming_comment['comment_content'] = $Parsedown->setUrlsLinked(false)->text($incoming_comment['comment_content']);
-    return $incoming_comment;
-}
-
-add_filter('preprocess_comment', 'markdown_parser');
 remove_filter('comment_text', 'make_clickable', 9);
-
-//保存Markdown评论
-function save_markdown_comment($comment_ID, $comment_approved) {
-    global $wpdb, $comment_markdown_content;
-    $comment = get_comment($comment_ID);
-    $comment_content = $comment_markdown_content;
-    //store markdow content
-    $wpdb->query("UPDATE wp_comments SET comment_markdown='" . $comment_content . "' WHERE comment_ID='" . $comment_ID . "';");
-}
-
-add_action('comment_post', 'save_markdown_comment', 10, 2);
-
-//打开评论HTML标签限制
-function allow_more_tag_in_comment() {
-    global $allowedtags;
-    $allowedtags['pre'] = array('class' => array());
-    $allowedtags['code'] = array('class' => array());
-    $allowedtags['h1'] = array('class' => array());
-    $allowedtags['h2'] = array('class' => array());
-    $allowedtags['h3'] = array('class' => array());
-    $allowedtags['h4'] = array('class' => array());
-    $allowedtags['h5'] = array('class' => array());
-    $allowedtags['ul'] = array('class' => array());
-    $allowedtags['ol'] = array('class' => array());
-    $allowedtags['li'] = array('class' => array());
-    $allowedtags['td'] = array('class' => array());
-    $allowedtags['th'] = array('class' => array());
-    $allowedtags['tr'] = array('class' => array());
-    $allowedtags['table'] = array('class' => array());
-    $allowedtags['thead'] = array('class' => array());
-    $allowedtags['tbody'] = array('class' => array());
-    $allowedtags['span'] = array('class' => array());
-}
-
-add_action('pre_comment_on_post', 'allow_more_tag_in_comment');
 
 /*
  * 随机图
@@ -1235,7 +1149,7 @@ add_filter('file_is_displayable_image', 'mimvp_file_is_displayable_image', 10, 2
 //code end
 
 //展开收缩功能
-function x_collapse($atts, $content = null) {
+function x_collapse($atts, $content = null): string {
     $attrs = shortcode_atts(array("title" => ""), $atts);
     return '<div style="margin: 0.5em 0;">
     <div class="xControl">

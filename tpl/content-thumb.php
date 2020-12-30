@@ -20,7 +20,7 @@ while (have_posts()) : the_post();
         $large_image_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
         $post_img = $large_image_url[0];
     } else {
-        $post_img = DEFAULT_FEATURE_IMAGE();
+        $post_img = default_feature_image();
     }
     $the_cat = get_the_category();
     // 摘要字数限制
