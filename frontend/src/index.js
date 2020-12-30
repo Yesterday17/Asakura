@@ -28,6 +28,8 @@ global.asakura = {
   cmt_showPopup,
   bg_update,
   init_page,
+  mail_me,
+  coverVideo,
 };
 
 window.timeSeriesReload = timeSeriesReload;

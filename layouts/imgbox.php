@@ -129,7 +129,7 @@
                                             src="<?php echo akina_option('webweb_img'); ?>/sns/csdn.png"/></a></li>
                         <?php } ?>
                         <?php if (akina_option('email_name') && akina_option('email_domain')) { ?>
-                            <li><a onclick="mail_me()" class="social-wangyiyun" title="E-mail"><img
+                            <li><a onclick="asakura.mail_me()" class="social-wangyiyun" title="E-mail"><img
                                             src="<?php echo akina_option('webweb_img'); ?>/sns/mail.png"/></a></li>
                         <?php } ?>
                         <?php if (akina_option('background-rgs', '1')): ?>
@@ -221,7 +221,7 @@
                                title="CSDN"><img src="<?php echo akina_option('webweb_img'); ?>/sns/csdn.png"/></a></li>
                     <?php } ?>
                     <?php if (akina_option('email_name') && akina_option('email_domain')) { ?>
-                        <li><a onclick="mail_me()" class="social-wangyiyun" title="E-mail"><img
+                        <li><a onclick="asakura.mail_me()" class="social-wangyiyun" title="E-mail"><img
                                         src="<?php echo akina_option('webweb_img'); ?>/sns/mail.png"/></a></li>
                     <?php } ?>
                     <?php if (akina_option('background-rgs', '1')): ?>

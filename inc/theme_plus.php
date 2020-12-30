@@ -371,7 +371,7 @@ function the_video_headPattern($type) {
             } else {
                 $edit_this_post_link = '';
             }
-            $t .= the_title('<h1 class="entry-title">', '<button id="coverVideo-btn" class=".constant-width-to-height-ratio" onclick="coverVideo()"><i class="fa fa-pause" aria-hidden="true"></i></button></h1>', false);
+            $t .= the_title('<h1 class="entry-title">', '<button id="coverVideo-btn" class=".constant-width-to-height-ratio" onclick="asakura.coverVideo()"><i class="fa fa-pause" aria-hidden="true"></i></button></h1>', false);
             $t .= '<p class="entry-census"><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '"><img src="' . get_avatar_profile_url(get_the_author_meta('ID')) . '"></a></span><span><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'), get_the_author_meta('user_nicename'))) . '">' . get_the_author() . '</a></span><span class="bull">·</span>' . poi_time_since(get_post_time('U', true), false, true) . '<span class="bull">·</span>' . get_post_views(get_the_ID()) . ' ' . _n("View", "Views", get_post_views(get_the_ID()), SAKURA_DOMAIN)/*次阅读*/ . $edit_this_post_link . '</p>';
         endwhile; endif;
     } elseif (is_page()) {
