@@ -26,6 +26,8 @@ global.asakura = {
   scrollTo: aScrollTo,
   showPopup,
   cmt_showPopup,
+  bg_update,
+  init_page,
 };
 
 window.timeSeriesReload = timeSeriesReload;
@@ -33,26 +35,17 @@ window.post_list_show_animation = post_list_show_animation;
 
 var $body = $("body");
 
-if (!window.mashiro_global) {
-  window.mashiro_global = {
-    variables: {
-      bgn: 1,
-    },
-    ini: {
-      normalize: (normal = true) => {
-        if (normal) {
-          // initial functions when page first load (首次加载页面时的初始化函数)
-          new lazyload();
-          scrollBar();
-        }
+function init_page(normal = true) {
+  if (normal) {
+    // initial functions when page first load (首次加载页面时的初始化函数)
+    new lazyload();
+    scrollBar();
+  }
 
-        post_list_show_animation();
-        web_audio();
-        coverVideoIni();
-        load_bangumi();
-      },
-    },
-  };
+  post_list_show_animation();
+  web_audio();
+  coverVideoIni();
+  load_bangumi();
 }
 
 function post_list_show_animation() {
@@ -274,28 +267,9 @@ function bg_update() {
       document.body.clientWidth < 860 && mashiro_option.cover_beta
         ? "type=mobile&"
         : ""
-    }${mashiro_global.variables.bgn})`
+    }${Date.now()})`
   );
 }
-
-function nextBG() {
-  bg_update();
-  mashiro_global.variables.bgn++;
-}
-
-function preBG() {
-  mashiro_global.variables.bgn--;
-  bg_update();
-}
-
-$(document).ready(function () {
-  $("#bg-next").click(function () {
-    nextBG();
-  });
-  $("#bg-pre").click(function () {
-    preBG();
-  });
-});
 
 function aScrollTo(top) {
   window.scrollTo({ top, behavior: "smooth" });
@@ -556,20 +530,6 @@ function mail_me() {
   window.open(mail);
 }
 
-function activate_widget() {
-  if (document.body.clientWidth > 860) {
-    $(".show-hide").on("click", function () {
-      $("#secondary").toggleClass("active");
-    });
-  } else {
-    $("#secondary").remove();
-  }
-}
-
-setTimeout(function () {
-  activate_widget();
-}, 100);
-
 function load_bangumi() {
   if ($("section").hasClass("bangumi")) {
     $body.on("click", "#bangumi-pagination a", function () {
@@ -597,7 +557,7 @@ function load_bangumi() {
   }
 }
 
-mashiro_global.ini.normalize();
+init_page();
 loadCSS(mashiro_option.entry_content_theme_src);
 loadCSS("https://at.alicdn.com/t/font_679578_qyt5qzzavdo39pb9.css");
 

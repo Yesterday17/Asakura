@@ -30,12 +30,6 @@ function pjaxInit() {
   }
   $(".iconflat").css("width", "50px").css("height", "50px");
   $(".openNav").css("height", "50px");
-  $("#bg-next").click(function () {
-    nextBG();
-  });
-  $("#bg-pre").click(function () {
-    preBG();
-  });
   timeSeriesReload();
   tableOfContentScroll();
 }
@@ -74,7 +68,7 @@ export function InitPJAX() {
     initSerach();
     if (mashiro_option.nprogress_on) NProgress.done();
     pjaxInit();
-    mashiro_global.ini.normalize(false);
+    global.asakura.init_page(false);
     $("#loading").fadeOut(500);
 
     if (window.gtag) {
