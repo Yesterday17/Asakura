@@ -23,10 +23,42 @@ get_header();
     <div class="notice" style="margin-top:60px">
         <i class="iconfont icon-notification"></i>
         <?php if (strlen($text) > 142 && !wp_is_mobile()) { ?>
-            <marquee align="middle" behavior="scroll" loop="-1" scrollamount="6"
-                     style="margin: 0 8px 0 20px; display: block;" onMouseOut="this.start()" onMouseOver="this.stop()">
+            <style>
+                @keyframes marquee {
+                    0% {
+                        transform: translate(0, 0);
+                    }
+                    100% {
+                        transform: translate(-100%, 0);
+                    }
+                }
+
+                .marquee {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                }
+
+                .marquee div:hover {
+                    animation-play-state: paused;
+                }
+
+                .marquee div {
+                    display: inline-block;
+                    will-change: transform;
+                    padding-left: 100%;
+                    animation: marquee 114514s linear infinite;
+                }
+            </style>
+            <div class="marquee" style="margin: 0 8px 0 20px; display: block;" align="middle">
                 <div class="notice-content"><?php echo $text; ?></div>
-            </marquee>
+            </div>
+            <script>
+                document.querySelectorAll('.marquee div').forEach((m) => {
+                    const seconds = Math.floor(m.clientWidth / 6 / 1000 * 85);
+                    m.style.animationDuration = `${seconds}s`;
+                })
+            </script>
         <?php } else { ?>
             <div class="notice-content"><?php echo $text; ?></div>
         <?php } ?>
