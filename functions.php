@@ -1040,52 +1040,6 @@ if (akina_option('sakura_widget')) {
 
 remove_filter('comment_text', 'make_clickable', 9);
 
-/*
- * 随机图
- */
-function create_sakura_table() {
-    if (akina_option('cover_beta')) {
-        global $wpdb, $sakura_image_array, $sakura_mobile_image_array;
-    } else {
-        global $wpdb, $sakura_image_array;
-    }
-    $sakura_table_name = $wpdb->base_prefix . SAKURA_DOMAIN;
-    require_once ABSPATH . "wp-admin/includes/upgrade.php";
-    dbDelta("CREATE TABLE IF NOT EXISTS `" . $sakura_table_name . "` (
-        `mate_key` varchar(50) COLLATE utf8_bin NOT NULL,
-        `mate_value` text COLLATE utf8_bin NOT NULL,
-        PRIMARY KEY (`mate_key`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;");
-    //default data
-    if (!$wpdb->get_var("SELECT COUNT(*) FROM $sakura_table_name WHERE mate_key = 'manifest_json'")) {
-        $manifest = array(
-            "mate_key"   => "manifest_json",
-            "mate_value" => file_get_contents(get_template_directory() . "/manifest/manifest.json"),
-        );
-        $wpdb->insert($sakura_table_name, $manifest);
-    }
-    if (akina_option('cover_beta')) {
-        if (!$wpdb->get_var("SELECT COUNT(*) FROM $sakura_table_name WHERE mate_key = 'mobile_manifest_json'")) {
-            $mobile_manifest = array(
-                "mate_key"   => "mobile_manifest_json",
-                "mate_value" => file_get_contents(get_template_directory() . "/manifest/manifest_mobile.json"),
-            );
-            $wpdb->insert($sakura_table_name, $mobile_manifest);
-        }
-    }
-    if (!$wpdb->get_var("SELECT COUNT(*) FROM $sakura_table_name WHERE mate_key = 'json_time'")) {
-        $time = array("mate_key" => "json_time", "mate_value" => date("Y-m-d H:i:s", time()),);
-        $wpdb->insert($sakura_table_name, $time);
-    }
-    //reduce sql query
-    $sakura_image_array = $wpdb->get_var("SELECT `mate_value` FROM  $sakura_table_name WHERE `mate_key`='manifest_json'");
-    if (akina_option('cover_beta')) {
-        $sakura_mobile_image_array = $wpdb->get_var("SELECT `mate_value` FROM  $sakura_table_name WHERE `mate_key`='mobile_manifest_json'");
-    }
-}
-
-add_action('after_setup_theme', 'create_sakura_table');
-
 //rest api支持
 function permalink_tip() {
     if (!get_option('permalink_structure')) {

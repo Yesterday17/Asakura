@@ -287,37 +287,24 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('Cover Random Graphs Option', SAKURA_DOMAIN),
-        'desc'    => __('Select how to call the cover random image', SAKURA_DOMAIN),
-        'id'      => 'cover_cdn_options',
-        'std'     => "type_3",
-        'type'    => "select",
-        'options' => array(
-            'type_1' => __('Webp Optimized Random Graphs', SAKURA_DOMAIN),
-            'type_2' => __('Local Random Graphs', SAKURA_DOMAIN),
-            'type_3' => __('External API Random Graphs', SAKURA_DOMAIN),
-        )
-    );
-
-    $options[] = array(
-        'name' => __('Multi Terminal Separation of Home Random Graphs', SAKURA_DOMAIN),
-        'desc' => __('It is off by default and enabled by check', SAKURA_DOMAIN),
+        'name' => ll('Multi Terminal Separation of Home Random Graphs'),
+        'desc' => ll('It is off by default and enabled by check'),
         'id'   => 'cover_beta',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Webp Optimization / External API PC Random Graphs Url', SAKURA_DOMAIN),
-        'desc' => sprintf(__('Fill in the manifest path for random picture display, please refer to <a href="https://github.com/mashirozx/Sakura/wiki/options">Wiki </a>. If you select webp images above, click <a href="%s">here</a> to update manifest', SAKURA_DOMAIN), asakura_rest_url('database/update')),
+        'name' => ll('Webp Optimization / External API PC Random Graphs Url'),
+        'desc' => ll('Fill in the manifest path for random picture display, please refer to <a href="https://github.com/mashirozx/Sakura/wiki/options">Wiki </a>. If you select webp images above, click <a href="%s">here</a> to update manifest'),
         'id'   => 'cover_cdn',
         'std'  => 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images',
         'type' => 'text'
     );
 
     $options[] = array(
-        'name' => __('External API Mobile Random Graphs Url', SAKURA_DOMAIN),
-        'desc' => __('When you use the external API random graph and check the multi terminal separation option, please fill in the random graph API mobile terminal address here, otherwise the mobile terminal random graph will be blank', SAKURA_DOMAIN),
+        'name' => ll('External API Mobile Random Graphs Url'),
+        'desc' => ll('When you use the external API random graph and check the multi terminal separation option, please fill in the random graph API mobile terminal address here, otherwise the mobile terminal random graph will be blank'),
         'id'   => 'cover_cdn_mobile',
         'std'  => 'https://api.uomg.com/api/rand.img2?sort=二次元&format=images',
         'type' => 'text'
@@ -414,8 +401,8 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => ll('Home Page Article Details Icon Switch', SAKURA_DOMAIN),
-        'desc' => ll('Default on, check off', SAKURA_DOMAIN),
+        'name' => ll('Home Page Article Details Icon Switch'),
+        'desc' => ll('Default on, check off'),
         'id'   => 'hpage-art-dis',
         'std'  => '0',
         'type' => 'checkbox'
@@ -1069,66 +1056,6 @@ function optionsframework_options() {
         'id'   => 'open_useragent',
         'std'  => '0',
         'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name'    => __('Comment Image Upload API', SAKURA_DOMAIN),
-        'id'      => 'img_upload_api',
-        'std'     => "imgur",
-        'type'    => "radio",
-        'options' => array(
-            'imgur'     => __('Imgur (https://imgur.com)', SAKURA_DOMAIN),
-            'smms'      => __('SM.MS (https://sm.ms)', SAKURA_DOMAIN),
-            'chevereto' => __('Chevereto (https://chevereto.com)', SAKURA_DOMAIN),
-        )
-    );
-
-    $options[] = array(
-        'name' => __('Imgur Client ID', SAKURA_DOMAIN),
-        'desc' => __('Register your application <a href="https://api.imgur.com/oauth2/addclient">here</a>, note we only need the Client ID here.', SAKURA_DOMAIN),
-        'id'   => 'imgur_client_id',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('SM.MS Secret Token', SAKURA_DOMAIN),
-        'desc' => __('Register your application <a href="https://sm.ms/home/apitoken">here</a>.', SAKURA_DOMAIN),
-        'id'   => 'smms_client_id',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Chevereto API v1 key', SAKURA_DOMAIN),
-        'desc' => __('Get your API key here: ' . akina_option('cheverto_url') . '/dashboard/settings/api', SAKURA_DOMAIN),
-        'id'   => 'chevereto_api_key',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Chevereto URL', SAKURA_DOMAIN),
-        'desc' => __('Your Chevereto homepage url, no slash in the end, eg. https://your.cherverto.com', SAKURA_DOMAIN),
-        'id'   => 'cheverto_url',
-        'std'  => 'https://your.cherverto.com',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Comment Images Proxy', SAKURA_DOMAIN),
-        'desc' => __('A front-ed proxy for the uploaded images. Leave it blank if you do not need.', SAKURA_DOMAIN),
-        'id'   => 'cmt_image_proxy',
-        'std'  => 'https://images.weserv.nl/?url=',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Imgur Upload Proxy', SAKURA_DOMAIN),
-        'desc' => __('A back-ed proxy to upload images. You may set a self hosted proxy with Nginx, following my <a href="https://2heng.xin/2018/06/06/javascript-upload-images-with-imgur-api/">turtal</a>. This feature is mainly for Chinese who cannot access to Imgur due to the GFW. The default and official setting is 【<a href="https://api.imgur.com/3/image/">https://api.imgur.com/3/image/</a>】', SAKURA_DOMAIN),
-        'id'   => 'imgur_upload_image_proxy',
-        'std'  => 'https://api.imgur.com/3/image/',
-        'type' => 'text'
     );
 
     $options[] = array(

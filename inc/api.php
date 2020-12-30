@@ -6,6 +6,7 @@
 include_once('classes/Aplayer.php');
 include_once('classes/Bilibili.php');
 include_once('classes/Cache.php');
+include_once('classes/Images.php');
 
 use Sakura\API\Aplayer;
 use Sakura\API\Bilibili;
@@ -29,11 +30,6 @@ add_action('rest_api_init', function () {
     register_rest_route(SAKURA_REST_API, '/image/feature', array(
         'methods'             => 'GET',
         'callback'            => 'feature_gallery',
-        'permission_callback' => '__return_true',
-    ));
-    register_rest_route(SAKURA_REST_API, '/database/update', array(
-        'methods'             => 'GET',
-        'callback'            => 'update_database',
         'permission_callback' => '__return_true',
     ));
     register_rest_route(SAKURA_REST_API, '/bangumi/bilibili', array(
@@ -97,20 +93,6 @@ function feature_gallery(): WP_REST_Response {
     $response->set_status(302);
     $response->header('Location', $img_url);
     return $response;
-}
-
-/*
- * update database rest api
- * @rest api接口路径：SAKURA_REST_API/database/update
- */
-function update_database(): WP_REST_Response {
-    if (akina_option('cover_cdn_options') == "type_1") {
-        $output = Cache::update_database();
-        $result = new WP_REST_Response($output, 200);
-        return $result;
-    } else {
-        return new WP_REST_Response("Invalid access", 200);
-    }
 }
 
 /*

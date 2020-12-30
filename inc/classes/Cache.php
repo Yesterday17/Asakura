@@ -3,7 +3,7 @@
 namespace Sakura\API;
 
 class Cache {
-    public static function search_json() {
+    public static function search_json(): array {
         global $more;
         $vowels = array(
             "[", "{", "]", "}", "<", ">", "\r\n", "\r", "\n", "-", "'", '"', '`', " ", ":", ";", '\\', "  ", "toc"
@@ -58,49 +58,6 @@ EOS;
                     "text"  => $is_private ? ($comment->comment_author . ": " . __('The comment is private', SAKURA_DOMAIN)) : str_replace($vowels, ' ', preg_replace($regex, ' ', $comment->comment_author . "：" . $comment->comment_content))
                 );
             }
-        }
-        return $output;
-    }
-
-
-    public static function update_database() {
-        global $wpdb;
-        $sakura_table_name = $wpdb->base_prefix . SAKURA_DOMAIN;
-        $img_domain = akina_option('cover_cdn') ? akina_option('cover_cdn') : get_template_directory();
-        $manifest = file_get_contents($img_domain . "/manifest/manifest.json");
-        if (akina_option('cover_beta')) {
-            $manifest_mobile = file_get_contents($img_domain . "/manifest/manifest_mobile.json");
-            if ($manifest && $manifest_mobile) {
-                $manifest = array("mate_key" => "manifest_json", "mate_value" => $manifest);
-                $manifest_mobile = array("mate_key" => "mobile_manifest_json", "mate_value" => $manifest_mobile);
-                $time = array("mate_key" => "json_time", "mate_value" => date("Y-m-d H:i:s", time()));
-
-                /** @noinspection SqlResolve */
-                $wpdb->query("DELETE FROM  $sakura_table_name WHERE `mate_key` ='manifest_json'");
-                /** @noinspection SqlResolve */
-                $wpdb->query("DELETE FROM  $sakura_table_name WHERE `mate_key` ='mobile_manifest_json'");
-                /** @noinspection SqlResolve */
-                $wpdb->query("DELETE FROM  $sakura_table_name WHERE `mate_key` ='json_time'");
-                $wpdb->insert($sakura_table_name, $manifest);
-                $wpdb->insert($sakura_table_name, $manifest_mobile);
-                $wpdb->insert($sakura_table_name, $time);
-                $output = "manifest.json&&mainfest_mobile.json has been stored into database.";
-            } else {
-                $output = "manifest.json or mainfest_mobile.json not found, please ensure your url ($img_domain) is corrent.";
-            }
-        } elseif ($manifest) {
-            $manifest = array("mate_key" => "manifest_json", "mate_value" => $manifest);
-            $time = array("mate_key" => "json_time", "mate_value" => date("Y-m-d H:i:s", time()));
-
-            /** @noinspection SqlResolve */
-            $wpdb->query("DELETE FROM  $sakura_table_name WHERE `mate_key` ='manifest_json'");
-            /** @noinspection SqlResolve */
-            $wpdb->query("DELETE FROM  $sakura_table_name WHERE `mate_key` ='json_time'");
-            $wpdb->insert($sakura_table_name, $manifest);
-            $wpdb->insert($sakura_table_name, $time);
-            $output = "manifest.json has been stored into database.";
-        } else {
-            $output = "manifest.json not found, please ensure your url ($img_domain) is corrent.";
         }
         return $output;
     }
