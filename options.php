@@ -1004,14 +1004,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Google Analytics', SAKURA_DOMAIN),
-        'desc' => __('UA-xxxxx-x', SAKURA_DOMAIN),
-        'id'   => 'google_analytics_id',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
         'name' => __('CNZZ Statistics (Not Recommand)', SAKURA_DOMAIN),
         'desc' => __('Statistics code, which will be invisible in web page.', SAKURA_DOMAIN),
         'id'   => 'site_statistics',

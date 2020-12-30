@@ -912,11 +912,6 @@ window.Siren = {
           $("#loading-comments").after(result.fadeIn(500));
           $("ul.comment-wrap").after(nextlink);
           new lazyload();
-          if (window.gtag) {
-            gtag("config", mashiro_option.google_analytics_id, {
-              page_path: path,
-            });
-          }
           highlightCode();
         },
       });

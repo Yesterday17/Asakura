@@ -71,12 +71,6 @@ export function InitPJAX() {
     global.asakura.init_page(false);
     $("#loading").fadeOut(500);
 
-    if (window.gtag) {
-      gtag("config", mashiro_option.google_analytics_id, {
-        page_path: window.location.pathname,
-      });
-    }
-
     if ($(".js-search.is-visible").length > 0) {
       $(".js-toggle-search").toggleClass("is-active");
       $(".js-search").toggleClass("is-visible");

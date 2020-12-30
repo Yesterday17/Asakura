@@ -58,21 +58,6 @@
     <?php } ?>
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <?php wp_head(); ?>
-    <?php if (akina_option('google_analytics_id', '')): ?>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async
-                src="https://www.googletagmanager.com/gtag/js?id=<?php echo akina_option('google_analytics_id', ''); ?>"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments)
-            }
-
-            gtag('js', new Date());
-            gtag('config', '<?php echo akina_option('google_analytics_id', ''); ?>');
-        </script>
-    <?php endif; ?>
 </head>
 <body <?php body_class(); ?>>
 <?php if (akina_option('preload_animation', '1')): ?>

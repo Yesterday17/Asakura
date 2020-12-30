@@ -37,7 +37,6 @@ function get_asakura_option(): array {
         'form_position'           => 'bottom', // ajax comments 默认为bottom，如果你的表单在顶部则设置为top
         'api'                     => esc_url_raw(rest_url()),
         'nonce'                   => wp_create_nonce('wp_rest'),
-        'google_analytics_id'     => akina_option('google_analytics_id', ''),
         'gravatar_url'            => akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar',
         // Asakura
         'instantclick'            => False,
