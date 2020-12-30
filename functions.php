@@ -713,85 +713,6 @@ function new_user_message_fix($message) {
 add_filter('wp_new_user_notification_email', 'new_user_message_fix');
 
 /*
- * 评论邮件回复
- */
-function comment_mail_notify($comment_id) {
-    $mail_user_name = akina_option('mail_user_name') ? akina_option('mail_user_name') : 'poi';
-    $comment = get_comment($comment_id);
-    $parent_id = $comment->comment_parent ? $comment->comment_parent : '';
-    $spam_confirmed = $comment->comment_approved;
-    $mail_notify = akina_option('mail_notify') ? get_comment_meta($parent_id, 'mail_notify', false) : false;
-    $admin_notify = akina_option('admin_notify') ? '1' : (get_comment($parent_id)->comment_author_email != get_bloginfo('admin_email') ? '1' : '0');
-    if (($parent_id != '') && ($spam_confirmed != 'spam') && ($admin_notify != '0') && (!$mail_notify)) {
-        $wp_email = $mail_user_name . '@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
-        $to = trim(get_comment($parent_id)->comment_author_email);
-        $subject = '你在 [' . get_option("blogname") . '] 的留言有了回应';
-        $message = '
-      <div style="background: white;
-      width: 95%;
-      max-width: 800px;
-      margin: auto auto;
-      border-radius: 5px;
-      border: ' . akina_option('theme_skin') . ' 1px solid;
-      overflow: hidden;
-      -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.18);">
-        <header style="overflow: hidden;">
-            <img style="width:100%;z-index: 666;" src="' . akina_option('mail_img') . '">
-        </header>
-        <div style="padding: 5px 20px;">
-        <p style="position: relative;
-        color: white;
-        float: left;
-        z-index: 999;
-        background: ' . akina_option('theme_skin') . ';
-        padding: 5px 30px;
-        margin: -25px auto 0 ;
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.30)">Dear&nbsp;' . trim(get_comment($parent_id)->comment_author) . '</p>
-        <br>
-        <h3>您有一条来自<a style="text-decoration: none;color: ' . akina_option('theme_skin') . ' " target="_blank" href="' . home_url() . '/">' . get_option("blogname") . '</a>的回复</h3>
-        <br>
-        <p style="font-size: 14px;">您在文章《' . get_the_title($comment->comment_post_ID) . '》上发表的评论：</p>
-        <div style="border-bottom:#ddd 1px solid;border-left:#ddd 1px solid;padding-bottom:20px;background-color:#eee;margin:15px 0px;padding-left:20px;padding-right:20px;border-top:#ddd 1px solid;border-right:#ddd 1px solid;padding-top:20px">' . trim(get_comment($parent_id)->comment_content) . '</div>
-        <p style="font-size: 14px;">' . trim($comment->comment_author) . ' 给您的回复如下：</p>
-        <div style="border-bottom:#ddd 1px solid;border-left:#ddd 1px solid;padding-bottom:20px;background-color:#eee;margin:15px 0px;padding-left:20px;padding-right:20px;border-top:#ddd 1px solid;border-right:#ddd 1px solid;padding-top:20px">' . trim($comment->comment_content) . '</div>
-
-      <div style="text-align: center;">
-          <img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/comment/comment-mail.png" alt="hr" style="width:100%;
-                                                                                                  margin:5px auto 5px auto;
-                                                                                                  display: block;">
-          <a style="text-transform: uppercase;
-                      text-decoration: none;
-                      font-size: 14px;
-                      border: 2px solid #6c7575;
-                      color: #2f3333;
-                      padding: 10px;
-                      display: inline-block;
-                      margin: 10px auto 0; " target="_blank" href="' . htmlspecialchars(get_comment_link($parent_id)) . '">点击查看回复的完整內容</a>
-      </div>
-        <p style="font-size: 12px;text-align: center;color: #999;">本邮件为系统自动发出，请勿直接回复<br>
-        &copy; ' . date(Y) . ' ' . get_option("blogname") . '</p>
-      </div>
-    </div>
-';
-        $message = convert_smilies($message);
-
-        $message = str_replace('{UPLOAD}', 'https://i.loli.net/', $message);
-        $message = str_replace('[/img][img]', '[/img^img]', $message);
-
-        $message = str_replace('[img]', '<img src="', $message);
-        $message = str_replace('[/img]', '" style="width:80%;display: block;margin-left: auto;margin-right: auto;">', $message);
-
-        $message = str_replace('[/img^img]', '" style="width:80%;display: block;margin-left: auto;margin-right: auto;"><img src="', $message);
-        $from = "From: \"" . get_option('blogname') . "\" <$wp_email>";
-        $headers = "$from\nContent-Type: text/html; charset=" . get_option('blog_charset') . "\n";
-        wp_mail($to, $subject, $message, $headers);
-    }
-}
-
-add_action('comment_post', 'comment_mail_notify');
-
-/*
  * 链接新窗口打开
  */
 function rt_add_link_target($content) {
@@ -1149,75 +1070,10 @@ function html_tag_parser($content) {
 
 add_filter('the_content', 'html_tag_parser'); //替换文章关键词
 
-/*
- * QQ 评论
- */
-// 数据库插入评论表单的qq字段
-add_action('wp_insert_comment', 'sql_insert_qq_field', 10, 2);
-function sql_insert_qq_field($comment_ID, $commmentdata) {
-    $qq = isset($_POST['new_field_qq']) ? $_POST['new_field_qq'] : false;
-    update_comment_meta($comment_ID, 'new_field_qq', $qq); // new_field_qq 是表单name值，也是存储在数据库里的字段名字
-}
-
-// 后台评论中显示qq字段
-add_filter('manage_edit-comments_columns', 'add_comments_columns');
-add_action('manage_comments_custom_column', 'output_comments_qq_columns', 10, 2);
-function add_comments_columns($columns) {
-    $columns['new_field_qq'] = ll('QQ'); // 新增列名称
-    return $columns;
-}
-
-function output_comments_qq_columns($column_name, $comment_id) {
-    switch ($column_name) {
-        case "new_field_qq":
-            // 这是输出值，可以拿来在前端输出，这里已经在钩子manage_comments_custom_column上输出了
-            echo get_comment_meta($comment_id, 'new_field_qq', true);
-            break;
-    }
-}
-
-/**
- * 头像调用路径
- */
-add_filter('get_avatar', 'change_avatar', 10, 3);
-function change_avatar($avatar) {
-    global $comment, $sakura_privkey;
-    if ($comment) {
-        if (get_comment_meta($comment->comment_ID, 'new_field_qq', true)) {
-            $qq_number = get_comment_meta($comment->comment_ID, 'new_field_qq', true);
-            if (akina_option('qq_avatar_link') == 'off') {
-                return '<img src="https://q2.qlogo.cn/headimg_dl?dst_uin=' . $qq_number . '&spec=100" class="lazyload avatar avatar-24 photo" alt="😀" width="24" height="24" onerror="imgError(this,1)">';
-            } elseif (akina_option('qq_avatar_link') == 'type_3') {
-                $qqavatar = file_get_contents('http://ptlogin2.qq.com/getface?appid=1006102&imgtype=3&uin=' . $qq_number);
-                preg_match('/:\"([^\"]*)\"/i', $qqavatar, $matches);
-                return '<img src="' . $matches[1] . '"class="lazyload avatar avatar-24 photo" alt="😀" width="24" height="24" onerror="imgError(this,1)">';
-            } else {
-                $iv = str_repeat($sakura_privkey, 2);
-                $encrypted = openssl_encrypt($qq_number, 'aes-128-cbc', $sakura_privkey, 0, $iv);
-                $encrypted = urlencode(base64_encode($encrypted));
-                return '<img src="' . asakura_rest_url("qqinfo/avatar") . '?qq=' . $encrypted . '"class="lazyload avatar avatar-24 photo" alt="😀" width="24" height="24" onerror="imgError(this,1)">';
-            }
-        } else {
-            return $avatar;
-        }
-    } else {
-        return $avatar;
-    }
-}
-
 // default feature image
 function DEFAULT_FEATURE_IMAGE() {
     return asakura_rest_url('image/feature') . '?' . rand(1, 1000);
 }
-
-//评论回复
-function sakura_comment_notify($comment_id) {
-    if (!$_POST['mail-notify']) {
-        update_comment_meta($comment_id, 'mail_notify', 'false');
-    }
-}
-
-add_action('comment_post', 'sakura_comment_notify');
 
 //侧栏小工具
 if (akina_option('sakura_widget')) {

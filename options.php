@@ -1172,20 +1172,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'    => __('QQ Avatar Link Encryption', SAKURA_DOMAIN),
-        'desc'    => __('Do not display the user\'s qq avatar links directly.', SAKURA_DOMAIN),
-        'id'      => 'qq_avatar_link',
-        'std'     => "off",
-        'type'    => "select",
-        'options' => array(
-            'off'    => __('Off (default)', SAKURA_DOMAIN),
-            'type_1' => __('use redirect (general security)', SAKURA_DOMAIN),
-            'type_2' => __('fetch data at backend (high security)', SAKURA_DOMAIN),
-            'type_3' => __('fetch data at backend (high security，slow)', SAKURA_DOMAIN),
-        )
-    );
-
-    $options[] = array(
         'name' => __('Search Background Customization', SAKURA_DOMAIN),
         'desc' => __('It is the cute one that opens the search interface', SAKURA_DOMAIN),
         'id'   => 'search-image',
@@ -1247,22 +1233,6 @@ function optionsframework_options() {
         'id'   => 'mail_user_name',
         'std'  => 'bibi',
         'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('Comments Reply Notification', SAKURA_DOMAIN),
-        'desc' => __('WordPress will use email to notify users when their comments receive a reply by default. Tick this item allows users to set their own comments reply notification', SAKURA_DOMAIN),
-        'id'   => 'mail_notify',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('Administrator Comment Notification', SAKURA_DOMAIN),
-        'desc' => __('Whether to use email notification when the administrator\'s comments receive a reply', SAKURA_DOMAIN),
-        'id'   => 'admin_notify',
-        'std'  => '0',
-        'type' => 'checkbox'
     );
 
     //增强功能

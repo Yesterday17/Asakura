@@ -47,7 +47,6 @@ if (comments_open()): ?>
                 global $comment_author_url;
 
                 $private_ms = akina_option('open_private_message') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="is-private"><span class="siren-is-private-checkbox siren-checkbox-radioInput"></span>' . ll('Comment in private') . '</label>' : '';
-                $mail_notify = akina_option('mail_notify') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . ll('Comment reply notify') . '</label>' : '';
                 $args = array(
                     'id_form'              => 'commentform',
                     'id_submit'            => 'submit',
@@ -75,7 +74,7 @@ if (comments_open()): ?>
 <input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr($comment_author_email) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
                         'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . ll("Advertisement is forbidden 😀")/*禁止小广告😀*/ . '</span>
-<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr($comment_author_url) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . $mail_notify,
+<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr($comment_author_url) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . ll('Comment reply notify') . '</label>',
                     ))
                 );
                 comment_form($args);
