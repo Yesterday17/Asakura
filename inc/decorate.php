@@ -1571,7 +1571,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (akina_option('user-avatar', '1')) {
+    if (!akina_option('user-avatar', '1')) {
         $result .= '
 .header-user-avatar {
   display: none;

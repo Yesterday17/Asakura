@@ -925,22 +925,6 @@ function optionsframework_options() {
         'type' => 'text'
     );
 
-    $options[] = array(
-        'name' => __('More JavaScript', SAKURA_DOMAIN),
-        'desc' => __('check on', SAKURA_DOMAIN),
-        'id'   => 'addmorejs',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('More JavaScript Url', SAKURA_DOMAIN),
-        'desc' => __('Add More JavaScript Url, Fill in the URL', SAKURA_DOMAIN),
-        'id'   => 'addmorejsurl',
-        'std'  => '',
-        'type' => 'text'
-    );
-
     //后台设置
     $options[] = array('name' => __('Backstage', SAKURA_DOMAIN), 'type' => 'heading');
 

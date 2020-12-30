@@ -165,11 +165,6 @@ comments_template('', true);
             src="https://cdn.jsdelivr.net/gh/<?php echo akina_option('live2d-custom'); ?>/live2d-widget@<?php echo akina_option('live2d-custom-ver'); ?>/autoload.js"></script>
 <?php endif; ?>
 
-<?php if (akina_option('addmorejs', '1')): ?>
-    <!-- 自由添加JS -->
-    <script type="text/javascript" src="<?php echo akina_option('addmorejsurl'); ?>"></script>
-<?php endif; ?>
-
 <!-- logo字体部分 -->
 <link rel="stylesheet" href="<?php echo akina_option('logo_zt', ''); ?>" media="all">
 
