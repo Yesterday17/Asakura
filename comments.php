@@ -35,7 +35,7 @@ if (comments_open()): ?>
             <?php elseif (comments_open()): ?>
                 <div class="comment-wrap">
                     <div class="notification-hidden"><i
-                                class="iconfont icon-mark"></i> <?php _e('no comment', SAKURA_DOMAIN); /*暂无评论*/ ?>
+                                class="iconfont icon-mark"></i> <?php ee('no comment'); /*暂无评论*/ ?>
                     </div>
                 </div>
             <?php endif; ?>
@@ -54,8 +54,7 @@ if (comments_open()): ?>
                     'title_reply_to'       => '<div class="graybar"><i class="fa fa-comments-o"></i>' . ll('Leave a Reply to') . ' %s' . '</div>',
                     'cancel_reply_link'    => ll('Cancel Reply'),
                     'label_submit'         => ll('BiuBiuBiu~'),
-                    'comment_field'        => '<p style="font-style:italic"><a href="https://segmentfault.com/markdown" target="_blank"><i class="iconfont icon-markdown" style="color:#000"></i></a> Markdown Supported while <i class="fa fa-code" aria-hidden="true"></i> Forbidden</p><div class="comment-textarea"><textarea placeholder="' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ..." name="comment" class="commentbody" id="comment" rows="5" tabindex="4"></textarea><label class="input-label">' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ...</label></div>
-                        <div id="upload-img-show"></div>',
+                    'comment_field'        => '<p style="font-style:italic"><a href="https://segmentfault.com/markdown" target="_blank"><i class="iconfont icon-markdown" style="color:#000"></i></a> Markdown Supported while <i class="fa fa-code" aria-hidden="true"></i> Forbidden</p><div class="comment-textarea"><textarea placeholder="' . __("You are a surprise that I will only meet once in my life", SAKURA_DOMAIN) . ' ..." name="comment" class="commentbody" id="comment" rows="5" tabindex="4"></textarea><label class="input-label">' . ll("You are a surprise that I will only meet once in my life") . ' ...</label></div>',
                     'comment_notes_after'  => '',
                     'comment_notes_before' => '',
                     'fields'               => apply_filters('comment_form_default_fields', array(
@@ -70,11 +69,11 @@ if (comments_open()): ?>
 <input type="text" placeholder="' . ll("Nickname") . ' (' . ll("Name* ") . ')" name="author" id="author" value="' . esc_attr($comment_author) . '" size="22" autocomplete="off" tabindex="1" aria-required="true" />
 </div>',
                         'email'  => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
-<span class="popuptext" id="thePopup" style="margin-left: -65px;width: 130px;">' . ll("You will receive notification by email")/*你将收到回复通知*/ . '</span>
+<span class="popuptext" id="thePopup" style="margin-left: -65px;width: 140px;">' . ll("You will receive notification by email")/*你将收到回复通知*/ . '</span>
 <input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr($comment_author_email) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
                         'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . ll("Advertisement is forbidden 😀")/*禁止小广告😀*/ . '</span>
-<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr($comment_author_url) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . ll('Comment reply notify') . '</label>',
+<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr($comment_author_url) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms,
                     ))
                 );
                 comment_form($args);

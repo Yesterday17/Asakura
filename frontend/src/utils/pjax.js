@@ -9,7 +9,6 @@ function pjaxInit() {
     EnlighterJSINIT();
   }
 
-  add_upload_tips();
   no_right_click();
   $("p").remove(".head-copyright");
   highlightCode();

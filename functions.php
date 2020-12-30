@@ -605,14 +605,6 @@ function enable_more_buttons($buttons) {
 }
 
 add_filter("mce_buttons_3", "enable_more_buttons");
-// 下载按钮
-function download($atts, $content = null) {
-    return '<a class="download" href="' . $content . '" rel="external"
-target="_blank" title="下载地址">
-<span><i class="iconfont down icon-pulldown"></i>Download</span></a>';
-}
-
-add_shortcode("download", "download");
 
 add_action('after_wp_tiny_mce', 'bolo_after_wp_tiny_mce');
 function bolo_after_wp_tiny_mce($mce_settings) {
@@ -751,19 +743,6 @@ function rt_add_link_target($content) {
 }
 
 add_filter('comment_text', 'rt_add_link_target');
-
-// 评论通过BBCode插入图片
-function comment_picture_support($content) {
-    $content = str_replace('http://', 'https://', $content); // 干掉任何可能的 http
-    $content = str_replace('{UPLOAD}', 'https://i.loli.net/', $content);
-    $content = str_replace('[/img][img]', '[/img^img]', $content);
-    $content = str_replace('[img]', '<br><img src="' . akina_option('webweb_img') . '/load/inload.svg" data-src="', $content);
-    $content = str_replace('[/img]', '" class="lazyload comment_inline_img" onerror="imgError(this)"><br>', $content);
-    $content = str_replace('[/img^img]', '" class="lazyload comment_inline_img" onerror="imgError(this)"><img src="' . akina_option('webweb_img') . '/load/inload.svg" data-src="', $content);
-    return $content;
-}
-
-add_filter('comment_text', 'comment_picture_support');
 
 function featuredtoRSS($content) {
     global $post;

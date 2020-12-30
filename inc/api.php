@@ -6,7 +6,6 @@
 include_once('classes/Aplayer.php');
 include_once('classes/Bilibili.php');
 include_once('classes/Cache.php');
-include_once('classes/Images.php');
 
 use Sakura\API\Aplayer;
 use Sakura\API\Bilibili;
@@ -17,11 +16,6 @@ use Sakura\API\Cache;
  * Router
  */
 add_action('rest_api_init', function () {
-    register_rest_route(SAKURA_REST_API, '/image/upload', array(
-        'methods'             => 'POST',
-        'callback'            => 'upload_image',
-        'permission_callback' => '__return_true',
-    ));
     register_rest_route(SAKURA_REST_API, '/cache_search/json', array(
         'methods'             => 'GET',
         'callback'            => 'cache_search_json',
@@ -73,57 +67,6 @@ function check_nonce() {
         return $result;
     }
 }
-
-/**
- * Image uploader response
- * @param WP_REST_Request $request
- * @return WP_REST_Response
- */
-// see: https://developer.wordpress.org/rest-api/requests/
-function upload_image(WP_REST_Request $request): WP_REST_Response {
-    /**
-     * handle file params $file === $_FILES
-     * curl \
-     *   -F "filecomment=This is an img file" \
-     *   -F "cmt_img_file=@screenshot.jpg" \
-     *   https://dev.2heng.xin/wp-json/$SAKURA_REST_API/image/upload
-     */
-    // $file = $request->get_file_params();
-    if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
-        $output = array(
-            'status'  => 403,
-            'success' => false,
-            'message' => 'Unauthorized client.',
-            'link'    => "https://view.moezx.cc/images/2019/11/14/step04.md.png",
-            'proxy'   => akina_option('cmt_image_proxy') . "https://view.moezx.cc/images/2019/11/14/step04.md.png",
-        );
-        $result = new WP_REST_Response($output, 403);
-        $result->set_headers(array('Content-Type' => 'application/json'));
-        return $result;
-    }
-    $images = new Images();
-    switch (akina_option("img_upload_api")) {
-        case 'imgur':
-            $image = file_get_contents($_FILES["cmt_img_file"]["tmp_name"]);
-            $api_request = $images->Imgur_API($image);
-            break;
-        case 'smms':
-            $image = $_FILES;
-            $api_request = $images->SMMS_API($image);
-            break;
-        case 'chevereto':
-            $image = file_get_contents($_FILES["cmt_img_file"]["tmp_name"]);
-            $api_request = $images->Chevereto_API($image);
-            break;
-        default:
-            $api_request = array('status' => 403, 'message' => 'Image upload api not configured.');
-    }
-
-    $result = new WP_REST_Response($api_request, $api_request['status']);
-    $result->set_headers(array('Content-Type' => 'application/json'));
-    return $result;
-}
-
 
 /*
  * 随机封面图 rest api

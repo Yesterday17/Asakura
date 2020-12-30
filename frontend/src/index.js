@@ -97,111 +97,6 @@ document.querySelectorAll(".comment-reply-link").forEach((r) =>
   })
 );
 
-function attach_image() {
-  var cached = $(".insert-image-tips");
-  $("#upload-img-file").change(function () {
-    if (this.files.length > 10) {
-      createButterbar("每次上传上限为10张.<br>10 files max per request.");
-      return 0;
-    }
-    for (i = 0; i < this.files.length; i++) {
-      if (this.files[i].size >= 5242880) {
-        alert(
-          "图片上传大小限制为5 MB.\n5 MB max per file.\n\n「" +
-            this.files[i].name +
-            "」\n\n这张图太大啦~\nThis image is too large~"
-        );
-      }
-    }
-    for (var i = 0; i < this.files.length; i++) {
-      var f = this.files[i];
-      var formData = new FormData();
-      formData.append("cmt_img_file", f);
-      $.ajax({
-        url:
-          mashiro_option.api +
-          "asakura/v1/image/upload?_wpnonce=" +
-          mashiro_option.nonce,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        data: formData,
-        beforeSend: function (xhr) {
-          cached.html(
-            '<i class="fa fa-spinner rotating" aria-hidden="true"></i>'
-          );
-          createButterbar("上传中...<br>Uploading...");
-        },
-        success: function (res) {
-          cached.html('<i class="fa fa-check" aria-hidden="true"></i>');
-          setTimeout(function () {
-            cached.html('<i class="fa fa-picture-o" aria-hidden="true"></i>');
-          }, 1000);
-          if (res.status === 200) {
-            var get_the_url = res.proxy;
-            $("#upload-img-show").append(
-              '<img class="lazyload upload-image-preview" src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/theme/sakura/load/inload.svg" data-src="' +
-                get_the_url +
-                '" onclick="window.open(\'' +
-                get_the_url +
-                '\')" onerror="imgError(this)" />'
-            );
-            new lazyload();
-            createButterbar("图片上传成功~<br>Uploaded successfully~");
-            grin(get_the_url, "Img");
-          } else {
-            createButterbar(
-              "上传失败！<br>Uploaded failed!<br> 文件名/Filename: " +
-                f.name +
-                "<br>code: " +
-                res.status +
-                "<br>" +
-                res.message,
-              3000
-            );
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          cached.html(
-            '<i class="fa fa-times" aria-hidden="true" style="color:red"></i>'
-          );
-          alert("上传失败，请重试.\nUpload failed, please try again.");
-          setTimeout(function () {
-            cached.html('<i class="fa fa-picture-o" aria-hidden="true"></i>');
-          }, 1000);
-          // console.info(jqXHR.responseText);
-          // console.info(jqXHR.status);
-          // console.info(jqXHR.readyState);
-          // console.info(jqXHR.statusText);
-          // console.info(textStatus);
-          // console.info(errorThrown);
-        },
-      });
-    }
-  });
-}
-
-function clean_upload_images() {
-  $("#upload-img-show").html("");
-}
-
-function add_upload_tips() {
-  $(
-    '<div class="insert-image-tips popup"><i class="fa fa-picture-o" aria-hidden="true"></i><span class="insert-img-popuptext" id="uploadTipPopup">上传图片</span></div><input id="upload-img-file" type="file" accept="image/*" multiple="multiple" class="insert-image-button">'
-  ).insertAfter($(".form-submit #submit"));
-  attach_image();
-  $("#upload-img-file").hover(
-    function () {
-      $(".insert-image-tips").addClass("insert-image-tips-hover");
-      $("#uploadTipPopup").addClass("show");
-    },
-    function () {
-      $(".insert-image-tips").removeClass("insert-image-tips-hover");
-      $("#uploadTipPopup").removeClass("show");
-    }
-  );
-}
-
 function showPopup(ele) {
   var popup = ele.querySelector("#thePopup");
   popup.classList.toggle("show");
@@ -243,7 +138,6 @@ $(document).ready(function () {
   $(".skin-menu #close-skinMenu").click(function () {
     closeSkinMenu();
   });
-  add_upload_tips();
 });
 
 function bg_update() {
@@ -824,7 +718,6 @@ window.Siren = {
           createButterbar("提交成功(Succeed)");
           new lazyload();
           highlightCode();
-          clean_upload_images();
           cancel.style.display = "none";
           cancel.onclick = null;
           document.getElementById("comment_parent").value = "0";
