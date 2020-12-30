@@ -61,7 +61,6 @@ export function highlightCode() {
   function gen_top_bar(p) {
     p.classList.add("highlight-wrap");
   }
-  hljs.initLineNumbersOnLoad({ singleLine: true });
 
   document.querySelectorAll("pre:not(.initialized) code").forEach((code) => {
     const pre = code.parentElement;
@@ -76,4 +75,5 @@ export function highlightCode() {
       document.body.classList.toggle("code-block-fullscreen-html-scroll");
     });
   });
+  hljs.initLineNumbersOnLoad({ singleLine: true });
 }
