@@ -45,8 +45,6 @@ if (post_password_required()) {
 
             <?php
             if (comments_open()) {
-                if (akina_option('norobot'))
-                    $robot_comments = '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="no-robot"><span class="siren-no-robot-checkbox siren-checkbox-radioInput"></span>' . __('I\'m not a robot', SAKURA_DOMAIN) . '</label>';
                 $private_ms = akina_option('open_private_message') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="is-private"><span class="siren-is-private-checkbox siren-checkbox-radioInput"></span>' . __('Comment in private', SAKURA_DOMAIN) . '</label>' : '';
                 $mail_notify = akina_option('mail_notify') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . __('Comment reply notify', SAKURA_DOMAIN) . '</label>' : '';
                 $args = array(
@@ -80,7 +78,7 @@ if (post_password_required()) {
 <input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr(get_comment_author_email()) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
                         'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . ll("Advertisement is forbidden 😀")/*禁止小广告😀*/ . '</span>
-<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr(get_comment_author_url()) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $robot_comments . $private_ms . $mail_notify,
+<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr(get_comment_author_url()) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . $mail_notify,
                         'qq'     => '<input type="text" placeholder="QQ" name="new_field_qq" id="qq" value="' . esc_attr(get_comment_author_url()) . '" style="display:none" autocomplete="off"/><!--此栏不可见-->'
                     ))
                 );

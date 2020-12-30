@@ -1289,14 +1289,6 @@ function optionsframework_options() {
         'type' => 'checkbox'
     );
 
-    $options[] = array(
-        'name' => __('Human Verification', SAKURA_DOMAIN),
-        'desc' => __('Enable human verification', SAKURA_DOMAIN),
-        'id'   => 'norobot',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
     //增强功能
     $options[] = array('name' => __('Enhanced', SAKURA_DOMAIN), 'type' => 'heading');
 

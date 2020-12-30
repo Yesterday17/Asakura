@@ -126,7 +126,7 @@ add_filter('comment_text', 'comment_add_at', 20, 2);
  */
 if (version_compare($GLOBALS['wp_version'], '4.4-alpha', '<')) {
     wp_die(ll('Please upgrade wordpress to version 4.4+'));
-}/*请升级到4.4以上版本*/
+}
 // 提示
 if (!function_exists('siren_ajax_comment_err')) {
     function siren_ajax_comment_err($t) {
@@ -136,29 +136,6 @@ if (!function_exists('siren_ajax_comment_err')) {
         exit;
     }
 }
-// 机器评论验证
-function siren_robot_comment() {
-    if (!$_POST['no-robot'] && !is_user_logged_in()) {
-        siren_ajax_comment_err('上车请刷卡。<br>Please comfirm you are not a robot.');
-    }
-}
-
-// 纯英文评论拦截
-function scp_comment_post($incoming_comment) {
-    // 为什么要拦自己呢？
-    global $user_ID;
-    if ($user_ID && current_user_can('level_10')) {
-        return ($incoming_comment);
-    } elseif (mb_detect_encoding($incoming_comment['comment_content'], 'ASCII', true)) {
-        siren_ajax_comment_err('写点汉字吧。You should add some non-ASCII characters.');
-    }
-    return ($incoming_comment);
-}
-
-if (akina_option('norobot')):
-    add_action('pre_comment_on_post', 'siren_robot_comment');
-    add_filter('preprocess_comment', 'scp_comment_post');
-endif;
 
 // 国际化很重要
 // 评论提交
@@ -326,7 +303,9 @@ function the_headPattern() {
             endwhile;
         endif;
     } elseif (is_page()) {
-        $full_image_url = $full_image_url[0];
+        if ($full_image_url) {
+            $full_image_url = $full_image_url[0];
+        }
         $t .= the_title('<h1 class="entry-title">', '</h1>', false);
     } elseif (is_archive()) {
         $full_image_url = z_taxonomy_image_url();
