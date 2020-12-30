@@ -4387,10 +4387,6 @@ body.dark .ins-section .fa {
     border: 1px solid #FB98C0
 }
 
-.error-img {
-    text-align: center
-}
-
 .err-button.back {
     text-align: center
 }
@@ -4403,11 +4399,6 @@ body.dark .ins-section .fa {
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px
-}
-
-#gohome {
-    background: #FB98C0;
-    color: #fff
 }
 
 .err-button.back a:hover {

@@ -319,7 +319,7 @@ h1.cat-title {
   background: var(--theme-color);
 }
 
-#gohome {
+#not-found-go-home {
   background: var(--theme-color);
 }
 
