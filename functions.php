@@ -1045,9 +1045,9 @@ remove_filter('comment_text', 'make_clickable', 9);
  */
 function create_sakura_table() {
     if (akina_option('cover_beta')) {
-        global $wpdb, $sakura_image_array, $sakura_mobile_image_array, $sakura_privkey;
+        global $wpdb, $sakura_image_array, $sakura_mobile_image_array;
     } else {
-        global $wpdb, $sakura_image_array, $sakura_privkey;
+        global $wpdb, $sakura_image_array;
     }
     $sakura_table_name = $wpdb->base_prefix . SAKURA_DOMAIN;
     require_once ABSPATH . "wp-admin/includes/upgrade.php";
@@ -1077,16 +1077,11 @@ function create_sakura_table() {
         $time = array("mate_key" => "json_time", "mate_value" => date("Y-m-d H:i:s", time()),);
         $wpdb->insert($sakura_table_name, $time);
     }
-    if (!$wpdb->get_var("SELECT COUNT(*) FROM $sakura_table_name WHERE mate_key = 'privkey'")) {
-        $privkey = array("mate_key" => "privkey", "mate_value" => wp_generate_password(8),);
-        $wpdb->insert($sakura_table_name, $privkey);
-    }
     //reduce sql query
     $sakura_image_array = $wpdb->get_var("SELECT `mate_value` FROM  $sakura_table_name WHERE `mate_key`='manifest_json'");
     if (akina_option('cover_beta')) {
         $sakura_mobile_image_array = $wpdb->get_var("SELECT `mate_value` FROM  $sakura_table_name WHERE `mate_key`='mobile_manifest_json'");
     }
-    $sakura_privkey = $wpdb->get_var("SELECT `mate_value` FROM  $sakura_table_name WHERE `mate_key`='privkey'");
 }
 
 add_action('after_setup_theme', 'create_sakura_table');
