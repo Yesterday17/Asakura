@@ -7,12 +7,10 @@ include_once('classes/Aplayer.php');
 include_once('classes/Bilibili.php');
 include_once('classes/Cache.php');
 include_once('classes/Images.php');
-include_once('classes/QQ.php');
 
 use Sakura\API\Aplayer;
 use Sakura\API\Bilibili;
 use Sakura\API\Images;
-use Sakura\API\QQ;
 use Sakura\API\Cache;
 
 /**
@@ -42,16 +40,6 @@ add_action('rest_api_init', function () {
     register_rest_route(SAKURA_REST_API, '/database/update', array(
         'methods'             => 'GET',
         'callback'            => 'update_database',
-        'permission_callback' => '__return_true',
-    ));
-    register_rest_route(SAKURA_REST_API, '/qqinfo/json', array(
-        'methods'             => 'GET',
-        'callback'            => 'get_qq_info',
-        'permission_callback' => '__return_true',
-    ));
-    register_rest_route(SAKURA_REST_API, '/qqinfo/avatar', array(
-        'methods'             => 'GET',
-        'callback'            => 'get_qq_avatar',
         'permission_callback' => '__return_true',
     ));
     register_rest_route(SAKURA_REST_API, '/bangumi/bilibili', array(
@@ -200,47 +188,6 @@ function cache_search_json(): WP_REST_Response {
         'Cache-Control' => 'max-age=3600', // json 缓存控制
     ));
     return $result;
-}
-
-/**
- * QQ info
- * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/json
- * @param WP_REST_Request $request
- * @return WP_REST_Response
- */
-function get_qq_info(WP_REST_Request $request): WP_REST_Response {
-    if (!check_ajax_referer('wp_rest', '_wpnonce', false)) {
-        $output = array('status' => 403, 'success' => false, 'message' => 'Unauthorized client.');
-    } elseif ($_GET['qq']) {
-        $qq = $_GET['qq'];
-        $output = QQ::get_qq_info($qq);
-    } else {
-        $output = array('status' => 400, 'success' => false, 'message' => 'Bad Request');
-    }
-
-    $result = new WP_REST_Response($output, $output['status']);
-    $result->set_headers(array('Content-Type' => 'application/json'));
-    return $result;
-}
-
-/**
- * QQ头像链接解密
- * https://sakura.2heng.xin/wp-json/$SAKURA_REST_API/qqinfo/avatar
- */
-function get_qq_avatar(): WP_REST_Response {
-    $encrypted = $_GET["qq"];
-    $imgurl = QQ::get_qq_avatar($encrypted);
-    if (akina_option('qq_avatar_link') == 'type_2') {
-        $imgdata = file_get_contents($imgurl);
-        $response = new WP_REST_Response();
-        $response->set_headers(array('Content-Type' => 'image/jpeg', 'Cache-Control' => 'max-age=86400'));
-        echo $imgdata;
-    } else {
-        $response = new WP_REST_Response();
-        $response->set_status(301);
-        $response->header('Location', $imgurl);
-    }
-    return $response;
 }
 
 function bgm_bilibili(): WP_REST_Response {

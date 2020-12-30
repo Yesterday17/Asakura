@@ -11,24 +11,21 @@ if (post_password_required()) {
     return;
 }
 
-?>
-
-<?php if (comments_open()): ?>
+if (comments_open()): ?>
     <section id="comments" class="comments">
-        <div class="commentwrap comments-hidden">
+        <div class="comment-wrap comments-hidden">
             <div class="notification">
                 <i class="iconfont icon-mark"></i><?php ee('view comments'); /*查看评论*/ ?> -
-                <span class="noticom"><?php comments_number('0', '1', '%'); ?> </span>
+                <span><?php comments_number('0', '1', '%'); ?> </span>
             </div>
         </div>
 
         <div class="comments-main">
-            <h3 id="comments-list-title">Comments | <span
-                        class="noticom"><?php comments_number('0', '1', '%'); ?> </span>
+            <h3 id="comments-list-title">Comments | <span><?php comments_number('0', '1', '%'); ?> </span>
             </h3>
             <div id="loading-comments"><span></span></div>
             <?php if (have_comments()): ?>
-                <ul class="commentwrap">
+                <ul class="comment-wrap">
                     <?php wp_list_comments('type=comment&callback=akina_comment_format'); ?>
                 </ul>
 
@@ -36,7 +33,7 @@ if (post_password_required()) {
                     <?php paginate_comments_links('prev_text=« Older&next_text=Newer »'); ?>
                 </nav>
             <?php elseif (comments_open()): ?>
-                <div class="commentwrap">
+                <div class="comment-wrap">
                     <div class="notification-hidden"><i
                                 class="iconfont icon-mark"></i> <?php _e('no comment', SAKURA_DOMAIN); /*暂无评论*/ ?>
                     </div>
@@ -45,8 +42,12 @@ if (post_password_required()) {
 
             <?php
             if (comments_open()) {
-                $private_ms = akina_option('open_private_message') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="is-private"><span class="siren-is-private-checkbox siren-checkbox-radioInput"></span>' . __('Comment in private', SAKURA_DOMAIN) . '</label>' : '';
-                $mail_notify = akina_option('mail_notify') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . __('Comment reply notify', SAKURA_DOMAIN) . '</label>' : '';
+                global $comment_author;
+                global $comment_author_email;
+                global $comment_author_url;
+
+                $private_ms = akina_option('open_private_message') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="is-private"><span class="siren-is-private-checkbox siren-checkbox-radioInput"></span>' . ll('Comment in private') . '</label>' : '';
+                $mail_notify = akina_option('mail_notify') ? '<label class="siren-checkbox-label"><input class="siren-checkbox-radio" type="checkbox" name="mail-notify"><span class="siren-mail-notify-checkbox siren-checkbox-radioInput"></span>' . ll('Comment reply notify') . '</label>' : '';
                 $args = array(
                     'id_form'              => 'commentform',
                     'id_submit'            => 'submit',
@@ -62,24 +63,19 @@ if (post_password_required()) {
                         'avatar' => '<div class="cmt-info-container">
     <div class="comment-user-avatar">
         <img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpeg">
-        <div class="social-check qq-check">
-            <i class="fa fa-qq" aria-hidden="true"></i>
-        </div>
         <div class="social-check gravatar-check">
             <i class="fa fa-google" aria-hidden="true"></i>
         </div>
     </div>',
-                        'author' => '<div class="popup cmt-popup cmt-author" onclick="asakura.cmt_showPopup(this)">
-<span class="popuptext" id="thePopup" style="margin-left: -115px;width: 230px;">' . ll("Auto pull nickname and avatar with a QQ num. entered")/*输入QQ号将自动拉取昵称和头像*/ . '</span>
-<input type="text" placeholder="' . ll("Nickname or QQ number") /*昵称或QQ号*/ . ' (' . ll("Name* ") . ')" name="author" id="author" value="' . esc_attr(get_comment_author()) . '" size="22" autocomplete="off" tabindex="1" aria-required="true" />
+                        'author' => '<div class="popup cmt-popup cmt-author">
+<input type="text" placeholder="' . ll("Nickname") . ' (' . ll("Name* ") . ')" name="author" id="author" value="' . esc_attr($comment_author) . '" size="22" autocomplete="off" tabindex="1" aria-required="true" />
 </div>',
                         'email'  => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -65px;width: 130px;">' . ll("You will receive notification by email")/*你将收到回复通知*/ . '</span>
-<input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr(get_comment_author_email()) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
+<input type="text" placeholder="' . ll("email") . ' (' . ll("Must* ") . ')" name="email" id="email" value="' . esc_attr($comment_author_email) . '" size="22" tabindex="1" autocomplete="off" aria-required="true" /></div>',
                         'url'    => '<div class="popup cmt-popup" onclick="asakura.cmt_showPopup(this)">
 <span class="popuptext" id="thePopup" style="margin-left: -55px;width: 110px;">' . ll("Advertisement is forbidden 😀")/*禁止小广告😀*/ . '</span>
-<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr(get_comment_author_url()) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . $mail_notify,
-                        'qq'     => '<input type="text" placeholder="QQ" name="new_field_qq" id="qq" value="' . esc_attr(get_comment_author_url()) . '" style="display:none" autocomplete="off"/><!--此栏不可见-->'
+<input type="text" placeholder="' . ll("Site") . '" name="url" id="url" value="' . esc_attr($comment_author_url) . '" size="22" autocomplete="off" tabindex="1" /></div></div>' . $private_ms . $mail_notify,
                     ))
                 );
                 comment_form($args);

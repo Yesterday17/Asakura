@@ -3001,14 +3001,14 @@ a.page-numbers {
     margin-right: auto
 }
 
-.comments .commentwrap {
+.comments .comment-wrap {
     width: 100%;
     max-width: 860px;
     margin: 0 auto;
     padding: 0
 }
 
-.comments .commentwrap hr {
+.comments .comment-wrap hr {
     height: 0;
     width: 100%;
     background: #eee;
@@ -3017,7 +3017,7 @@ a.page-numbers {
 }
 
 @media (max-width: 1150px) {
-    .comments .commentwrap {
+    .comments .comment-wrap {
         width: 100%;
         padding: 0 6.39%;
         max-width: 1245px;
@@ -3037,7 +3037,7 @@ a.page-numbers {
     transition: height 0s ease-out
 }
 
-.comments ul.commentwrap {
+.comments ul.comment-wrap {
     margin: 0 auto 30px
 }
 
