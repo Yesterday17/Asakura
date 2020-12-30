@@ -70,14 +70,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => ll('Favicon'),
-        'desc' => ll('It is the small logo on the browser tab, fill in the url'),
-        'id'   => 'favicon_link',
-        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico',
-        'type' => 'text'
-    );
-
-    $options[] = array(
         'name' => ll('Custom Keywords and Descriptions '),
         'desc' => ll('Customize keywords and descriptions after opening'),
         'id'   => 'akina_meta',
@@ -1537,30 +1529,6 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Reference External Font', SAKURA_DOMAIN),
-        'desc' => __('Check open', SAKURA_DOMAIN),
-        'id'   => 'refer-ext-font',
-        'std'  => '0',
-        'type' => 'checkbox'
-    );
-
-    $options[] = array(
-        'name' => __('External Font Address', SAKURA_DOMAIN),
-        'desc' => __('Fill in font address.', SAKURA_DOMAIN),
-        'id'   => 'ext-font-address',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
-        'name' => __('External Font Name', SAKURA_DOMAIN),
-        'desc' => __('Fill in the font name.', SAKURA_DOMAIN),
-        'id'   => 'ext-font-name',
-        'std'  => '',
-        'type' => 'text'
-    );
-
-    $options[] = array(
         'name' => __('Google Fonts Api Address', SAKURA_DOMAIN),
         'desc' => __('Fill in Google Fonts API Address', SAKURA_DOMAIN),
         'id'   => 'gfontsapi',
@@ -1617,8 +1585,8 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name'  => __('Global Fontsize', SAKURA_DOMAIN),
-        'desc'  => __('Fill in Number. Between 10 and 20 is recommended', SAKURA_DOMAIN),
+        'name'  => ll('Global Fontsize'),
+        'desc'  => ll('Fill in Number. Between 10 and 20 is recommended'),
         'id'    => 'global-fontsize',
         'std'   => '',
         'class' => 'mini',

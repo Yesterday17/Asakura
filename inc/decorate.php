@@ -22,7 +22,11 @@ function customizer_css() {
             akina_option('fore-switch-bca')
         )) . ');
   --hpage-art-tpac: ' . akina_option('hpage-art-tpac') . ';
-  --webweb-img: \'' . akina_option('webweb_img') . '\';
+  --webweb-img: "' . akina_option('webweb_img') . '";
+  --default-font: ' . akina_option('global-default-font') . ';
+  --default-font-size: ' . akina_option('global-fontsize') . ';
+  --another-font: ' . akina_option('global-font2') . ';
+  --title-font: ' . akina_option('font-title') . ';
 }
 ';
 
@@ -1254,27 +1258,20 @@ h1, small, sub, sup, code, kbd, pre, samp, body, button, input, select, textarea
 }
 
 /*字体*/';
-    if (akina_option('refer-ext-font', '1')) {
-        $result .= '
-@font-face {
-  font-family: \'' . akina_option('ext-font-name') . '\';
-  src: url(\'' . akina_option('ext-font-address') . '\');
-}';
-    }
 
     $result .= '
 .serif {
-  font-family: ' . akina_option('global-default-font') . ' !important ;
-  font-size: ' . akina_option('global-fontsize') . 'px !important;
+  font-family: var(--default-font) !important ;
+  font-size: var(--default-font-size)px !important;
 }
 
 body {
-  font-family: ' . akina_option('global-font2') . ' !important;
-  font-size: ' . akina_option('global-fontsize') . 'px !important;
+  font-family: var(--another-font) !important;
+  font-size: var(--default-font-size)px !important;
 }
 
 h1.main-title, h1.fes-title {
-  font-family: ' . akina_option('font-title') . ' !important;
+  font-family: var(--title-font) !important;
 }
 
 .header-info p {

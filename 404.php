@@ -12,7 +12,6 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="<?php echo akina_option('favicon_link', ''); ?>"/>
     <title itemprop="name"><?php global $page, $paged;
         wp_title('-', true, 'right');
         bloginfo('name');

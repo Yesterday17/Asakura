@@ -56,7 +56,6 @@
         <meta name="description" content="<?php echo $description; ?>"/>
         <meta name="keywords" content="<?php echo $keywords; ?>"/>
     <?php } ?>
-    <link rel="shortcut icon" href="<?php echo akina_option('favicon_link', ''); ?>"/>
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <?php wp_head(); ?>
     <?php if (akina_option('google_analytics_id', '')): ?>

@@ -8834,8 +8834,8 @@ h6[id*=toc-head]:focus {
 input#wp-comment-cookies-consent {
     vertical-align: middle;
     margin: 0px;
-    width: 18.4px;
-    height: 18.4px;
+    width: 18px;
+    height: 18px;
 }
 
 .comment-form-cookies-consent label {
