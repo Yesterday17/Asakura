@@ -3438,13 +3438,12 @@ a.page-numbers {
 }
 
 .comment-respond input[type=submit] {
-    width: calc(98% - 46px);
+    width: 98%;
     margin: 0;
     padding: 15px 25px;
     text-transform: none;
     color: #535a63;
     background: 0 0;
-    border-right: 0;
     -webkit-transition: all .1s ease-out;
     -moz-transition: all .1s ease-out;
     transition: all .1s ease-out;
@@ -5080,7 +5079,12 @@ i.iconfont.down {
 
     .site-title {
         font-size: 20px;
-        margin-right: 10px
+        margin-right: 16px;
+        margin-top: 10px;
+    }
+
+    .site-title a {
+        color: var(--theme-color) !important;
     }
 
     .links ul li {
