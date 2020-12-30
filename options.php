@@ -616,9 +616,9 @@ function optionsframework_options() {
     );
 
     $options[] = array(
-        'name' => __('Post Lincenses', SAKURA_DOMAIN),
+        'name' => __('Post Licenses', SAKURA_DOMAIN),
         'desc' => __('Check close', SAKURA_DOMAIN),
-        'id'   => 'post-lincenses',
+        'id'   => 'post-licenses',
         'std'  => '0',
         'type' => 'checkbox'
     );

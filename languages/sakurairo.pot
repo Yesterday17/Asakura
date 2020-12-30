@@ -1056,7 +1056,7 @@ msgid "Check to enable"
 msgstr ""
 
 #: options.php:643
-msgid "Post Lincenses"
+msgid "Post Licenses"
 msgstr ""
 
 #: options.php:644

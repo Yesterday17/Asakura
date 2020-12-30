@@ -1095,7 +1095,7 @@ msgid "Check to enable"
 msgstr "勾選啟用"
 
 #: options.php:643
-msgid "Post Lincenses"
+msgid "Post Licenses"
 msgstr "頁尾版權提示功能"
 
 #: options.php:644

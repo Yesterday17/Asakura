@@ -1832,17 +1832,17 @@ h1.page-title.mb- {
     height: 100px
 }
 
-.post-lincenses {
+.post-licenses {
     text-align: center;
     padding-bottom: 5px;
     font-size: 14px
 }
 
-.post-lincenses a:hover {
+.post-licenses a:hover {
     color: #888
 }
 
-.post-lincenses a {
+.post-licenses a {
     color: #B3B3B3
 }
 
