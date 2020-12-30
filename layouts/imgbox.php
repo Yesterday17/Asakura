@@ -3,13 +3,15 @@
 //https://api.mashiro.top/cover
 
 ?>
-<style>.header-info::before {
+<style>
+    .header-info::before {
         display: none !important;
         opacity: 0 !important;
-    }</style>
+    }
+</style>
 <div id="banner_wave_1"></div>
 <div id="banner_wave_2"></div>
-<figure id="centerbg" class="centerbg">
+<figure id="center-bg">
     <?php if (!akina_option('info-bar')) { ?>
         <div class="focusinfo">
             <?php if (akina_option('focus_logo_text')): ?>
@@ -46,7 +48,8 @@
                 <?php if (akina_option('info-bar-style') == "v2"): ?>
                     <div class="top-social_v2">
                         <?php if (akina_option('background-rgs', '1')): ?>
-                            <li id="bg-pre" onclick="asakura.bg_update()"><img src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
+                            <li id="bg-pre" onclick="asakura.bg_update()"><img
+                                        src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
                         <?php endif; ?>
                         <?php if (akina_option('github')) { ?>
                             <li><a href="<?php echo akina_option('github', ''); ?>" target="_blank"
@@ -130,7 +133,8 @@
                                             src="<?php echo akina_option('webweb_img'); ?>/sns/mail.png"/></a></li>
                         <?php } ?>
                         <?php if (akina_option('background-rgs', '1')): ?>
-                            <li id="bg-next" onclick="asakura.bg_update()"><img src="<?php echo akina_option('webweb_img'); ?>/sns/next.png"/></li>
+                            <li id="bg-next" onclick="asakura.bg_update()"><img
+                                        src="<?php echo akina_option('webweb_img'); ?>/sns/next.png"/></li>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
@@ -138,7 +142,8 @@
             <?php if (akina_option('info-bar-style') == "v1"): ?>
                 <div class="top-social">
                     <?php if (akina_option('background-rgs', '1')): ?>
-                        <li id="bg-pre" onclick="asakura.bg_update()"><img src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
+                        <li id="bg-pre" onclick="asakura.bg_update()"><img
+                                    src="<?php echo akina_option('webweb_img'); ?>/sns/pre.png"/></li>
                     <?php endif; ?>
                     <?php if (akina_option('github')) { ?>
                         <li><a href="<?php echo akina_option('github', ''); ?>" target="_blank" class="social-github"
@@ -220,7 +225,8 @@
                                         src="<?php echo akina_option('webweb_img'); ?>/sns/mail.png"/></a></li>
                     <?php } ?>
                     <?php if (akina_option('background-rgs', '1')): ?>
-                        <li id="bg-next" onclick="asakura.bg_update()"><img src="<?php echo akina_option('webweb_img'); ?>/sns/next.png"/></li>
+                        <li id="bg-next" onclick="asakura.bg_update()"><img
+                                    src="<?php echo akina_option('webweb_img'); ?>/sns/next.png"/></li>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -228,10 +234,10 @@
     <?php } ?>
 </figure>
 <?php
-echo bgvideo(); //BGVideo 
-?>
-<!-- 首页下拉箭头 -->
-<?php if (akina_option('godown', '1')): ?>
+echo bgvideo(); //BGVideo
+
+if (akina_option('godown', '1')): ?>
+    <!-- 首页下拉箭头 -->
     <div class="headertop-down faa-float animated"
          onclick="asakura.scrollTo(document.querySelector('#content').offsetTop)">
         <span><i class="fa fa-chevron-down" aria-hidden="true"

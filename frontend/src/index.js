@@ -18,7 +18,7 @@ import { createButterbar } from "./utils/butterBar";
 import "font-awesome/css/font-awesome.css";
 import "font-awesome-animation/dist/font-awesome-animation.css";
 
-import "smoothscroll-for-websites";
+// import "smoothscroll-for-websites";
 import { scrollBar } from "./utils/dom";
 
 global.asakura = {
@@ -228,21 +228,7 @@ function no_right_click() {
 no_right_click();
 
 $(document).ready(function () {
-  function cover_bg() {
-    if (document.body.clientWidth < 860 && mashiro_option.cover_beta) {
-      $(".centerbg").css(
-        "background-image",
-        "url(" + mashiro_option.cover_api + "?type=mobile" + ")"
-      );
-    } else {
-      $(".centerbg").css(
-        "background-image",
-        "url(" + mashiro_option.cover_api + ")"
-      );
-    }
-  }
-
-  cover_bg();
+  bg_update();
 
   function closeSkinMenu() {
     $(".skin-menu").removeClass("show");
@@ -261,7 +247,7 @@ $(document).ready(function () {
 });
 
 function bg_update() {
-  $(".centerbg").css(
+  $("#center-bg").css(
     "background-image",
     `url(${mashiro_option.cover_api}?${
       document.body.clientWidth < 860 && mashiro_option.cover_beta
@@ -676,7 +662,7 @@ window.Siren = {
     if (mashiro_option.window_height === "auto") {
       if ($("h1.main-title").length > 0) {
         var _height = $(window).height() + "px";
-        $("#centerbg").css({
+        $("#center-bg").css({
           height: "100vh",
         });
         $("#bgvideo").css({

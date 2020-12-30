@@ -701,7 +701,7 @@ h1.main-title {
   background-attachment: inherit;' : '';
 
     $result .= "
-.centerbg {
+#center-bg {
 $bg_style
   background-position: center center;
   background-attachment: inherit;
@@ -944,8 +944,8 @@ body.dark .openNav .icon:before {
   background-color: #eee;
 }
 
-body.dark .centerbg {
-background-blend-mode: hard-light;
+body.dark #center-bg {
+  background-blend-mode: hard-light;
   background-color: #31363b;
 }
 

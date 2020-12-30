@@ -3773,7 +3773,7 @@ li.feature-2 {
     z-index: 4
 }
 
-#centerbg {
+#center-bg {
     width: 100%;
     height: 550px;
     margin: 0;
@@ -3786,13 +3786,13 @@ li.feature-2 {
 }
 
 @supports (-webkit-touch-callout: none) {
-    #centerbg {
+    #center-bg {
         background-attachment: scroll !important;
     }
 }
 
 @media (max-width: 860px) {
-    #centerbg {
+    #center-bg {
         height: 300px;
         background-attachment: scroll
     }
