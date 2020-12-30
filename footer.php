@@ -103,11 +103,6 @@ comments_template('', true);
 </form>
 <!-- search end -->
 <?php wp_footer(); ?>
-<?php if (akina_option('site_statistics')) { ?>
-    <div class="site-statistics">
-        <script type="text/javascript"><?php echo akina_option('site_statistics'); ?></script>
-    </div>
-<?php } ?>
 <div class="skin-menu no-select">
     Style
     <div class="theme-controls row-container">
