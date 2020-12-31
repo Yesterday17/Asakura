@@ -16,7 +16,7 @@ comments_template('', true);
 ?>
 </div><!-- #page Pjax container-->
 <footer id="colophon" class="site-footer" role="contentinfo">
-    <div class="site-info" theme-info="Asakura v<?php echo SAKURA_VERSION; ?>">
+    <div class="site-info" theme-info="「アサクラ」 v<?php echo SAKURA_VERSION; ?>">
         <div class="footertext">
             <div class="img-preload">
                 <img src="<?php echo akina_option('webweb_img'); ?>/load/ball.svg"><!-- 加载下一部分圈圈 -->
@@ -27,16 +27,17 @@ comments_template('', true);
         </div>
         <div class="footer-device">
             <p style="font-family: 'Ubuntu', sans-serif;">
-					<span style="color: #b9b9b9;">
-                        <?php if (akina_option('oneword')): ?>
-                            <script type="text/javascript"
-                                    src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
-                            <div id="yan"><script>text()</script></div>
-                        <?php endif; ?>
-                        <?php if (akina_option('loadoq')): // TODO: i18n                ?>
-                            <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
-                        <?php endif; ?>
-            Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">Asakura (o・∇・o)</a>
+			    <span style="color: #b9b9b9;">
+                    <?php if (akina_option('oneword')): ?>
+                        <script type="text/javascript"
+                                src="https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js"></script>
+                        <div id="yan"><script>text()</script></div>
+                    <?php endif; ?>
+                    <?php if (akina_option('loadoq')): // TODO: i18n                ?>
+                        <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB', timer_stop(0, 3), get_num_queries(), memory_get_peak_usage() / 1024 / 1024); ?>
+                        <br>
+                    <?php endif; ?>
+            Theme <a href="https://blog.mmf.moe/post/theme-asakura/" target="_blank" id="site-info">「アサクラ」</a>
             by <a href="https://mmf.moe/" target="_blank" id="site-info">Yesterday17</a>
             </span>
             </p>

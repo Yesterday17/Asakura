@@ -17,25 +17,21 @@
             <?php if (akina_option('focus_logo_text')): ?>
                 <h1 class="center-text glitch is-glitching Ubuntu-font"
                     data-text="<?php echo akina_option('focus_logo_text'); ?>"><?php echo akina_option('focus_logo_text'); ?></h1>
-            <?php elseif (akina_option('focus_logo')): ?>
+            <?php else: ?>
                 <div class="header-tou"><a href="<?php bloginfo('url'); ?>"><img
                                 src="<?php echo akina_option('focus_logo'); ?>"></a></div>
-            <?php else : ?>
-                <div class="header-tou"><a href="<?php bloginfo('url'); ?>"><img
-                                src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpg"></a>
-                </div>
             <?php endif; ?>
             <div class="header-info">
                 <!-- 首页一言打字效果 -->
-                <?php if (akina_option('dazi')): ?>
+                <?php if (akina_option('oneword-type-effect')): ?>
                     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
-                    <?php if (akina_option('dazi_yh')): ?><i class="fa fa-quote-left"></i><?php endif; ?>
+                    <?php if (akina_option('oneword-type-quote')): ?><i class="fa fa-quote-left"></i><?php endif; ?>
                     <span class="element">疯狂造句中......</span>
-                    <?php if (akina_option('dazi_yh')): ?><i class="fa fa-quote-right"></i><?php endif; ?>
+                    <?php if (akina_option('oneword-type-quote')): ?><i class="fa fa-quote-right"></i><?php endif; ?>
                     <span class="element"></span>
                     <script>
                         var typed = new Typed('.element', {
-                            strings: ["给时光以生命，给岁月以文明",<?php echo akina_option('dazi_a'); ?>,], //输入内容, 支持html标签
+                            strings: ["给时光以生命，给岁月以文明",<?php echo akina_option('oneword-type-text'); ?>,], //输入内容, 支持html标签
                             typeSpeed: 140, //打字速度
                             backSpeed: 50, //回退速度
                             loop: false,//是否循环

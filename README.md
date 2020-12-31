@@ -1,39 +1,10 @@
-<h1 align="center"> 「アサクラ」(o・∇・o) Asakura </h1>
+<h1 align="center"> 「アサクラ」(o・∇・o)</h1>
 
 > 一个多彩，轻松上手，体验完善，具有强大自定义功能的WordPress主题（基于 [Sakura](https://github.com/mashirozx/Sakura) 和 [Sakurairo](https://github.com/mirai-mamori/Sakurairo) 主题）
 
 [![GitHub release](https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=for-the-badge&logo=appveyor)](https://github.com/Yesterday17/Asakura/releases/latest)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Yesterday17/Asakura?style=for-the-badge&logo=appveyor)](https://github.com/Yesterday17/Asakura/releases)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Yeterday17/Asakura?style=for-the-badge&logo=appveyor)
-
-## 特色：
-
-<details>
-<summary>文字介绍</summary>
-
-```
-- 功能类：
-    - 主页随机图多端分离（支持API）
-    - 内嵌提示块（短代码）
-    - 特效资源云端化
-    - 强大的色彩控制功能
-    - 多种全局定制色彩图标
-    - 网页预加载动画
-    - 强大的字体设置功能
-    - 可选择的夜间模式
-- 特效类：
-    - 樱花飘落特效
-    - 波浪特效
-    - 看板娘 Live2D
-    - 首页下拉箭头
-    - 脚页一言（随机话语API）
-    - 首页一言打字效果
-    - logo音符触动效果
-    - logo特效
-    - 邮件模板自定义
-
-```
-</details>
 
 ## 如遇问题
 
@@ -48,7 +19,7 @@
 
 ### 版权：
 
-- 「アサクラ」(o・∇・o) Asakura 主题 使用 [GPL V2.0](https://github.com/Yeterday17/Asakura/blob/master/LICENSE) 协议开源。
+- 「アサクラ」(o・∇・o) 主题 使用 [GPL V2.0](https://github.com/Yeterday17/Asakura/blob/master/LICENSE) 协议开源。
 
 - 本主题 LOGO 特效样式参考原主题作者白猫，由 [Hyacm](https://hyacm.com/acai/ui/143/sakura-logo/) 提供方案
 

@@ -51,6 +51,7 @@ function optionsframework_options(): array {
         'name' => ll('Personal Avatar'),
         'desc' => ll('The best size is 130px*130px.'),
         'id'   => 'focus_logo',
+        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/avatar.jpg',
         'type' => 'upload'
     );
 
@@ -194,7 +195,7 @@ function optionsframework_options(): array {
 
     $options[] = array(
         'name' => ll('About'),
-        'desc' => sprintf(ll('Asakura v %s  |  <a href="https://blog.mmf.moe/post/theme-asakura/">Theme document</a>  |  <a href="https://github.com/Yesterday17/Asakura">Source code</a><a href="https://github.com/Yesterday17/Asakura/releases/latest"><img src="https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=flat-square" alt="GitHub release"></a>'), SAKURA_VERSION),
+        'desc' => sprintf(ll('「アサクラ」 v %s  |  <a href="https://blog.mmf.moe/post/theme-asakura/">Theme document</a>  |  <a href="https://github.com/Yesterday17/Asakura">Source code</a><a href="https://github.com/Yesterday17/Asakura/releases/latest"><img src="https://img.shields.io/github/v/release/Yesterday17/Asakura.svg?style=flat-square" alt="GitHub release"></a>'), SAKURA_VERSION),
         'id'   => 'theme_intro',
         'std'  => '',
         'type' => 'typography '
@@ -1254,33 +1255,33 @@ function optionsframework_options(): array {
     );
 
     $options[] = array(
-        'name' => __('Load Occupancy Query', SAKURA_DOMAIN),
-        'desc' => __('Check open', SAKURA_DOMAIN),
+        'name' => ll('Load Occupancy Query'),
+        'desc' => ll('Check open'),
         'id'   => 'loadoq',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('One Word Typing Effect of Home Page', SAKURA_DOMAIN),
-        'desc' => __('Check open', SAKURA_DOMAIN),
-        'id'   => 'dazi',
+        'name' => ll('One Word Typing Effect of Home Page'),
+        'desc' => ll('Check open'),
+        'id'   => 'oneword-type-effect',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Double Quotation Marks for Typing Effect', SAKURA_DOMAIN),
-        'desc' => __('Check open', SAKURA_DOMAIN),
-        'id'   => 'dazi_yh',
+        'name' => ll('Double Quotation Marks for Typing Effect'),
+        'desc' => ll('Check open'),
+        'id'   => 'oneword-type-quote',
         'std'  => '0',
         'type' => 'checkbox'
     );
 
     $options[] = array(
-        'name' => __('Typewriting Effect Text', SAKURA_DOMAIN),
-        'desc' => __('Fill in the text part of the typing effect (double quotation marks must be used outside the text, and English commas shall be used to separate the two sentences. Support for HTML tags)', SAKURA_DOMAIN),
-        'id'   => 'dazi_a',
+        'name' => ll('Typewriting Effect Text'),
+        'desc' => ll('Fill in the text part of the typing effect (double quotation marks must be used outside the text, and English commas shall be used to separate the two sentences. Support for HTML tags)'),
+        'id'   => 'oneword-type-text',
         'std'  => '"寒蝉黎明之时,便是重生之日。"',
         'type' => 'text'
     );
