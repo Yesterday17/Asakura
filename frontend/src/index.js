@@ -554,21 +554,6 @@ window.Siren = {
       Siren.addsource();
     });
   },
-  AH: function () {
-    if (mashiro_option.window_height === "auto") {
-      if ($("h1.main-title").length > 0) {
-        var _height = $(window).height() + "px";
-        $("#center-bg").css({
-          height: "100vh",
-        });
-        $("#bgvideo").css({
-          "min-height": "100vh",
-        });
-      }
-    } else {
-      $(".headertop").addClass("headertop-bar");
-    }
-  },
   PE: function () {
     if ($(".headertop").length > 0) {
       if ($("h1.main-title").length > 0) {
@@ -827,7 +812,6 @@ window.Siren = {
 };
 $(function () {
   get_comment_avatar();
-  Siren.AH();
   Siren.PE();
   Siren.NH();
   Siren.GT();

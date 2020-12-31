@@ -62,7 +62,6 @@ export function InitPJAX() {
   });
 
   document.addEventListener("pjax:complete", () => {
-    Siren.AH();
     Siren.PE();
     initSerach();
     if (mashiro_option.nprogress_on) NProgress.done();
@@ -80,7 +79,6 @@ export function InitPJAX() {
   window.addEventListener(
     "popstate",
     () => {
-      Siren.AH();
       Siren.PE();
       initSerach();
       timeSeriesReload(true);

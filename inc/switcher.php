@@ -31,14 +31,11 @@ function get_asakura_option(): array {
             'name' => akina_option('amv_title'),
             'live' => akina_option('focus_mvlive') ? 'open' : 'close',
         ) : 'close',
-        'window_height'           => akina_option('focus_height') ? 'fixed' : 'auto',
         'ajax_url'                => admin_url('admin-ajax.php'),
         'comment_order'           => get_option('comment_order'),
         'form_position'           => 'bottom', // ajax comments 默认为bottom，如果你的表单在顶部则设置为top
         'api'                     => esc_url_raw(rest_url()),
         'nonce'                   => wp_create_nonce('wp_rest'),
         'gravatar_url'            => akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar',
-        // Asakura
-        'instantclick'            => False,
     );
 }

@@ -312,10 +312,10 @@ function optionsframework_options(): array {
     );
 
     $options[] = array(
-        'name' => __('Full-Screen Display', SAKURA_DOMAIN),
-        'desc' => __('Default on, check off', SAKURA_DOMAIN),
-        'id'   => 'focus_height',
-        'std'  => '0',
+        'name' => ll('Full-Screen Display'),
+        'desc' => ll('Default on'),
+        'id'   => 'focus_height_auto',
+        'std'  => '1',
         'type' => 'checkbox'
     );
 

@@ -846,11 +846,6 @@ inherits@2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-instantclick@^3.1.0-2:
-  version "3.1.0-2"
-  resolved "https://registry.yarnpkg.com/instantclick/-/instantclick-3.1.0-2.tgz#b079e1c93cb9cc543998c63799f68efa3f01acdd"
-  integrity sha512-MdwiHfUao89qEolFXchDRfDfYTkTOXTcNKVcND6GhqabRMYoetDdlsWC9b9GJwXjMF+X1jkpSNr409YGAXBR8Q==
-
 interpret@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.2.0.tgz#1a78a0b5965c40a5416d007ad6f50ad27c417df9"

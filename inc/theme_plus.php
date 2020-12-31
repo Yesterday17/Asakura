@@ -15,14 +15,13 @@ show_admin_bar(false);
  * 视频
  */
 function bgvideo() {
-    $dis = (!akina_option('focus_amv') || akina_option('focus_height')) ? ' style="display:none"' : '';
-    $html = '<div id="video-container"' . $dis . '>';
-    $html .= '<video id="bgvideo" class="video" src="" width="auto" preload="auto"></video>';
-    $html .= '<div id="video-btn" class="loadvideo videolive"></div>';
-    $html .= '<div id="video-add"></div>';
-    $html .= '<div class="video-stu"></div>';
-    $html .= '</div>';
-    return $html;
+    $dis = (!akina_option('focus_amv') || !akina_option('focus_height_auto')) ? ' style="display:none"' : '';
+    return '<div id="video-container"' . $dis . '>
+<video id="bgvideo" class="video" src="" width="auto" preload="auto"></video>
+<div id="video-btn" class="loadvideo videolive"></div>
+<div id="video-add"></div>
+<div class="video-stu"></div>
+</div>';
 }
 
 

@@ -28,6 +28,8 @@ function customizer_css() {
   --another-font: ' . akina_option('global-font2') . ';
   --title-font: ' . akina_option('font-title') . ';
   --social-card: ' . (akina_option('social_card') ? 'inline-block' : 'none') . ';
+' . (akina_option('focus_height_auto') ? '  --focus-after-display: none;
+  --focus-bg-height: 100vh;' : '550px') . '
 }
 ';
 
@@ -686,15 +688,23 @@ h1.main-title {
 }
 ';
     }
-    //$image_api = 'background-image: url("'.asakura_rest_url('image/cover').'");';
-    $bg_style = akina_option('focus_height') ? '  background-position: center center;
-  background-attachment: inherit;' : '';
-
     $result .= "
 #center-bg {
-$bg_style
   background-position: center center;
   background-attachment: inherit;
+  height: var(--focus-bg-height);
+}
+
+#bgvideo {
+    min-height: var(--focus-bg-height);
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 99.999%;
+    min-height: 550px;
+    z-index: 0
 }
 
 .rotating {
@@ -890,7 +900,7 @@ body.dark .post-list-show,
 body.dark .post-list hr,
 body.dark .lower li ul,
 body.dark .header-user-menu,
-body.dark .headertop-bar::after {
+body.dark .headertop::after {
   background: #31363b !important;
 }
 
@@ -1216,7 +1226,7 @@ body.dark .focusinfo .header-tou img {
 }
 
 /*切换动画*/
-html, #main-container, .pattern-center:after, #mo-nav, .headertop-bar::after, .comments, .site-footer, .pattern-center-blank, .yya, .blank, .toc, .search-form input, .wrapper, .site-footer, .site-wrapper, #mobileGoTop:hover, #changeSkin:hover, .post-list-show, .post-list hr, .post-date, .float-content i:hover {
+html, #main-container, .pattern-center:after, #mo-nav, .headertop::after, .comments, .site-footer, .pattern-center-blank, .yya, .blank, .toc, .search-form input, .wrapper, .site-footer, .site-wrapper, #mobileGoTop:hover, #changeSkin:hover, .post-list-show, .post-list hr, .post-date, .float-content i:hover {
   transition: background 1s;
 }
 
@@ -1659,6 +1669,20 @@ li.link-item {
   border-radius: 10px 0 0 10px
 }';
     }
+
+    $result .= '
+.headertop::after {
+    display: var(--focus-after-display);
+    content: \'\';
+    width: 150%;
+    height: 4.375rem;
+    background: #fff;
+    left: -25%;
+    bottom: -2.875rem;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 4;
+}';
 
     return $result;
 }
