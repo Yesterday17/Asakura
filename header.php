@@ -60,7 +60,7 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<?php if (akina_option('preload_animation', '1')): ?>
+<?php if (akina_option('preload_animation')): ?>
     <div id="preload">
         <li data-id="3" class="active">
             <div id="preloader_3"></div>
@@ -89,14 +89,14 @@
 							<span class="logolink moe-mashiro">
                                 <a href="<?php bloginfo('url'); ?>">
                                     <ruby>
-                                    <span class="site-name"><?php echo akina_option('site_name', ''); ?></span>
+                                    <span class="site-name"><?php echo akina_option('site_name'); ?></span>
                                     <span class="sakuraso"
-                                          style="font-family: '<?php echo akina_option('logo_ztmc', ''); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;;"><?php echo akina_option('logo_a', ''); ?></span>
+                                          style="font-family: '<?php echo akina_option('logo_ztmc'); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;;"><?php echo akina_option('logo_a'); ?></span>
                                     <span class="no"
-                                          style="font-family: '<?php echo akina_option('logo_ztmc', ''); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;"><?php echo akina_option('logo_b', ''); ?></span>
+                                          style="font-family: '<?php echo akina_option('logo_ztmc'); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;"><?php echo akina_option('logo_b'); ?></span>
                                     <span class="shironeko"
-                                          style="font-family: '<?php echo akina_option('logo_ztmc', ''); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;"><?php echo akina_option('logo_c', ''); ?></span>
-                                    <rp></rp><rt class="chinese-font"><?php echo akina_option('logo_two', ''); ?></rt><rp></rp></ruby>
+                                          style="font-family: '<?php echo akina_option('logo_ztmc'); ?>', 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;"><?php echo akina_option('logo_c'); ?></span>
+                                    <rp></rp><rt class="chinese-font"><?php echo akina_option('logo_two'); ?></rt><rp></rp></ruby>
                                 </a>
                             </span>
 						</span>
@@ -129,7 +129,7 @@
             the_headPattern();
         } ?>
         <div id="content" class="site-content">
-            <?php if (akina_option('shooting-star', '1')): ?>
+            <?php if (akina_option('shooting-star')): ?>
                 <!--动态星星 -->
                 <div class="night">
                     <div class="shooting_star"></div>

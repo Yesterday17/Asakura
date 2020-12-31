@@ -10,7 +10,7 @@ get_header();
         </div>
         <div class="author-center">
             <h3><?php the_author() ?></h3>
-            <div class="description"><?php echo get_the_author_meta('description') ? get_the_author_meta('description') : akina_option('admin_des', 'Carpe Diem and Do what I like'); ?></div>
+            <div class="description"><?php echo get_the_author_meta('description') ? get_the_author_meta('description') : akina_option('admin_des'); ?></div>
         </div>
     </div>
     <style type="text/css">
@@ -81,7 +81,7 @@ get_header();
         <?php if (akina_option('pagenav_style') == 'ajax') { ?>
             <div id="pagination"><?php next_posts_link(' Previous'); ?></div>
             <div id="add_post"><span id="add_post_time" style="visibility: hidden;"
-                                     title="<?php echo akina_option('auto_load_post', ''); ?>"></span></div>
+                                     title="<?php echo akina_option('auto_load_post'); ?>"></span></div>
         <?php } else { ?>
             <nav class="navigator">
                 <?php previous_posts_link('<i class="iconfont icon-back"></i>') ?><?php next_posts_link('<i class="iconfont icon-right"></i>') ?>

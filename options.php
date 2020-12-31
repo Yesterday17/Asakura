@@ -25,7 +25,7 @@ function optionsframework_option_name() {
  * Frame from: https://github.com/devinsays/options-framework-plugin/
  */
 
-function optionsframework_options() {
+function optionsframework_options(): array {
     $options = array();
 
     //基本设置

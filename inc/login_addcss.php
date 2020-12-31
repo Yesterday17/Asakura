@@ -28,7 +28,7 @@
         background: rgba(255, 255, 255, 0.40) center 48%;
     }
 
-    <?php if (akina_option('login_pf', '1')): ?>
+    <?php if (akina_option('login_pf')): ?>
     #login {
         font: 14px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
         position: absolute;
@@ -45,7 +45,7 @@
 
     <?php endif; ?>
 
-    <?php if (akina_option('login_blur', '0')): ?>
+    <?php if (akina_option('login_blur')): ?>
     #bg {
         -webkit-filter: blur(2px); /* Chrome, Opera */
         -moz-filter: blur(2px);

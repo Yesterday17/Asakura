@@ -398,7 +398,7 @@ h1.cat-title {
 ';
 
         /*Logo 特效*/
-        if (akina_option('logocss', '1')):
+        if (akina_option('logocss')):
             $result .= '
 .logolink .sakuraso {
   background-color: rgba(255, 255, 255, .5);
@@ -705,7 +705,7 @@ $bg_style
 }
 ";
 
-    if (akina_option('preload_animation', '1')):
+    if (akina_option('preload_animation')):
         $result .= '
 /*预加载部分*/
 #preload {
@@ -1354,7 +1354,7 @@ a:active {
 
 /*标题横线动画*/
 ';
-    if (akina_option('title-line', '1')):
+    if (akina_option('title-line')):
         $result .= '
 .single-center header.single-header .toppic-line {
   position: relative;
@@ -1380,7 +1380,7 @@ a:active {
     endif;
 
     /*标题动画*/
-    if (akina_option('title-ani', '1')) {
+    if (akina_option('title-ani')) {
         $result .= '
 .entry-title, .single-center .entry-census a, .entry-census, .post-list p, .post-more i, .p-time, .feature {
   -moz-animation: fadeInUp ' . akina_option('title-ani-t') . 's;
@@ -1391,7 +1391,7 @@ a:active {
     }
 
     /*首页动画*/
-    if (akina_option('homepage-ani', '1')) {
+    if (akina_option('homepage-ani')) {
         $result .= '
 h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-info p, .header-info, .focusinfo .header-tou img, .top-social img, .center-text {
   -moz-animation: fadeInDown ' . akina_option('hp-ani-t') . 's;
@@ -1540,7 +1540,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 /*其他*/
 ';
 
-    if (!akina_option('post-licenses', '1')) {
+    if (!akina_option('post-licenses')) {
         $result .= '
 .post-licenses a {
   display: none;
@@ -1553,7 +1553,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (!akina_option('user-avatar', '1')) {
+    if (!akina_option('user-avatar')) {
         $result .= '
 .header-user-avatar {
   display: none;
@@ -1561,7 +1561,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (akina_option('godown-mb', '1')) {
+    if (akina_option('godown-mb')) {
         $result .= '
 @media (max-width: 860px) {
   .headertop-down {
@@ -1573,11 +1573,11 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 
     $result .= '
 .widget-area .sakura_widget {
-  background-image: url(' . akina_option('sakura_widget_bg', '') . ');
+  background-image: url(' . akina_option('sakura_widget_bg') . ');
 }
 ';
 
-    if (akina_option('hpage-art-dis', '1')) {
+    if (akina_option('hpage-art-dis')) {
         $result .= '
 .float-content i {
   display: none;
@@ -1585,7 +1585,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (akina_option('social-card', '1')) {
+    if (akina_option('social-card')) {
         $result .= '
 .top-social_v2, .top-social {
   display: none;
@@ -1593,7 +1593,7 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (akina_option('search-ico', '1')) {
+    if (akina_option('search-ico')) {
         $result .= '
 i.iconfont.js-toggle-search.iconsearch {
   font-size: 25px;
@@ -1601,7 +1601,7 @@ i.iconfont.js-toggle-search.iconsearch {
 ';
     }
 
-    if (akina_option('friend_center', '0')) {
+    if (akina_option('friend_center')) {
         $result .= '
 /*友链居中 */
 span.sitename {

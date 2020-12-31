@@ -78,7 +78,7 @@ if (akina_option('focus-area') == '1') {
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
             <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;">
-                <i class="fa fa-bookmark-o" aria-hidden="true"></i> <?php echo akina_option('homepage_title', '記事'); ?>
+                <i class="fa fa-bookmark-o" aria-hidden="true"></i> <?php echo akina_option('homepage_title'); ?>
             </h1>
             <?php
             if (have_posts()) :
@@ -104,7 +104,7 @@ if (akina_option('focus-area') == '1') {
         <?php if (akina_option('pagenav_style') == 'ajax') { ?>
             <div id="pagination"><?php next_posts_link(' Previous'); ?></div>
             <div id="add_post"><span id="add_post_time" style="visibility: hidden;"
-                                     title="<?php echo akina_option('auto_load_post', ''); ?>"></span></div>
+                                     title="<?php echo akina_option('auto_load_post'); ?>"></span></div>
         <?php } else { ?>
             <nav class="navigator">
                 <?php previous_posts_link('<i class="iconfont icon-back"></i>') ?><?php next_posts_link('<i class="iconfont icon-right"></i>') ?>

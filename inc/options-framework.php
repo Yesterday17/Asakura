@@ -109,7 +109,7 @@ function optionsframework_init() {
  * @return string The capability to actually use.
  */
 
-function optionsframework_page_capability($capability) {
+function optionsframework_page_capability($capability): string {
     return 'edit_theme_options';
 }
 
@@ -176,8 +176,11 @@ function optionsframework_setdefaults() {
 function optionsframework_menu_settings() {
 
     $menu = array(
-        'page_title' => ll('Asakura Options'), 'menu_title' => ll('Asakura Options'),
-        'capability' => 'edit_theme_options', 'menu_slug' => 'options-framework', 'callback' => 'optionsframework_page'
+        'page_title' => ll('Asakura Options'),
+        'menu_title' => ll('Asakura Options'),
+        'capability' => 'edit_theme_options',
+        'menu_slug'  => 'options-framework',
+        'callback'   => 'optionsframework_page'
     );
 
     return apply_filters('optionsframework_menu', $menu);
@@ -217,22 +220,26 @@ function optionsframework_load_scripts($hook) {
     // Enqueue colorpicker scripts for versions below 3.5 for compatibility
     if (!wp_script_is('wp-color-picker', 'registered')) {
         wp_register_script('iris', OPTIONS_FRAMEWORK_DIRECTORY . 'js/iris.min.js', array(
-            'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch'
+            'jquery-ui-draggable',
+            'jquery-ui-slider',
+            'jquery-touch-punch'
         ), false, 1);
         wp_register_script('wp-color-picker', OPTIONS_FRAMEWORK_DIRECTORY . 'js/color-picker.min.js', array(
-            'jquery', 'iris'
+            'jquery',
+            'iris'
         ));
         $colorpicker_l10n = array(
-            'clear' => __('Clear', 'options_framework_theme'),
+            'clear'         => __('Clear', 'options_framework_theme'),
             'defaultString' => __('Default', 'options_framework_theme'),
-            'pick' => __('Select Color', 'options_framework_theme')
+            'pick'          => __('Select Color', 'options_framework_theme')
         );
         wp_localize_script('wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n);
     }
 
     // Enqueue custom option panel JS
     wp_enqueue_script('options-custom', OPTIONS_FRAMEWORK_DIRECTORY . 'js/options-custom.js', array(
-        'jquery', 'wp-color-picker'
+        'jquery',
+        'wp-color-picker'
     ));
 
     // Inline scripts from options-interface.php
@@ -381,7 +388,7 @@ add_action('optionsframework_after_validate', 'optionsframework_save_options_not
  * @access    private
  */
 
-function of_get_default_values() {
+function of_get_default_values(): array {
     $output = array();
     $config =& _optionsframework_options();
     foreach ((array)$config as $option) {
@@ -410,7 +417,9 @@ function optionsframework_adminbar() {
     global $wp_admin_bar;
 
     $wp_admin_bar->add_menu(array(
-        'parent' => 'appearance', 'id' => 'of_theme_options', 'title' => ll('Asakura Options'),
+        'parent' => 'appearance',
+        'id'     => 'of_theme_options',
+        'title'  => ll('Asakura Options'),
         'href'   => admin_url('themes.php?page=options-framework')
     ));
 }
@@ -445,14 +454,14 @@ function optionsframework_adminbar() {
  *
  * @return array (by reference)
  */
-function &_optionsframework_options() {
+function &_optionsframework_options(): ?array {
     static $options = null;
 
     if (!$options) {
         // Load options from options.php file (if it exists)
         $location = apply_filters('options_framework_location', array('options.php'));
-        if ($optionsfile = locate_template($location)) {
-            $maybe_options = require_once $optionsfile;
+        if ($options_file = locate_template($location)) {
+            $maybe_options = require_once $options_file;
             if (is_array($maybe_options)) {
                 $options = $maybe_options;
             } else if (function_exists('optionsframework_options')) {
@@ -477,19 +486,32 @@ function &_optionsframework_options() {
 
 if (!function_exists('akina_option')) {
 
-    function akina_option($name, $default = false) {
+    function of_default_value($name) {
+        static $defaults = null;
+        if (!$defaults) {
+            $defaults = of_get_default_values();
+        }
+
+        if (isset($defaults[$name])) {
+            return $defaults[$name];
+        } else {
+            return null;
+        }
+    }
+
+    function akina_option($name) {
         $config = get_option('optionsframework');
 
         if (!isset($config['id'])) {
-            return $default;
+            return of_default_value($name);
         }
 
         $options = get_option($config['id']);
 
         if (isset($options[$name])) {
             return $options[$name];
+        } else {
+            return of_default_value($name);
         }
-
-        return $default;
     }
 }
