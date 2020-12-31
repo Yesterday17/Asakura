@@ -3,18 +3,18 @@ import { initSerach } from "./search";
 
 import NProgress from "nprogress";
 import "../styles/nprogress.css";
+import { highlightCode } from "./highlight";
+import lazyload from "lazyload";
+import { initTOC } from "./toc";
 
 function pjaxInit() {
   if (typeof window.EnlighterJSINIT === "function") {
     EnlighterJSINIT();
   }
 
-  no_right_click();
   $("p").remove(".head-copyright");
   highlightCode();
-  try {
-    getqqinfo();
-  } catch (e) {}
+  global.asakura.get_comment_avatar();
   new lazyload();
   $("#to-load-aplayer").click(function () {
     try {
@@ -30,7 +30,7 @@ function pjaxInit() {
   $(".iconflat").css("width", "50px").css("height", "50px");
   $(".openNav").css("height", "50px");
   timeSeriesReload();
-  tableOfContentScroll();
+  initTOC();
 }
 
 export function InitPJAX() {

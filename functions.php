@@ -617,42 +617,25 @@ function custom_loginlogo_url($url) {
 add_filter('login_headerurl', 'custom_loginlogo_url');
 
 //Login Page Footer
-function custom_html() {
-    if (akina_option('login_bg')) {
-        $loginbg = akina_option('login_bg');
-    } else {
-        $loginbg = 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/backstage/login-bg.png';
-    }
+function custom_login_footer() {
     echo '<script type="text/javascript" src="' . get_template_directory_uri() . '/js/login.js"></script>' . "\n";
-    echo '<script type="text/javascript">' . "\n";
-    echo 'jQuery("body").prepend("<div class=\"loading\"><img src=\"https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/login_loading.gif\" width=\"58\" height=\"10\"></div><div id=\"bg\"><img /></div>");' . "\n";
-    echo 'jQuery(\'#bg\').children(\'img\').attr(\'src\', \'' . $loginbg . '\').load(function(){' . "\n";
-    echo '	resizeImage(\'bg\');' . "\n";
-    echo '	jQuery(window).bind("resize", function() { resizeImage(\'bg\'); });' . "\n";
-    echo '	jQuery(\'.loading\').fadeOut();' . "\n";
-    echo '});';
-    echo '</script>' . "\n";
-    echo '<script>
-    $(document).ready(function(){
-        $(\'h1 a\').attr(\'style\',\'background-image: url(' . akina_option('logo_img') . '); \');
-		$(".forgetmenot").replaceWith(\'<p class="forgetmenot">' . ll('Remember_Me') . '<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>\');
-	});
-    </script>';
+    echo '<script type="text/javascript">
+jQuery("body").prepend(`<div class="loading"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/login_loading.gif" width="58" height="10"></div><div id="bg"></div>`);
+jQuery("#bg").children("img").attr("src", "' . akina_option('login_bg') . '").load(function(){
+    resizeImage("bg");
+	jQuery(window).bind("resize", function() { resizeImage("bg"); });
+	jQuery(".loading").fadeOut();
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("h1 a").attr("style","background-image: url(' . akina_option('logo_img') . ');");
+    $(".forgetmenot").replaceWith("<p class="forgetmenot">' . ll('Remember_Me') . '<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>");
+});
+</script>';
 }
 
-add_action('login_footer', 'custom_html');
-
-//Login message
-//* Add custom message to WordPress login page
-function smallenvelop_login_message($message) {
-    if (empty($message)) {
-        return '<p class="message"><strong>You may try 3 times for every 5 minutes!</strong></p>';
-    } else {
-        return $message;
-    }
-}
-
-//add_filter( 'login_message', 'smallenvelop_login_message' );
+add_action('login_footer', 'custom_login_footer');
 
 //Fix password reset bug </>
 function resetpassword_message_fix($message) {
@@ -688,7 +671,7 @@ function rt_add_link_target($content) {
             continue;
         }
 
-        // fix the target="_blank" bug in the codeblock
+        // fix the target="_blank" bug in the code block
         if (strpos(preg_replace('/code([\s\S]*?)\/code[\s]*/m', 'temp', $content), $bit) === false) {
             continue;
         }
@@ -714,17 +697,6 @@ function rt_add_link_target($content) {
 
 add_filter('comment_text', 'rt_add_link_target');
 
-function featuredtoRSS($content) {
-    global $post;
-    if (has_post_thumbnail($post->ID)) {
-        $content = '<div>' . get_the_post_thumbnail($post->ID, 'medium', array('style' => 'margin-bottom: 15px;')) . '</div>' . $content;
-    }
-    return $content;
-}
-
-add_filter('the_excerpt_rss', 'featuredtoRSS');
-add_filter('the_content_feed', 'featuredtoRSS');
-
 function toc_support($content) {
     $content = str_replace('[toc]', '<div class="have-toc"></div>', $content); // TOC 支持
     return $content;
@@ -749,24 +721,6 @@ function get_the_user_ip() {
 }
 
 add_shortcode('show_ip', 'get_the_user_ip');
-
-/*歌词*/
-function hero_get_lyric() {
-    /** These are the lyrics to Hero */
-    $lyrics = "";
-
-    // Here we split it into lines
-    $lyrics = explode("\n", $lyrics);
-
-    // And then randomly choose a line
-    return wptexturize($lyrics[mt_rand(0, count($lyrics) - 1)]);
-}
-
-// This just echoes the chosen line, we'll position it later
-function hello_hero() {
-    $chosen = hero_get_lyric();
-    echo $chosen;
-}
 
 /*私密评论*/
 add_action('wp_ajax_nopriv_siren_private', 'siren_private');
@@ -901,41 +855,11 @@ function excerpt_length($exp) {
 
 add_filter('the_excerpt', 'excerpt_length');
 
-/*
- * 后台路径
- */
-/*
-add_filter('site_url',  'wpadmin_filter', 10, 3);
-function wpadmin_filter( $url, $path, $orig_scheme ) {
-$old  = array( "/(wp-admin)/");
-$admin_dir = WP_ADMIN_DIR;
-$new  = array($admin_dir);
-return preg_replace( $old, $new, $url, 1);
-}
- */
-
 function admin_ini() {
     wp_enqueue_style('admin-styles-fix-icon', get_site_url() . '/wp-includes/css/dashicons.css');
-    wp_enqueue_script('lazyload', 'https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.min.js');
 }
 
 add_action('admin_enqueue_scripts', 'admin_ini');
-
-function custom_admin_js() {
-    echo '<script>
-    window.onload=function(){
-        lazyload();
-
-        try{
-            document.querySelector("#scheme-tip .notice-dismiss").addEventListener("click", function(){
-                location.href="?scheme-tip-dismissed' . BUILD_VERSION . '";
-            });
-        } catch(e){}
-    }
-    </script>';
-}
-
-add_action('admin_footer', 'custom_admin_js');
 
 //dashboard scheme
 function dash_scheme($key, $name, $col1, $col2, $col3, $col4, $base, $focus, $current, $rules = "") {

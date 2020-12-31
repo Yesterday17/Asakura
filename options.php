@@ -920,6 +920,7 @@ function optionsframework_options(): array {
         'name' => __('Login Interface Background Image', SAKURA_DOMAIN),
         'desc' => __('Use the default image if left this blank', SAKURA_DOMAIN),
         'id'   => 'login_bg',
+        'std'  => 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/backstage/login-bg.png',
         'type' => 'upload'
     );
 

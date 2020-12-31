@@ -5,7 +5,6 @@ import "lightgallery.js/dist/css/lightgallery.css";
 import "./styles/lightgallery-fix.css";
 
 import lazyload from "lazyload";
-import tocbot from "tocbot";
 
 import { changeTheme, checkDarkMode } from "./darkmode";
 import { web_audio } from "./webAudio";
@@ -20,6 +19,7 @@ import "font-awesome-animation/dist/font-awesome-animation.css";
 
 // import "smoothscroll-for-websites";
 import { scrollBar } from "./utils/dom";
+import { initTOC } from "./utils/toc";
 
 global.asakura = {
   changeTheme,
@@ -30,6 +30,7 @@ global.asakura = {
   init_page,
   mail_me,
   coverVideo,
+  get_comment_avatar,
 };
 
 window.timeSeriesReload = timeSeriesReload;
@@ -115,14 +116,6 @@ function cmt_showPopup(ele) {
 }
 
 checkDarkMode();
-
-function no_right_click() {
-  $(".post-thumb img").bind("contextmenu", function (e) {
-    return false;
-  });
-}
-
-no_right_click();
 
 $(document).ready(function () {
   bg_update();
@@ -241,42 +234,7 @@ function coverVideoIni() {
   }
 }
 
-function tableOfContentScroll() {
-  if (document.querySelector(".have-toc")) {
-    let id = 1,
-      heading_fix;
-    if (mashiro_option.entry_content_theme === "sakura") {
-      if ($("article").hasClass("type-post")) {
-        if ($("div").hasClass("pattern-attachment-img")) {
-          heading_fix = -75;
-        } else {
-          heading_fix = 200;
-        }
-      } else {
-        heading_fix = 375;
-      }
-      heading_fix += 80;
-      heading_fix -= window.innerHeight / 2;
-    }
-
-    document.querySelectorAll(".entry-content, .links").forEach((el) => {
-      el.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(
-        (e) => (e.id = `toc-head-${id++}`)
-      );
-    });
-
-    tocbot.init({
-      tocSelector: ".toc",
-      contentSelector: [".entry-content", ".links"],
-      headingSelector: "h1, h2, h3, h4, h5, h6",
-      headingsOffset: heading_fix,
-    });
-  } else {
-    document.querySelector(".toc-container")?.remove();
-  }
-}
-
-tableOfContentScroll();
+initTOC();
 
 $(document).on("click", ".sm", function () {
   var msg = "您真的要设为私密吗？";

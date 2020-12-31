@@ -9,7 +9,6 @@ function get_asakura_option(): array {
         'email_domain'            => akina_option('email_domain'),
         'email_name'              => akina_option('email_name'),
         'cookie_version_control'  => akina_option('cookie_version'),
-        'qzone_autocomplete'      => False,
         'site_name'               => akina_option('site_name'),
         'author_name'             => akina_option('author_name'),
         'template_url'            => get_template_directory_uri(),

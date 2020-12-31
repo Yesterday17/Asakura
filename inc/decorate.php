@@ -692,7 +692,7 @@ h1.main-title {
 #center-bg {
   background-position: center center;
   background-attachment: inherit;
-  height: var(--focus-bg-height);
+  height: var(--focus-bg-height, 550px);
 }
 
 #bgvideo {
