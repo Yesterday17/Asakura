@@ -27,6 +27,7 @@ function customizer_css() {
   --default-font-size: ' . akina_option('global-fontsize') . ';
   --another-font: ' . akina_option('global-font2') . ';
   --title-font: ' . akina_option('font-title') . ';
+  --social-card: ' . (akina_option('social_card') ? 'inline-block' : 'none') . ';
 }
 ';
 
@@ -1585,13 +1586,11 @@ h1.main-title, h1.fes-title, .the-feature.from_left_and_right .info, .header-inf
 ';
     }
 
-    if (akina_option('social-card')) {
-        $result .= '
+    $result .= '
 .top-social_v2, .top-social {
-  display: none;
+  display: var(--social-card);
 }
 ';
-    }
 
     if (akina_option('search-ico')) {
         $result .= '

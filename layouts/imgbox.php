@@ -12,7 +12,7 @@
 <div id="banner_wave_1"></div>
 <div id="banner_wave_2"></div>
 <figure id="center-bg">
-    <?php if (!akina_option('info-bar')) { ?>
+    <?php if (akina_option('info_bar')) { ?>
         <div class="focusinfo">
             <?php if (akina_option('focus_logo_text')): ?>
                 <h1 class="center-text glitch is-glitching Ubuntu-font"

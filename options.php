@@ -219,25 +219,25 @@ function optionsframework_options(): array {
 
     $options[] = array(
         'name' => ll('Main Switch'),
-        'desc' => ll('Default on, check off'),
-        'id'   => 'main-switch',
-        'std'  => '0',
+        'desc' => ll('Default on'),
+        'id'   => 'main_switch',
+        'std'  => '1',
         'type' => 'checkbox'
     );
 
     $options[] = array(
         'name' => ll('Information Bar'),
-        'desc' => ll('It is on by default and checked off to display the avatar / text logo, signature bar and social card.'),
-        'id'   => 'info-bar',
-        'std'  => '0',
+        'desc' => ll('It is on by default to display the avatar / text logo, signature bar and social card.'),
+        'id'   => 'info_bar',
+        'std'  => '1',
         'type' => 'checkbox'
     );
 
     $options[] = array(
         'name' => ll('Social Card'),
-        'desc' => ll('On by default, check off. When the social card is turned off, the switch button of background random graph and social network icon will not be displayed'),
-        'id'   => 'social-card',
-        'std'  => '0',
+        'desc' => ll('On by default. When the social card is turned off, the switch button of background random graph and social network icon will not be displayed'),
+        'id'   => 'social_card',
+        'std'  => '1',
         'type' => 'checkbox'
     );
 
@@ -352,16 +352,16 @@ function optionsframework_options(): array {
     );
 
     $options[] = array(
-        'name'    => __('Cover Random Graphs Filter', SAKURA_DOMAIN),
+        'name'    => ll('Cover Random Graphs Filter'),
         'id'      => 'focus_img_filter',
         'std'     => "filter-nothing",
         'type'    => "radio",
         'options' => array(
-            'filter-nothing'   => __('Nothing', SAKURA_DOMAIN),
-            'filter-undertint' => __('Undertint', SAKURA_DOMAIN),
-            'filter-dim'       => __('Dim', SAKURA_DOMAIN),
-            'filter-grid'      => __('Grid', SAKURA_DOMAIN),
-            'filter-dot'       => __('Dot', SAKURA_DOMAIN),
+            'filter-nothing'   => ll('Nothing'),
+            'filter-undertint' => ll('Undertint'),
+            'filter-dim'       => ll('Dim'),
+            'filter-grid'      => ll('Grid'),
+            'filter-dot'       => ll('Dot'),
         )
     );
 
