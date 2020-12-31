@@ -48,21 +48,13 @@ function initPlayer(container, songs) {
 
     const player = new APlayer(initOptions);
     // try hide lrc
-    try {
-      player.lrc.hide();
-    } catch (e) {
-      console.log(e);
-    }
+    player.lrc?.hide();
 
     let lrcTag = false;
     if (container.classList.contains("aplayer-fixed")) {
       container.addEventListener("click", () => {
         if (!lrcTag) {
-          try {
-            player.lrc.show();
-          } catch (e) {
-            console.log(e);
-          }
+          player.lrc?.show();
           lrcTag = true;
         }
       });

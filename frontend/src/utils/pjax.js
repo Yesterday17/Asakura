@@ -1,37 +1,11 @@
+import lazyload from "lazyload";
 import Pjax from "pjax";
+import { highlightCode } from "./highlight";
 import { initSerach } from "./search";
+import { initTOC } from "./toc";
 
 import NProgress from "nprogress";
 import "../styles/nprogress.css";
-import { highlightCode } from "./highlight";
-import lazyload from "lazyload";
-import { initTOC } from "./toc";
-
-function pjaxInit() {
-  if (typeof window.EnlighterJSINIT === "function") {
-    EnlighterJSINIT();
-  }
-
-  $("p").remove(".head-copyright");
-  highlightCode();
-  global.asakura.get_comment_avatar();
-  new lazyload();
-  $("#to-load-aplayer").click(function () {
-    try {
-      reloadHermit();
-    } catch (e) {}
-    $("div").remove(".load-aplayer");
-  });
-  if ($("div").hasClass("aplayer")) {
-    try {
-      reloadHermit();
-    } catch (e) {}
-  }
-  $(".iconflat").css("width", "50px").css("height", "50px");
-  $(".openNav").css("height", "50px");
-  timeSeriesReload();
-  initTOC();
-}
 
 export function InitPJAX() {
   new Pjax({
@@ -65,7 +39,16 @@ export function InitPJAX() {
     Siren.PE();
     initSerach();
     if (mashiro_option.nprogress_on) NProgress.done();
-    pjaxInit();
+
+    if (typeof window.EnlighterJSINIT === "function") EnlighterJSINIT();
+
+    highlightCode();
+    global.asakura.get_comment_avatar();
+    new lazyload();
+    $(".iconflat").css("width", "50px").css("height", "50px");
+    $(".openNav").css("height", "50px");
+    timeSeriesReload();
+    initTOC();
     global.asakura.init_page(false);
     $("#loading").fadeOut(500);
 

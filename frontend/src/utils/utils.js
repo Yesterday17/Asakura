@@ -1,7 +1,7 @@
 import md5 from "md5";
 
 export function doAfterDOMLoaded(cb) {
-  if (document.readyState === "complete" || document.readyState === "loaded") {
+  if (document.readyState != "loading") {
     cb();
   } else {
     window.addEventListener("DOMContentLoaded", cb, false);

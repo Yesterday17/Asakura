@@ -5,8 +5,8 @@ export function initTOC() {
     let id = 1,
       heading_fix;
     if (mashiro_option.entry_content_theme === "sakura") {
-      if (document.querySelector('article').classList.contains("type-post")) {
-        if (document.querySelector('div').classList.contains("pattern-attachment-img")) {
+      if (document.querySelector('article.type-post')) {
+        if (document.querySelector('div.pattern-attachment-img')) {
           heading_fix = -75;
         } else {
           heading_fix = 200;
