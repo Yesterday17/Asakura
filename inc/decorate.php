@@ -22,7 +22,7 @@ function customizer_css() {
             akina_option('fore-switch-bca')
         )) . ');
   --hpage-art-tpac: ' . akina_option('hpage-art-tpac') . ';
-  --webweb-img: "' . akina_option('webweb_img') . '";
+  --loading-img: url("' . akina_option('webweb_img') . '/load/ball.svg");
   --default-font: ' . akina_option('global-default-font') . ';
   --default-font-size: ' . akina_option('global-fontsize') . ';
   --another-font: ' . akina_option('global-font2') . ';
@@ -291,17 +291,8 @@ h1.cat-title {
   background-color: var(--theme-color);
 }
 
-#pagination .loading {
-  background: url(var(--webweb-img) \'/load/ball.svg\');
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #555;
-  border: none;
-  background-size: auto 100%
-}
-
 #pagination .loading, #bangumi-pagination .loading {
-  background: url(var(--webweb-img) \'/load/ball.svg\');
+  background: var(--loading-img);
   background-position: center;
   background-repeat: no-repeat;
   color: #555;

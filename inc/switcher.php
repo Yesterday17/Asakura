@@ -2,7 +2,6 @@
 
 function get_asakura_option(): array {
     return array(
-        // mashiro_option
         'nprogress_on'            => (bool)akina_option('nprogress_on'),
         'audio'                   => (bool)akina_option('audio'),
         'dark_mode'               => (bool)akina_option('dark_mode'),
@@ -36,5 +35,6 @@ function get_asakura_option(): array {
         'api'                     => esc_url_raw(rest_url()),
         'nonce'                   => wp_create_nonce('wp_rest'),
         'gravatar_url'            => akina_option('gravatar_proxy') ?: 'secure.gravatar.com/avatar',
+        'auto_load_post'          => akina_option('auto_load_post'),
     );
 }

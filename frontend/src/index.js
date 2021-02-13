@@ -552,73 +552,6 @@ window.Siren = {
       });
     }
   },
-  XLS: function () {
-    var load_post_timer;
-    var intersectionObserver = new IntersectionObserver(function (entries) {
-      if (entries[0].intersectionRatio <= 0) return;
-      var page_next = $("#pagination a").attr("href");
-      var load_key = document.getElementById("add_post_time");
-      if (page_next !== undefined && load_key) {
-        var load_time = document.getElementById("add_post_time").title;
-        if (load_time !== "233") {
-          if (load_time !== "0")
-            console.log(
-              "%c 自动加载时倒计时 %c",
-              "background:#9a9da2; color:#ffffff; border-radius:4px;",
-              "",
-              "",
-              load_time
-            );
-          load_post_timer = setTimeout(function () {
-            load_post();
-          }, load_time * 1000);
-        }
-      }
-    });
-    intersectionObserver.observe(
-      document.querySelector("#pagination") ||
-        document.querySelector(".footer-device")
-    );
-    $body.on("click", "#pagination a", function () {
-      clearTimeout(load_post_timer);
-      load_post();
-      return false;
-    });
-
-    function load_post() {
-      $("#pagination a").addClass("loading").text("");
-      $.ajax({
-        type: "POST",
-        url: $("#pagination a").attr("href") + "#main",
-        success: function (data) {
-          var result = $(data).find("#main .post");
-          var nextHref = $(data).find("#pagination a").attr("href");
-          $("#main").append(result.fadeIn(500));
-          $("#pagination a").removeClass("loading").text("Previous");
-          $("#add_post span").removeClass("loading").text("");
-          new lazyload();
-          post_list_show_animation();
-          if (nextHref !== undefined) {
-            $("#pagination a").attr("href", nextHref);
-            //加载完成上滑
-            var tempScrollTop = $(window).scrollTop();
-            $(window).scrollTop(tempScrollTop);
-            $body.animate(
-              {
-                scrollTop: tempScrollTop + 300,
-              },
-              666
-            );
-          } else {
-            $("#pagination").html(
-              "<span>很高兴你翻到这里，但是真的没有了...</span>"
-            );
-          }
-        },
-      });
-      return false;
-    }
-  },
   XCS: function () {
     var __cancel = $("#cancel-comment-reply-link"),
       __cancel_text = __cancel.text(),
@@ -768,12 +701,82 @@ window.Siren = {
     mb_to_top.onclick = () => aScrollTo(0);
   },
 };
+
+function prepare_next_page_load() {
+  let load_post_timer;
+  const pg = document.querySelector("#pagination a");
+  const intersectionObserver = new IntersectionObserver(function (entries) {
+    if (entries[0].intersectionRatio <= 0) return;
+
+    const nextPage = pg?.getAttribute("href");
+    if (nextPage) {
+      const load_time = Number(mashiro_option.auto_load_post);
+      if (load_time >= 0) {
+        pg.classList.add("loading");
+        pg.textContent = "";
+        load_post_timer = setTimeout(
+          () => load_post(nextPage),
+          load_time * 1000
+        );
+      }
+    } else {
+      $("#pagination").html("<span>很高兴你翻到这里，但是真的没有了...</span>");
+    }
+  });
+  intersectionObserver.observe(
+    document.querySelector("#pagination") ||
+      document.querySelector(".footer-device")
+  );
+  pg?.addEventListener("click", () => {
+    clearTimeout(load_post_timer);
+    load_post(pg?.getAttribute("href"));
+    return false;
+  });
+
+  function load_post(next) {
+    fetch(next)
+      .then((resp) => resp.text())
+      .then((html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const result = doc.querySelectorAll("#main .post");
+        const nextHref = doc
+          .querySelector("#pagination a")
+          ?.getAttribute("href");
+
+        $("#main").append($(result).fadeIn(500));
+        pg.classList.remove("loading");
+        pg.textContent = "Previous";
+        new lazyload();
+        post_list_show_animation();
+        if (nextHref) {
+          pg.setAttribute("href", nextHref);
+          //加载完成上滑
+          var tempScrollTop = $(window).scrollTop();
+          $(window).scrollTop(tempScrollTop);
+          $body.animate(
+            {
+              scrollTop: tempScrollTop + 300,
+            },
+            666
+          );
+        } else {
+          pg.removeAttribute("href");
+          $("#pagination").html(
+            "<span>很高兴你翻到这里，但是真的没有了...</span>"
+          );
+        }
+      });
+    return false;
+  }
+}
+
 $(function () {
   get_comment_avatar();
   Siren.PE();
   Siren.NH();
   Siren.GT();
-  Siren.XLS();
+  prepare_next_page_load();
   Siren.XCS();
   Siren.XCP();
   initSerach();

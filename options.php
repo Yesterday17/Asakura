@@ -181,7 +181,7 @@ function optionsframework_options(): array {
             '8'   => ll('8'),
             '9'   => ll('9'),
             '10'  => ll('10'),
-            '233' => ll('Do not load automatically'),
+            '-1' => ll('Do not load automatically'),
         )
     );
 
