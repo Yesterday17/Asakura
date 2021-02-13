@@ -514,4 +514,9 @@ if (!function_exists('akina_option')) {
             return of_default_value($name);
         }
     }
+
+    function asakura_option($name, $default) {
+        $option = akina_option($name);
+        return $option ?: $default;
+    }
 }

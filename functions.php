@@ -607,7 +607,7 @@ function custom_headertitle($title) {
     return get_bloginfo('name');
 }
 
-add_filter('login_headertitle', 'custom_headertitle');
+add_filter('login_headertext', 'custom_headertitle');
 
 //Login Page Link
 function custom_loginlogo_url($url) {
@@ -620,8 +620,8 @@ add_filter('login_headerurl', 'custom_loginlogo_url');
 function custom_login_footer() {
     echo '<script type="text/javascript" src="' . get_template_directory_uri() . '/js/login.js"></script>' . "\n";
     echo '<script type="text/javascript">
-jQuery("body").prepend(`<div class="loading"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/login_loading.gif" width="58" height="10"></div><div id="bg"></div>`);
-jQuery("#bg").children("img").attr("src", "' . akina_option('login_bg') . '").load(function(){
+jQuery("body").prepend(`<div class="loading"><img src="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/login_loading.gif" width="58" height="10"></div><div id="bg"><img></div>`);
+jQuery("#bg").children("img").attr("src", "' . asakura_option('login_bg', 'https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/background/backstage/login-bg.png') . '").load(function(){
     resizeImage("bg");
 	jQuery(window).bind("resize", function() { resizeImage("bg"); });
 	jQuery(".loading").fadeOut();
@@ -630,7 +630,7 @@ jQuery("#bg").children("img").attr("src", "' . akina_option('login_bg') . '").lo
 <script>
 $(document).ready(function(){
     $("h1 a").attr("style","background-image: url(' . akina_option('logo_img') . ');");
-    $(".forgetmenot").replaceWith("<p class="forgetmenot">' . ll('Remember_Me') . '<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>");
+    $(".forgetmenot").replaceWith(`<p class="forgetmenot">' . ll('Remember_Me') . '<input name="rememberme" id="rememberme" value="forever" type="checkbox"><label for="rememberme" style="float: right;margin-top: 5px;transform: scale(2);margin-right: -10px;"></label></p>`);
 });
 </script>';
 }
