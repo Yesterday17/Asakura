@@ -18,8 +18,7 @@
           media="all">
     <meta name="theme-color" content="<?php echo akina_option('theme_skin'); ?>">
     <meta charset="<?php bloginfo('charset'); ?>">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title itemprop="name"><?php global $page, $paged;
         wp_title('-', true, 'right');
         bloginfo('name');
@@ -62,9 +61,9 @@
 <body <?php body_class(); ?>>
 <?php if (akina_option('preload_animation')): ?>
     <div id="preload">
-        <li data-id="3" class="active">
+        <div data-id="3" class="active">
             <div id="preloader_3"></div>
-        </li>
+        </div>
     </div>
 <?php endif; ?>
 <div class="scrollbar" id="bar"></div>
@@ -121,35 +120,10 @@
             </div>
         </header><!-- #masthead -->
         <?php if (get_post_meta(get_the_ID(), 'cover_type', true) == 'hls') {
-            the_video_headPattern_hls();
+            the_video_headPattern('hls');
         } elseif (get_post_meta(get_the_ID(), 'cover_type', true) == 'normal') {
-            the_video_headPattern_normal();
+            the_video_headPattern('normal-cover-video');
         } else {
             the_headPattern();
         } ?>
         <div id="content" class="site-content">
-            <?php if (akina_option('shooting-star')): ?>
-                <!--动态星星 -->
-                <div class="night">
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                    <div class="shooting_star"></div>
-                </div>
-            <?php endif; ?>

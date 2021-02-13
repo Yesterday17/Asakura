@@ -79,7 +79,7 @@ get_header();
 
         </main><!-- #main -->
         <?php if (akina_option('pagenav_style') == 'ajax') { ?>
-            <div id="pagination"><?php next_posts_link(' Previous'); ?></div>
+            <div id="pagination"><?php next_posts_link('Previous'); ?></div>
         <?php } else { ?>
             <nav class="navigator">
                 <?php previous_posts_link('<i class="iconfont icon-back"></i>') ?><?php next_posts_link('<i class="iconfont icon-right"></i>') ?>

@@ -336,16 +336,6 @@ function the_headPattern() {
 }
 
 /*视频封面*/
-//HLS
-function the_video_headPattern_hls() {
-    the_video_headPattern('hls');
-}
-
-//普通视频
-function the_video_headPattern_normal() {
-    the_video_headPattern('normal-cover-video');
-}
-
 function the_video_headPattern($type) {
     $t = ''; // 标题
     $full_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full');

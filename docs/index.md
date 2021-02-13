@@ -17,5 +17,13 @@
 ```
 5. `pagenav_style == ajax`
 ```html
-<div id="pagination"><?php next_posts_link(' Previous'); ?></div>
+<div id="pagination"><?php next_posts_link('Previous'); ?></div>
 ```
+`else`
+```php
+?>
+<nav class="navigator">
+  <?php previous_posts_link('<i class="iconfont icon-back"></i>') ?><?php next_posts_link('<i class="iconfont icon-right"></i>') ?>
+</nav>
+```
+6. `footer`

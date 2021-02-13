@@ -720,11 +720,12 @@ h1.main-title {
   z-index: 99999;
 }
 
-#preload li.active {
+#preload .active {
   position: absolute;
-  top: 49%;
-  left: 49%;
-  list-style: none;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
 }
 
 html {
