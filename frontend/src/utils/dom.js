@@ -1,9 +1,9 @@
 export function scrollBar() {
   if (document.body.clientWidth > 860) {
     $(window).scroll(function () {
-      var s = $(window).scrollTop(),
-        a = $(document).height(),
-        b = $(window).height(),
+      var s = window.scrollY,
+        a = document.body.clientHeight,
+        b = window.innerHeight,
         result = parseInt((s / (a - b)) * 100),
         cached = $("#bar");
       cached.css("width", result + "%");

@@ -720,7 +720,8 @@ function prepare_next_page_load() {
         );
       }
     } else {
-      $("#pagination").html("<span>很高兴你翻到这里，但是真的没有了...</span>");
+      document.getElementById("pagination").innerHTML =
+        "<span>很高兴你翻到这里，但是真的没有了...</span>";
     }
   });
   intersectionObserver.observe(
@@ -744,7 +745,7 @@ function prepare_next_page_load() {
           .querySelector("#pagination a")
           ?.getAttribute("href");
 
-        $("#main").append($(result).fadeIn(500));
+        document.getElementById("main").append(...result);
         pg.classList.remove("loading");
         pg.textContent = "Previous";
         new lazyload();
@@ -752,19 +753,11 @@ function prepare_next_page_load() {
         if (nextHref) {
           pg.setAttribute("href", nextHref);
           //加载完成上滑
-          var tempScrollTop = $(window).scrollTop();
-          $(window).scrollTop(tempScrollTop);
-          $body.animate(
-            {
-              scrollTop: tempScrollTop + 300,
-            },
-            666
-          );
+          asakura.scrollTo(window.scrollY + 300);
         } else {
           pg.removeAttribute("href");
-          $("#pagination").html(
-            "<span>很高兴你翻到这里，但是真的没有了...</span>"
-          );
+          document.getElementById("pagination").innerHTML =
+            "<span>很高兴你翻到这里，但是真的没有了...</span>";
         }
       });
     return false;
