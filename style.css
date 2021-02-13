@@ -479,7 +479,7 @@ dd {
 img {
     height: auto;
     max-width: 100%;
-    object-fit: none;
+    object-fit: scale-down;
 }
 
 table {
