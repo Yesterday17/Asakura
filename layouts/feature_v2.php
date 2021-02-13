@@ -7,7 +7,7 @@
 
 ?>
 <div class="top-feature-row">
-    <h1 class="fes-title" style="font-family: 'Ubuntu', sans-serif;">
+    <h1 class="fes-title">
         <i class="fa fa-paper-plane-o" aria-hidden="true"></i> <?php echo akina_option('focus-area-title'); ?>
     </h1>
     <div class="top-feature-v2">

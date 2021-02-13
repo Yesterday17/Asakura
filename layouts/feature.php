@@ -6,8 +6,8 @@
 
 ?>
 <div class="top-feature">
-    <h1 class="fes-title" style="font-family: 'Ubuntu', sans-serif;"><i class="fa fa-paper-plane-o"
-                                                                        aria-hidden="true"></i> <?php echo akina_option('focus-area-title'); ?>
+    <h1 class="fes-title"><i class="fa fa-paper-plane-o"
+                             aria-hidden="true"></i> <?php echo akina_option('focus-area-title'); ?>
     </h1>
     <div class="feature-content">
         <li class="feature-1">

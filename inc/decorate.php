@@ -1267,7 +1267,7 @@ body {
 }
 
 h1.main-title, h1.fes-title {
-  font-family: var(--title-font) !important;
+  font-family: var(--title-font), "Ubuntu", sans-serif;
 }
 
 .header-info p {
